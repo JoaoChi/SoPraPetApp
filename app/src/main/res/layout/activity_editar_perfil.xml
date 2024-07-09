@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditarPerfilActivity">
+
+    <TextView
+        android:id="@+id/textpetvitaleditprofile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="1000dp"
+        android:height="60dp"
+        android:background="#000000"
+        android:text="Petvital"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="34dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-1dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imageprofile"
+        android:layout_width="76dp"
+        android:layout_height="61dp"
+        android:maxWidth="20dp"
+        android:maxHeight="20dp"
+        app:srcCompat="@drawable/_736502"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-2dp"
+        app:layout_constraintStart_toStartOf="@id/textpetvital"
+        />
+
+    <Button
+        android:id="@+id/buttonVoltacadastrocliente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="304dp"
+        android:backgroundTint="#FFFFFF"
+        android:hapticFeedbackEnabled="false"
+        android:text="Confirma"
+
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/imageprofile"
+        app:layout_constraintEnd_toEndOf="@id/textpetvital"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <CheckBox
+        android:id="@+id/checkboxBanho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Banho"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.177"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textpetvitaleditprofile"
+        app:layout_constraintVertical_bias="0.091" />
+
+    <CheckBox
+        android:id="@+id/checkboxTosa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tosa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.172"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkboxBanho"
+        app:layout_constraintVertical_bias="0.038" />
+
+    <CheckBox
+        android:id="@+id/checkBoxmedicamentos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Medicamentos"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.212"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkboxTosa"
+        app:layout_constraintVertical_bias="0.044" />
+
+    <CheckBox
+        android:id="@+id/checkboxDoencas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Doencas"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.185"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxmedicamentos"
+        app:layout_constraintVertical_bias="0.046" />
+
+    <CheckBox
+        android:id="@+id/checkBoxOutro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Outro?"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.178"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkboxDoencas"
+        app:layout_constraintVertical_bias="0.059" />
+
+    <EditText
+        android:id="@+id/editTextOutros"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Cite:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.298"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxOutro"
+        app:layout_constraintVertical_bias="0.035" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="437dp"
+        android:layout_height="213dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textpetvitaleditprofile"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/shutterstock_1569883195_scaled_2560x1280" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
