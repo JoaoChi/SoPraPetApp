@@ -13,7 +13,6 @@ class EditarPerfilActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        //aaaaa
 
         binding = ActivityEditarPerfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
