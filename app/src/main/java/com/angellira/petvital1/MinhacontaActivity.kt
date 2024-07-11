@@ -17,16 +17,26 @@ class MinhacontaActivity : AppCompatActivity() {
         binding = ActivityMinhacontaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        botaoVoltar()
+        botaoPropaganda()
+        botaoEditProfile()
+        }
 
+    private fun botaoVoltar() {
         binding.buttonVoltapaginainicial.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
+    }
 
+    private fun botaoPropaganda() {
         binding.botaopetshop.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
+    }
+
+    private fun botaoEditProfile() {
         binding.buttoneditprofile.setOnClickListener {
             startActivity(Intent(this, EditarPerfilActivity::class.java))
         }
-        }
     }
+}

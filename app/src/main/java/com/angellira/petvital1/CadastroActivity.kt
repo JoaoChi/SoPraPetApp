@@ -25,10 +25,24 @@ class CadastroActivity : AppCompatActivity() {
         binding = ActivityCadastroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        FuncPegarDadosRegistro()
+        botaoRegistrar()
+    }
+
+    private fun botaoRegistrar() {
+        binding.BotaoRegistrar.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+    }
+    val cadastro = User()
+
+    private fun FuncPegarDadosRegistro() {
+        intent.putExtra("nome", cadastro.username)
+        intent.putExtra("gmail", cadastro.email)
+        intent.putExtra("senha", cadastro.password)
         val botaoRegisto = findViewById<Button>(R.id.BotaoRegistrar)
         botaoRegisto.setOnClickListener {
 
-            val cadastro = User()
 
             cadastro.email = findViewById<EditText>(R.id.textoregistroEmail).text.toString()
             cadastro.password = findViewById<EditText>(R.id.passwordEditText).text.toString()
@@ -37,20 +51,11 @@ class CadastroActivity : AppCompatActivity() {
             if (ValidacaoInput(cadastro.username, cadastro.email, cadastro.password)) {
                 val user = User(cadastro.username, cadastro.email, cadastro.password)
                 registerUser(user)
-
-                val intent = (Intent(this, CadastroActivity::class.java))
-                startActivity(intent)
-                finish()
             } else {
                 Toast.makeText(this, "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT)
                     .show()
             }
         }
-
-        binding.BotaoRegistrar.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
-
     }
 
     private fun ValidacaoInput(username: String, email: String, password: String): Boolean {

@@ -17,7 +17,10 @@ class EsqueciASenha : AppCompatActivity() {
         binding = ActivityEsqueciAsenhaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        botaoRedefinir()
+    }
 
+    private fun botaoRedefinir() {
         binding.botaoRedefinirEVoltar.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }

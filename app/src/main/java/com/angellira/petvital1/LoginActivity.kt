@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.provider.ContactsContract.CommonDataKinds.Email
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.angellira.petvital1.Interfaces.autenticator
@@ -22,40 +23,54 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        JaestaLogado()
-
+        val intent = Intent(this, MainActivity::class.java)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        jaEstaLogado()
+        recebendoDados(intent)
+        funcaoVerificacaoLogin(intent)
+        botaoRegistro()
+        botaoEsqueciaSenha()
 
-        val intent = Intent(this, MainActivity::class.java)
+    }
 
+    private fun recebendoDados(intent: Intent) {
+        val recebernome = intent.getStringExtra("nome")
+        val recebergmail = intent.getStringExtra("gmail")
+        val recebersenha = intent.getStringExtra("senha")
+
+        cadastrado.username = recebernome.toString()
+        cadastrado.email = recebergmail.toString()
+        cadastrado.password = recebersenha.toString()
+    }
+
+    private fun funcaoVerificacaoLogin(intent: Intent) {
         val botaoLogin = findViewById<Button>(R.id.botaoLogin)
-        botaoLogin.setOnClickListener{
+        botaoLogin.setOnClickListener {
 
-            cadastrado.email = findViewById<EditText>(R.id.textEmailLogin).text.toString()
-            cadastrado.password = findViewById<EditText>(R.id.editTextPassword).text.toString()
-
-            if(validateLogin(cadastrado.email, cadastrado.password)){
-
+            if (cadastrado.authenticate(cadastrado.email, cadastrado.password)) {
+                startActivity(intent)
+            }else{
+                Toast.makeText(this, "Erro no login", Toast.LENGTH_SHORT).show()
             }
-
-            val nomeusuario = binding.textEmailLogin.text.toString()
-            intent.putExtra("Usuario", cadastrado.username)
-            startActivity(intent)
         }
+    }
 
-        binding.BotaoRegistrar.setOnClickListener {
-            startActivity(Intent(this, CadastroActivity::class.java))
-        }
-
+    private fun botaoEsqueciaSenha() {
         binding.button2esquecisenha.setOnClickListener {
             startActivity(Intent(this, EsqueciASenha::class.java))
         }
     }
 
+    private fun botaoRegistro() {
+        binding.BotaoRegistrar.setOnClickListener {
+            startActivity(Intent(this, CadastroActivity::class.java))
+        }
+    }
 
-    private fun JaestaLogado() {
+
+    private fun jaEstaLogado() {
         val sharedPreferences = getPreferences(MODE_PRIVATE)
 
         val estaLogado = b(sharedPreferences)
@@ -66,14 +81,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         sharedPreferences.edit().putBoolean("Logou", true).apply()
-    }
-
-    private fun validateLogin(email: String, password: String): Boolean {
-        if(cadastrado.email == email && cadastrado.password == password){
-            return true
-        }else{
-            return false
-        }
     }
 
     private fun b(sharedPreferences: SharedPreferences) =

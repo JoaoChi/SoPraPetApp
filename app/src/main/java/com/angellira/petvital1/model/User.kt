@@ -4,25 +4,15 @@ import com.angellira.petvital1.Interfaces.autenticator
 
 @Suppress("UNREACHABLE_CODE")
 data class User(
-    public var username: String = "",
-    public var email: String = "",
-    public var password: String = ""
+    var username: String = "",
+    var email: String = "",
+    var password: String = ""
 ) : autenticator { // Closeable etc. Nomes de interfaces
-    override fun emailinserido(email: String): Boolean {
-        TODO("Not yet implemented")
-        // colocar comportamento
-        if (this.email == email) {
-            println("Email correto!")
+    override fun authenticate(email: String, password: String): Boolean {
+        return if (this.email == email && this.password == password) {
+            true
         } else {
-            println("Email incorreto!")
+            return false
         }
-    }
-
-    override fun resetPassword(newPassword: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun authenticate(password: String): Boolean {
-        TODO("Not yet implemented")
     }
 }

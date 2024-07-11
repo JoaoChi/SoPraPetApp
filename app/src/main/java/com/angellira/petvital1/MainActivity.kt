@@ -19,13 +19,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val name = intent.getStringExtra("userName")
-        binding.textPet.text = "Bem vindo\n "+ name
+        escreverString()
+        botaoConta()
+    }
 
+    private fun escreverString() {
+        val name = intent.getStringExtra("userName")
+        binding.textPet.text = "Bem vindo\n " + name
+    }
+
+    private fun botaoConta() {
         binding.botaoConta.setOnClickListener {
             startActivity(Intent(this, MinhacontaActivity::class.java))
         }

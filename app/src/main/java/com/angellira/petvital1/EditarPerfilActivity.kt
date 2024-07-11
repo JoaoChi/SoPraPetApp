@@ -17,6 +17,10 @@ class EditarPerfilActivity : AppCompatActivity() {
         binding = ActivityEditarPerfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        botaoVoltarCadastro()
+    }
+
+    private fun botaoVoltarCadastro() {
         binding.buttonVoltacadastrocliente.setOnClickListener {
             startActivity(Intent(this, MinhacontaActivity::class.java))
         }
