@@ -25,7 +25,7 @@ class CadastroActivity : AppCompatActivity() {
         binding = ActivityCadastroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        FuncPegarDadosRegistro()
+        funcPegarDadosRegistro()
         botaoRegistrar()
     }
 
@@ -34,21 +34,23 @@ class CadastroActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
         }
     }
+
     val cadastro = User()
 
-    private fun FuncPegarDadosRegistro() {
+    private fun funcPegarDadosRegistro() {
+
         intent.putExtra("nome", cadastro.username)
         intent.putExtra("gmail", cadastro.email)
         intent.putExtra("senha", cadastro.password)
+
         val botaoRegisto = findViewById<Button>(R.id.BotaoRegistrar)
         botaoRegisto.setOnClickListener {
-
 
             cadastro.email = findViewById<EditText>(R.id.textoregistroEmail).text.toString()
             cadastro.password = findViewById<EditText>(R.id.passwordEditText).text.toString()
             cadastro.username = findViewById<EditText>(R.id.usernameEditText).text.toString()
 
-            if (ValidacaoInput(cadastro.username, cadastro.email, cadastro.password)) {
+            if (validacaoInput(cadastro.username, cadastro.email, cadastro.password)) {
                 val user = User(cadastro.username, cadastro.email, cadastro.password)
                 registerUser(user)
             } else {
@@ -58,7 +60,7 @@ class CadastroActivity : AppCompatActivity() {
         }
     }
 
-    private fun ValidacaoInput(username: String, email: String, password: String): Boolean {
+    private fun validacaoInput(username: String, email: String, password: String): Boolean {
         return username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()
 
     }
@@ -67,9 +69,9 @@ class CadastroActivity : AppCompatActivity() {
 
         val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
         with(sharedPreferences.edit()) {
-            putString("email", cadastro.email)
+            putString("gmail", cadastro.email)
             putString("senha", cadastro.password)
-            putString("usuario", cadastro.username)
+            putString("nome", cadastro.username)
             apply()
         }
         Log.d("RegisterActivity", "Usuário registrado: $cadastro")

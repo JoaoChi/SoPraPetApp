@@ -98,11 +98,11 @@
         app:layout_constraintTop_toBottomOf="@+id/buttoncadastrarpagamento" />
 
     <Button
-        android:id="@+id/buttoncadastrarpagamento"
+        android:id="@+id/buttonsair"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#000000"
-        android:text="Cadastrar meio de pagamento"
+        android:text="Sair da conta"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

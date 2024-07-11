@@ -51,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
 
             if (cadastrado.authenticate(cadastrado.email, cadastrado.password)) {
                 startActivity(intent)
-            }else{
+            } else {
                 Toast.makeText(this, "Erro no login", Toast.LENGTH_SHORT).show()
             }
         }
@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
     private fun jaEstaLogado() {
         val sharedPreferences = getPreferences(MODE_PRIVATE)
 
-        val estaLogado = b(sharedPreferences)
+        val estaLogado = falseLogou(sharedPreferences)
 
         if (estaLogado) {
             val main = Intent(this, MainActivity::class.java)
@@ -83,7 +83,7 @@ class LoginActivity : AppCompatActivity() {
         sharedPreferences.edit().putBoolean("Logou", true).apply()
     }
 
-    private fun b(sharedPreferences: SharedPreferences) =
+    private fun falseLogou(sharedPreferences: SharedPreferences) =
         sharedPreferences.getBoolean("Logou", false)
 
 }

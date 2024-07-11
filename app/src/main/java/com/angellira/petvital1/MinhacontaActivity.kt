@@ -1,7 +1,10 @@
 package com.angellira.petvital1
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.angellira.petvital1.databinding.ActivityMinhacontaBinding
@@ -14,12 +17,23 @@ class MinhacontaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        val intent = Intent(this, MinhacontaActivity::class.java)
         binding = ActivityMinhacontaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         botaoVoltar()
         botaoPropaganda()
         botaoEditProfile()
+
+        binding.buttonsair.setOnClickListener{
+            val sharedPreferences: SharedPreferences = getSharedPreferences("Logou", Context.MODE_PRIVATE)
+
+            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+
+            editor.clear()
+            editor.apply()
+        }
+
         }
 
     private fun botaoVoltar() {

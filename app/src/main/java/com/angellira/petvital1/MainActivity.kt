@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun escreverString() {
-        val name = intent.getStringExtra("userName")
+        val name = intent.getStringExtra("nome")
         binding.textPet.text = "Bem vindo\n " + name
     }
 
