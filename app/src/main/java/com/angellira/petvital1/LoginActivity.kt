@@ -28,14 +28,13 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         jaEstaLogado()
-        recebendoDados(intent)
+        recebendoDados()
         funcaoVerificacaoLogin(intent)
         botaoRegistro()
         botaoEsqueciaSenha()
-
     }
 
-    private fun recebendoDados(intent: Intent) {
+    private fun recebendoDados() {
         val recebernome = intent.getStringExtra("nome")
         val recebergmail = intent.getStringExtra("gmail")
         val recebersenha = intent.getStringExtra("senha")
@@ -49,7 +48,9 @@ class LoginActivity : AppCompatActivity() {
         val botaoLogin = findViewById<Button>(R.id.botaoLogin)
         botaoLogin.setOnClickListener {
 
-            if (cadastrado.authenticate(cadastrado.email, cadastrado.password)) {
+            val email = findViewById<EditText>(R.id.textEmailLogin).text.toString()
+            val password = findViewById<EditText>(R.id.editTextPassword).text.toString()
+            if (cadastrado.authenticate(email = email, password = password)) {
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Erro no login", Toast.LENGTH_SHORT).show()
@@ -78,9 +79,9 @@ class LoginActivity : AppCompatActivity() {
         if (estaLogado) {
             val main = Intent(this, MainActivity::class.java)
             startActivity(main)
-        }
 
-        sharedPreferences.edit().putBoolean("Logou", true).apply()
+            sharedPreferences.edit().putBoolean("Logou", true).apply()
+        }
     }
 
     private fun falseLogou(sharedPreferences: SharedPreferences) =

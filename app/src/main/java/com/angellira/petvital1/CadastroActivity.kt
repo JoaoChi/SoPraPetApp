@@ -26,22 +26,22 @@ class CadastroActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         funcPegarDadosRegistro()
-        botaoRegistrar()
     }
 
     private fun botaoRegistrar() {
-        binding.BotaoRegistrar.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
+
+        val loginIntent = Intent(this, LoginActivity::class.java)
+
+        loginIntent.putExtra("nome", cadastro.username)
+        loginIntent.putExtra("gmail", cadastro.email)
+        loginIntent.putExtra("senha", cadastro.password)
+
+        startActivity(loginIntent)
     }
 
     val cadastro = User()
 
     private fun funcPegarDadosRegistro() {
-
-        intent.putExtra("nome", cadastro.username)
-        intent.putExtra("gmail", cadastro.email)
-        intent.putExtra("senha", cadastro.password)
 
         val botaoRegisto = findViewById<Button>(R.id.BotaoRegistrar)
         botaoRegisto.setOnClickListener {
@@ -54,8 +54,7 @@ class CadastroActivity : AppCompatActivity() {
                 val user = User(cadastro.username, cadastro.email, cadastro.password)
                 registerUser(user)
             } else {
-                Toast.makeText(this, "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -75,5 +74,6 @@ class CadastroActivity : AppCompatActivity() {
             apply()
         }
         Log.d("RegisterActivity", "Usuário registrado: $cadastro")
+        botaoRegistrar()
     }
 }

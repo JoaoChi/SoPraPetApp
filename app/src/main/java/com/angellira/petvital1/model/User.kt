@@ -9,7 +9,8 @@ data class User(
     var password: String = ""
 ) : autenticator { // Closeable etc. Nomes de interfaces
     override fun authenticate(email: String, password: String): Boolean {
-        return if (this.email == email && this.password == password) {
+        return if (this.email == email && this.password == password
+            && email.isNotEmpty() && password.isNotEmpty()) {
             true
         } else {
             return false

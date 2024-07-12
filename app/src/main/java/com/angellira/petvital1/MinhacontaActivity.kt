@@ -1,17 +1,18 @@
 package com.angellira.petvital1
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.angellira.petvital1.databinding.ActivityMinhacontaBinding
+import com.angellira.petvital1.model.User
 
 class MinhacontaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMinhacontaBinding
+    val dados = User()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,17 +25,37 @@ class MinhacontaActivity : AppCompatActivity() {
         botaoVoltar()
         botaoPropaganda()
         botaoEditProfile()
+        allPreferences()
+    }
 
-        binding.buttonsair.setOnClickListener{
-            val sharedPreferences: SharedPreferences = getSharedPreferences("Logou", Context.MODE_PRIVATE)
+    private fun allPreferences() {
 
-            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+            val sharedPreferences = getSharedPreferences("Logou", MODE_PRIVATE)
 
-            editor.clear()
-            editor.apply()
-        }
+            dados.email = sharedPreferences.getString("gmail", null).toString()
+            val textEmail = binding.textnomecadastro
+            dados.username = sharedPreferences.getString("nome", null).toString()
+            val textNome = binding.textemailcadastro
 
-        }
+            mostrarTexto(textNome, textEmail)
+            val buttonDeslogar=binding.buttonsair
+            buttonDeslogar.setOnClickListener{
+                val editor: SharedPreferences.Editor = sharedPreferences.edit()
+
+                editor.clear().apply()
+                editor.putBoolean("Logou", false).apply()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+    }
+
+    private fun mostrarTexto(
+        textNome: TextView,
+        textEmail: TextView
+    ){
+        textNome.setText("Nome: " + dados.username)
+        textEmail.setText("E-mail: " + dados.email)
+    }
 
     private fun botaoVoltar() {
         binding.buttonVoltapaginainicial.setOnClickListener {
