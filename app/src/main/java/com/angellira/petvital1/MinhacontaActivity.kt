@@ -3,7 +3,6 @@ package com.angellira.petvital1
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.angellira.petvital1.databinding.ActivityMinhacontaBinding
@@ -18,43 +17,40 @@ class MinhacontaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val intent = Intent(this, MinhacontaActivity::class.java)
+        Intent(this, MinhacontaActivity::class.java)
         binding = ActivityMinhacontaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         botaoVoltar()
         botaoPropaganda()
         botaoEditProfile()
-        allPreferences()
+        printPreferences()
+        botaoDeslogarPreferences()
     }
 
-    private fun allPreferences() {
+    private fun printPreferences() {
 
-            val sharedPreferences = getSharedPreferences("Logou", MODE_PRIVATE)
+        val recebernome = intent.getStringExtra("nome")
+        val recebergmail = intent.getStringExtra("gmail")
 
-            dados.email = sharedPreferences.getString("gmail", null).toString()
-            val textEmail = binding.textnomecadastro
-            dados.username = sharedPreferences.getString("nome", null).toString()
-            val textNome = binding.textemailcadastro
+        dados.username = recebernome.toString()
+        dados.email = recebergmail.toString()
 
-            mostrarTexto(textNome, textEmail)
-            val buttonDeslogar=binding.buttonsair
-            buttonDeslogar.setOnClickListener{
-                val editor: SharedPreferences.Editor = sharedPreferences.edit()
-
-                editor.clear().apply()
-                editor.putBoolean("Logou", false).apply()
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
-            }
+        binding.textnomecadastro.text = "Usuario: \n " + recebernome
+        binding.textemailcadastro.text = "E-mail: \n" + recebergmail
     }
 
-    private fun mostrarTexto(
-        textNome: TextView,
-        textEmail: TextView
-    ){
-        textNome.setText("Nome: " + dados.username)
-        textEmail.setText("E-mail: " + dados.email)
+    private fun botaoDeslogarPreferences() {
+        val sharedPreferences = getSharedPreferences("Logou", MODE_PRIVATE)
+        val buttonDeslogar = binding.buttonsair
+        buttonDeslogar.setOnClickListener {
+            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+
+            editor.clear().apply()
+            editor.putBoolean("Logou", false).apply()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
     }
 
     private fun botaoVoltar() {
