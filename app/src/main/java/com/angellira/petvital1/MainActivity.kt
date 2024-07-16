@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,7 +17,7 @@ import com.angellira.petvital1.model.User
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
+    val cadastro = User()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -29,18 +30,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun escreverString() {
-        val nomeMain = User()
-        val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
-        nomeMain.username = sharedPreferences.getString("nome", null).toString()
-        val nomeTextPet = binding.nomeMain
-        showDataUser(nomeMain)
+        val sharedPreferences = getSharedPreferences("cadastro", Context.MODE_PRIVATE)
+        cadastro.username = sharedPreferences.getString("nome", cadastro.username).toString()
+        val textPet2 = binding.textPet
+        textPet2.text = "Bem vindo:\n ${cadastro.username}"
     }
 
-    private fun showDataUser(
-        nomeTextPet: TextView
-    ){
-        nomeTextPet.setText("Bem vindo \n ${nomeMain.username}")
-    }
 
     private fun botaoConta() {
         binding.botaoConta.setOnClickListener {

@@ -1,5 +1,6 @@
 package com.angellira.petvital1
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -30,14 +31,14 @@ class MinhacontaActivity : AppCompatActivity() {
 
     private fun printPreferences() {
 
-        val recebernome = intent.getStringExtra("nome")
-        val recebergmail = intent.getStringExtra("gmail")
+        val sharedPreferences = getSharedPreferences("cadastro", Context.MODE_PRIVATE)
+        dados.username = sharedPreferences.getString("nome", dados.username).toString()
+        val textNomeCadastro = binding.textnomecadastro
+        textNomeCadastro.text = "Nome: ${dados.username}"
 
-        dados.username = recebernome.toString()
-        dados.email = recebergmail.toString()
-
-        binding.textnomecadastro.text = "Usuario: \n " + recebernome
-        binding.textemailcadastro.text = "E-mail: \n" + recebergmail
+        dados.email = sharedPreferences.getString("gmail", dados.email).toString()
+        val textEmailCadastro = binding.textemailcadastro
+        textEmailCadastro.text = "Email: ${dados.email}"
     }
 
     private fun botaoDeslogarPreferences() {
@@ -48,7 +49,11 @@ class MinhacontaActivity : AppCompatActivity() {
 
             editor.clear().apply()
             editor.putBoolean("Logou", false).apply()
-            startActivity(Intent(this, LoginActivity::class.java))
+            editor.putBoolean("cadastro", false).apply()
+            val deslogarLogin = Intent(this, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            startActivity(deslogarLogin)
             finish()
         }
     }
