@@ -27,7 +27,12 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        jaEstaLogado()
+        val sharedPref = sharedPreferences(intent)
+        if (sharedPref != null) {
+            startActivity(intent)
+        }
+
+
         recebendoDados()
         funcaoVerificacaoLogin(intent)
         botaoRegistro()
@@ -71,21 +76,14 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    private fun jaEstaLogado() {
-        val sharedPreferences = getPreferences(MODE_PRIVATE)
-
-        val estaLogado = falseLogou(sharedPreferences)
+    private fun sharedPreferences(MainActivity: Intent): SharedPreferences? {
+        val sharedPref = getSharedPreferences("cadastro", Context.MODE_PRIVATE)
+        val estaLogado = sharedPref.getBoolean("Logou", false)
 
         if (estaLogado) {
-            val main = Intent(this, MainActivity::class.java)
-            startActivity(main)
-
-            sharedPreferences.edit().putBoolean("Logou", true).apply()
+            startActivity(MainActivity)
             finish()
         }
+        return sharedPref
     }
-
-    private fun falseLogou(sharedPreferences: SharedPreferences) =
-        sharedPreferences.getBoolean("Logou", false)
-
 }
