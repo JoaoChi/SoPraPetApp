@@ -46,9 +46,9 @@ class CadastroActivity : AppCompatActivity() {
         val botaoRegisto = findViewById<Button>(R.id.BotaoRegistrar)
         botaoRegisto.setOnClickListener {
 
-            cadastro.email = findViewById<EditText>(R.id.textoregistroEmail).text.toString()
-            cadastro.password = findViewById<EditText>(R.id.passwordEditText).text.toString()
-            cadastro.username = findViewById<EditText>(R.id.usernameEditText).text.toString()
+            cadastro.email = binding.textoregistroEmail.text.toString()
+            cadastro.password = binding.passwordEditText.text.toString()
+            cadastro.username = binding.usernameEditText.text.toString()
 
             if (validacaoInput(cadastro.username, cadastro.email, cadastro.password)) {
                 val user = User(cadastro.username, cadastro.email, cadastro.password)
@@ -68,6 +68,7 @@ class CadastroActivity : AppCompatActivity() {
 
         val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
         with(sharedPreferences.edit()) {
+
             putString("gmail", cadastro.email)
             putString("senha", cadastro.password)
             putString("nome", cadastro.username)

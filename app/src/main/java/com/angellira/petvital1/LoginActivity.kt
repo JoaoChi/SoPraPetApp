@@ -81,6 +81,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(main)
 
             sharedPreferences.edit().putBoolean("Logou", true).apply()
+            finish()
         }
     }
 
