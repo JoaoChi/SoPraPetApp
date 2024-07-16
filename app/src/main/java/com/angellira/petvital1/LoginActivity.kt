@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
         cadastrado.email = recebergmail.toString()
         cadastrado.password = recebersenha.toString()
     }
-
+//
     private fun funcaoVerificacaoLogin(intent: Intent) {
         val botaoLogin = findViewById<Button>(R.id.botaoLogin)
         botaoLogin.setOnClickListener {
