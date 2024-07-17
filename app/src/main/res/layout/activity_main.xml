@@ -11,13 +11,13 @@
 
     <TextView
         android:id="@+id/textPet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="210dp"
+        android:layout_height="87dp"
         android:layout_marginStart="16dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
         android:rotationX="0"
-        android:text="PetVital"
+        android:text=""
         android:textColor="#000000"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"

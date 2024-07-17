@@ -2,17 +2,17 @@ package com.angellira.petvital1
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.provider.ContactsContract.CommonDataKinds.Email
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.angellira.petvital1.Interfaces.autenticator
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.angellira.petvital1.databinding.ActivityLoginBinding
 import com.angellira.petvital1.model.User
+
+const val preferenciaCadastro = "cadastro"
 
 class LoginActivity : AppCompatActivity() {
 
@@ -27,7 +27,13 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        jaEstaLogado()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        sharedPreferences(intent)
         recebendoDados()
         funcaoVerificacaoLogin(intent)
         botaoRegistro()
@@ -48,9 +54,14 @@ class LoginActivity : AppCompatActivity() {
         val botaoLogin = findViewById<Button>(R.id.botaoLogin)
         botaoLogin.setOnClickListener {
 
-            val email = findViewById<EditText>(R.id.textEmailLogin).text.toString()
-            val password = findViewById<EditText>(R.id.editTextPassword).text.toString()
+            val email = binding.textEmailLogin.text.toString()
+            val password = binding.editTextPassword.text.toString()
             if (cadastrado.authenticate(email = email, password = password)) {
+                val sharedPref = getSharedPreferences(preferenciaCadastro, Context.MODE_PRIVATE)
+                with(sharedPref.edit()) {
+                    putBoolean(preferenciaCadastro, true)
+                    apply()
+                }
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Erro no login", Toast.LENGTH_SHORT).show()
@@ -70,21 +81,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun jaEstaLogado() {
-        val sharedPreferences = getPreferences(MODE_PRIVATE)
-
-        val estaLogado = falseLogou(sharedPreferences)
+    private fun sharedPreferences(mainActivity: Intent){
+        val sharedPref = getSharedPreferences(preferenciaCadastro, Context.MODE_PRIVATE)
+        val estaLogado = sharedPref.getBoolean(preferenciaCadastro, false)
 
         if (estaLogado) {
-            val main = Intent(this, MainActivity::class.java)
-            startActivity(main)
-
-            sharedPreferences.edit().putBoolean("Logou", true).apply()
+            startActivity(mainActivity)
+            finish()
         }
     }
-
-    private fun falseLogou(sharedPreferences: SharedPreferences) =
-        sharedPreferences.getBoolean("Logou", false)
-
 }
