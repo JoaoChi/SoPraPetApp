@@ -2,15 +2,13 @@ package com.angellira.petvital1
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.provider.ContactsContract.CommonDataKinds.Email
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.angellira.petvital1.Interfaces.autenticator
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.angellira.petvital1.databinding.ActivityLoginBinding
 import com.angellira.petvital1.model.User
 
@@ -28,6 +26,12 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         sharedPreferences(intent)
         recebendoDados()
@@ -77,14 +81,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun sharedPreferences(MainActivity: Intent): SharedPreferences? {
+    private fun sharedPreferences(mainActivity: Intent){
         val sharedPref = getSharedPreferences(preferenciaCadastro, Context.MODE_PRIVATE)
         val estaLogado = sharedPref.getBoolean(preferenciaCadastro, false)
 
         if (estaLogado) {
-            startActivity(MainActivity)
+            startActivity(mainActivity)
             finish()
         }
-        return sharedPref
     }
 }

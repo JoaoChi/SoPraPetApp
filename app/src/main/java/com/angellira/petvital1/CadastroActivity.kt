@@ -43,7 +43,7 @@ class CadastroActivity : AppCompatActivity() {
 
     private fun funcPegarDadosRegistro() {
 
-        val botaoRegisto = findViewById<Button>(R.id.BotaoRegistrar)
+        val botaoRegisto = binding.BotaoRegistrar
         botaoRegisto.setOnClickListener {
 
             cadastro.email = binding.textoregistroEmail.text.toString()
