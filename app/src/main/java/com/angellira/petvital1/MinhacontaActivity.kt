@@ -31,7 +31,7 @@ class MinhacontaActivity : AppCompatActivity() {
 
     private fun printPreferences() {
 
-        val sharedPreferences = getSharedPreferences("cadastro", Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences(preferenciaCadastro, Context.MODE_PRIVATE)
         dados.username = sharedPreferences.getString("nome", dados.username).toString()
         val textNomeCadastro = binding.textnomecadastro
         textNomeCadastro.text = "Nome: ${dados.username}"
@@ -42,14 +42,12 @@ class MinhacontaActivity : AppCompatActivity() {
     }
 
     private fun botaoDeslogarPreferences() {
-        val sharedPreferences = getSharedPreferences("Logou", MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences(preferenciaCadastro, MODE_PRIVATE)
         val buttonDeslogar = binding.buttonsair
         buttonDeslogar.setOnClickListener {
             val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
-            editor.clear().apply()
-            editor.putBoolean("Logou", false).apply()
-            editor.putBoolean("cadastro", false).apply()
+            editor.putBoolean("cadastro", false).clear().apply()
             val deslogarLogin = Intent(this, LoginActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }

@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun escreverString() {
-        val sharedPreferences = getSharedPreferences("cadastro", Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences(preferenciaCadastro, Context.MODE_PRIVATE)
         cadastro.username = sharedPreferences.getString("nome", cadastro.username).toString()
         val textPet2 = binding.textPet
         textPet2.text = "Bem vindo:\n ${cadastro.username}"

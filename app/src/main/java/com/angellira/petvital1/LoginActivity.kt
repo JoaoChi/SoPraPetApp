@@ -14,6 +14,8 @@ import com.angellira.petvital1.Interfaces.autenticator
 import com.angellira.petvital1.databinding.ActivityLoginBinding
 import com.angellira.petvital1.model.User
 
+const val preferenciaCadastro = "cadastro"
+
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
@@ -27,12 +29,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sharedPref = sharedPreferences(intent)
-        if (sharedPref != null) {
-            startActivity(intent)
-        }
-
-
+        sharedPreferences(intent)
         recebendoDados()
         funcaoVerificacaoLogin(intent)
         botaoRegistro()
@@ -53,9 +50,14 @@ class LoginActivity : AppCompatActivity() {
         val botaoLogin = findViewById<Button>(R.id.botaoLogin)
         botaoLogin.setOnClickListener {
 
-            val email = findViewById<EditText>(R.id.textEmailLogin).text.toString()
-            val password = findViewById<EditText>(R.id.editTextPassword).text.toString()
+            val email = binding.textEmailLogin.text.toString()
+            val password = binding.editTextPassword.text.toString()
             if (cadastrado.authenticate(email = email, password = password)) {
+                val sharedPref = getSharedPreferences(preferenciaCadastro, Context.MODE_PRIVATE)
+                with(sharedPref.edit()) {
+                    putBoolean(preferenciaCadastro, true)
+                    apply()
+                }
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Erro no login", Toast.LENGTH_SHORT).show()
@@ -75,10 +77,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-
     private fun sharedPreferences(MainActivity: Intent): SharedPreferences? {
-        val sharedPref = getSharedPreferences("cadastro", Context.MODE_PRIVATE)
-        val estaLogado = sharedPref.getBoolean("Logou", false)
+        val sharedPref = getSharedPreferences(preferenciaCadastro, Context.MODE_PRIVATE)
+        val estaLogado = sharedPref.getBoolean(preferenciaCadastro, false)
 
         if (estaLogado) {
             startActivity(MainActivity)

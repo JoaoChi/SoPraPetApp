@@ -66,7 +66,7 @@ class CadastroActivity : AppCompatActivity() {
 
     private fun registerUser(cadastro: User) {
 
-        val sharedPreferences = getSharedPreferences("cadastro", Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences(preferenciaCadastro, Context.MODE_PRIVATE)
         with(sharedPreferences.edit()) {
             putString("gmail", cadastro.email)
             putString("senha", cadastro.password)
