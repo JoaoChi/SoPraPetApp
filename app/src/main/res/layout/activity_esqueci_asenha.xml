@@ -16,10 +16,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.183" />
+        app:layout_constraintVertical_bias="0.263" />
 
     <EditText
         android:id="@+id/editTextNumberPassword"
@@ -60,7 +59,7 @@
         android:id="@+id/botaoRedefinirEVoltar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#000000"
+        android:backgroundTint="#3e2b05"
         android:ellipsize="middle"
         android:text="Redefinir e voltar"
         android:textColorLink="#673AB7"
@@ -100,4 +99,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textemail" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="250dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/green_leaf_png_hd_image" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
