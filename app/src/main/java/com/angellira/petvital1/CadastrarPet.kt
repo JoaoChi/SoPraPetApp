@@ -5,16 +5,31 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.angellira.petvital1.databinding.ActivityLoginBinding
+
 
 class CadastrarPet : AppCompatActivity() {
+
+    private lateinit var binding: ActivityLoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         setContentView(R.layout.activity_cadastrar_pet)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+
+            binding.BotaoRegistrar.setOnClickListener{
+                startActivity(this, MainActivity::class.java)
+            }
         }
     }
+
+
 }

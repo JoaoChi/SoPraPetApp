@@ -1,19 +1,15 @@
 package com.angellira.petvital1
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.angellira.petvital1.databinding.ActivityLoginBinding
-import com.angellira.petvital1.interfaces.Autenticator
 import com.angellira.petvital1.model.User
 import com.angellira.petvital1.preferences.PreferencesManager
-import com.angellira.petvital1.preferences.preferenciaCadastro
 
 class LoginActivity : AppCompatActivity() {
 
@@ -82,7 +78,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun sharedPreferences(mainActivity: Intent){
-        val preferencesManager = PreferencesManager(this)
         val estaLogado = preferencesManager.estaLogado
 
         if (estaLogado) {

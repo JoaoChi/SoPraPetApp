@@ -75,7 +75,6 @@ class CadastroActivity : AppCompatActivity() {
         preferencesManager.password = cadastro.password
         preferencesManager.username = cadastro.username
         botaoRegistrar()
-
     }
 }
 
