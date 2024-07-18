@@ -14,10 +14,14 @@ import androidx.core.view.WindowInsetsCompat
 import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.databinding.ActivityMainBinding
 import com.angellira.petvital1.model.User
+import com.angellira.petvital1.preferences.PreferencesManager
+import com.angellira.petvital1.preferences.preferenciaCadastro
 
 class CadastroActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCadastroBinding
+
+    private lateinit var preferencesManager: PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +29,7 @@ class CadastroActivity : AppCompatActivity() {
         binding = ActivityCadastroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        preferencesManager = PreferencesManager(this)
         funcPegarDadosRegistro()
     }
 
@@ -54,7 +59,8 @@ class CadastroActivity : AppCompatActivity() {
                 val user = User(cadastro.username, cadastro.email, cadastro.password)
                 registerUser(user)
             } else {
-                Toast.makeText(this, "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -65,15 +71,11 @@ class CadastroActivity : AppCompatActivity() {
     }
 
     private fun registerUser(cadastro: User) {
-
-        val sharedPreferences = getSharedPreferences(preferenciaCadastro, Context.MODE_PRIVATE)
-        with(sharedPreferences.edit()) {
-            putString("gmail", cadastro.email)
-            putString("senha", cadastro.password)
-            putString("nome", cadastro.username)
-            apply()
-        }
-        Log.d("RegisterActivity", "Usuário registrado: $cadastro")
+        preferencesManager.email = cadastro.email
+        preferencesManager.password = cadastro.password
+        preferencesManager.username = cadastro.username
         botaoRegistrar()
+
     }
 }
+
