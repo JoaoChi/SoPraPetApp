@@ -1,4 +1,4 @@
-package com.angellira.petvital1.preferences
+package com.angellira.petvital1.interfaces
 
 interface Autenticator {
 
