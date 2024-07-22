@@ -13,42 +13,31 @@
         android:layout_height="wrap_content"
         android:width="1000dp"
         android:height="60dp"
-        android:background="#000000"
+        android:background="#60B340"
         android:text="Petvital"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="34dp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-1dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageprofile"
-        android:layout_width="76dp"
-        android:layout_height="61dp"
-        android:maxWidth="20dp"
-        android:maxHeight="20dp"
-        app:srcCompat="@drawable/_736502"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-2dp"
-        app:layout_constraintStart_toStartOf="@id/textpetvital"
-        />
+        tools:layout_editor_absoluteY="-1dp" />
 
     <Button
         android:id="@+id/buttonVoltacadastrocliente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="304dp"
-        android:backgroundTint="#FFFFFF"
+        android:backgroundTint="#3e2b05"
         android:hapticFeedbackEnabled="false"
-        android:text="Confirma"
 
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/imageprofile"
-        app:layout_constraintEnd_toEndOf="@id/textpetvital"
+        android:text="Confirma"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.888"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.641" />
 
     <CheckBox
         android:id="@+id/checkboxBanho"
@@ -126,7 +115,7 @@
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="437dp"
+        android:layout_width="470dp"
         android:layout_height="213dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -134,5 +123,18 @@
         app:layout_constraintTop_toBottomOf="@+id/textpetvitaleditprofile"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/shutterstock_1569883195_scaled_2560x1280" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="170dp"
+        android:layout_height="200dp"
+        android:rotation="180"
+        app:layout_constraintBottom_toTopOf="@+id/imageView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textpetvitaleditprofile"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/green_leaf_png_hd_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

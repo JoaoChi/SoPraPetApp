@@ -73,11 +73,24 @@
         android:id="@+id/BotaoRegistrar"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="#33691E"
         android:text="Registrar"
-        android:backgroundTint="#000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/textoregistroEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/duas_folhas_png_floral_flower_wall_mural_2_11562913513jbtydjggdq" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

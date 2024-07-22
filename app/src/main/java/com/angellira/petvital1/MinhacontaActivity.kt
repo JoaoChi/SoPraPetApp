@@ -10,11 +10,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.angellira.petvital1.databinding.ActivityMinhacontaBinding
 import com.angellira.petvital1.model.User
+import com.angellira.petvital1.preferences.PreferencesManager
+import com.angellira.petvital1.preferences.preferenciaCadastro
 
 class MinhacontaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMinhacontaBinding
-    val dados = User()
+    private val dados = User()
+
+    private lateinit var preferencesManager: PreferencesManager
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +35,7 @@ class MinhacontaActivity : AppCompatActivity() {
             insets
         }
 
+        preferencesManager = PreferencesManager(this)
         botaoVoltar()
         botaoPropaganda()
         botaoEditProfile()
@@ -39,23 +45,20 @@ class MinhacontaActivity : AppCompatActivity() {
 
     private fun printPreferences() {
 
-        val sharedPreferences = getSharedPreferences(preferenciaCadastro, Context.MODE_PRIVATE)
-        dados.username = sharedPreferences.getString("nome", dados.username).toString()
+        dados.username = preferencesManager.username ?: dados.username
         val textNomeCadastro = binding.textnomecadastro
         textNomeCadastro.text = "Nome: ${dados.username}"
 
-        dados.email = sharedPreferences.getString("gmail", dados.email).toString()
+        dados.email = preferencesManager.email ?: dados.email
         val textEmailCadastro = binding.textemailcadastro
         textEmailCadastro.text = "Email: ${dados.email}"
     }
 
     private fun botaoDeslogarPreferences() {
-        val sharedPreferences = getSharedPreferences(preferenciaCadastro, MODE_PRIVATE)
+
         val buttonDeslogar = binding.buttonsair
         buttonDeslogar.setOnClickListener {
-            val editor: SharedPreferences.Editor = sharedPreferences.edit()
-
-            editor.putBoolean("cadastro", false).clear().apply()
+            preferencesManager.logout()
             val deslogarLogin = Intent(this, LoginActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }

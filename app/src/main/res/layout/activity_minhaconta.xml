@@ -13,14 +13,14 @@
         android:layout_height="wrap_content"
         android:width="1000dp"
         android:height="60dp"
-        android:background="#000000"
+        android:background="#33691E"
         android:text="Petvital"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="34dp"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-1dp"
-        />
+        tools:layout_editor_absoluteY="-1dp" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -28,11 +28,14 @@
         android:layout_height="61dp"
         android:maxWidth="20dp"
         android:maxHeight="20dp"
-        app:srcCompat="@drawable/_736502"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-2dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonsair"
+        app:layout_constraintEnd_toStartOf="@+id/buttonVoltapaginainicial"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/textpetvital"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/_736502"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textnomecadastro"
@@ -90,7 +93,7 @@
         android:id="@+id/buttoneditprofile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#000000"
+        android:backgroundTint="#3e2b05"
         android:text="Editar Preferências"
         app:layout_constraintBottom_toTopOf="@+id/botaopetshop"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,35 +106,51 @@
         android:id="@+id/buttonsair"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#000000"
+        android:backgroundTint="#33691E"
         android:text="Sair da conta"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textpetvital" />
 
-    <ImageButton
-        android:id="@+id/botaopetshop"
-        android:layout_width="231dp"
-        android:layout_height="208dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonsair"
-        app:layout_constraintVertical_bias="0.846"
-        app:srcCompat="@drawable/resource_do" />
-
     <Button
         android:id="@+id/buttonVoltapaginainicial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#F6F2F2"
+        android:backgroundTint="#3e2b05"
         android:hapticFeedbackEnabled="false"
         android:text="Voltar"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/textpetvital"
         app:layout_constraintEnd_toEndOf="@id/textpetvital"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textpetvital"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
 
-        tools:layout_editor_absoluteY="5dp" />
+    <ImageView
+        android:id="@+id/botaopetshop"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonsair"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/_865746" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/buttonsair"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textpetvital"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/duas_folhas_png_floral_flower_wall_mural_2_11562913513jbtydjggdq" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
