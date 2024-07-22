@@ -64,10 +64,10 @@
         app:layout_constraintVertical_bias="0.212" />
 
     <TextView
-        android:id="@+id/texttelefone"
+        android:id="@+id/textPreferencias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Telefone:   Telefone Cliente"
+        android:text="Preferências:"
         android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,18 +76,23 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
         app:layout_constraintVertical_bias="0.309" />
 
-    <TextView
-        android:id="@+id/textPreferencias1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Preferências"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/textItensRecyclerview"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_margin="12dp"
+        tools:text="Item Recyclerview"
         android:textSize="16dp"
+        app:spanCount="2"
+        tools:itemCount="12"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.401" />
+        app:layout_constraintVertical_bias="0.407"
+        android:layout_marginStart="12dp"
+        />
 
     <Button
         android:id="@+id/buttoneditprofile"
@@ -100,7 +105,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonsair"
-        app:layout_constraintVertical_bias="0.321" />
+        app:layout_constraintVertical_bias="0.875" />
 
     <Button
         android:id="@+id/buttonsair"
@@ -110,8 +115,10 @@
         android:text="Sair da conta"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textpetvital" />
+        app:layout_constraintTop_toBottomOf="@+id/textpetvital"
+        app:layout_constraintVertical_bias="0.568" />
 
     <Button
         android:id="@+id/buttonVoltapaginainicial"
@@ -127,6 +134,7 @@
         app:layout_constraintStart_toStartOf="@+id/textpetvital"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
+        android:layout_margin="6dp"
         tools:ignore="MissingConstraints" />
 
     <ImageView

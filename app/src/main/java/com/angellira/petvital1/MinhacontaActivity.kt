@@ -12,6 +12,7 @@ import com.angellira.petvital1.databinding.ActivityMinhacontaBinding
 import com.angellira.petvital1.model.User
 import com.angellira.petvital1.preferences.PreferencesManager
 import com.angellira.petvital1.preferences.preferenciaCadastro
+import com.angellira.petvital1.recyclerview.adapter.PreferenciasListAdapter
 
 class MinhacontaActivity : AppCompatActivity() {
 
@@ -41,6 +42,14 @@ class MinhacontaActivity : AppCompatActivity() {
         botaoEditProfile()
         printPreferences()
         botaoDeslogarPreferences()
+
+        val adapter = PreferenciasListAdapter(
+            context = this,
+            preferencias = List(20){
+                "Banho ${+ 1}"
+            }
+        )
+        binding.textItensRecyclerview.adapter = adapter
     }
 
     private fun printPreferences() {
