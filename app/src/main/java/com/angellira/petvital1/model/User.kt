@@ -1,6 +1,6 @@
 package com.angellira.petvital1.model
 
-import com.angellira.petvital1.preferences.Autenticator
+import com.angellira.petvital1.interfaces.Autenticator
 
 data class User(
     var username: String = "",

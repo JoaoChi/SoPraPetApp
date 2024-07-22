@@ -43,11 +43,26 @@ class MinhacontaActivity : AppCompatActivity() {
         printPreferences()
         botaoDeslogarPreferences()
 
+        val preferences = listOf(
+            "Banho",
+            "Tosa Máquina",
+            "Tosa Tesoura",
+            "Tosa higiênica",
+            "Doença",
+            "Medicamentos",
+            "Tratamentos",
+            "Produtos",
+            "Ração",
+            "Brinquedos",
+            "Hidratação",
+            "Escovação",
+            "Tingimento",
+            "Corte de Unhas",
+            "Limpeza Ouvidos",
+
+        )
         val adapter = PreferenciasListAdapter(
-            context = this,
-            preferencias = List(20){
-                "Banho ${+ 1}"
-            }
+            preferencias = preferences
         )
         binding.textItensRecyclerview.adapter = adapter
     }

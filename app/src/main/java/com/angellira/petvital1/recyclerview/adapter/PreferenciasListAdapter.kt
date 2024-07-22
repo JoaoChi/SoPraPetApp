@@ -10,7 +10,6 @@ import com.angellira.petvital1.databinding.PreferencesUsuarioBinding
 import com.angellira.petvital1.preferences.PreferencesManager
 
 class PreferenciasListAdapter(
-    private val context: Context,
     private val preferencias: List<String>
 ) : RecyclerView.Adapter<PreferenciasListAdapter.ViewHolder>() {
 
@@ -31,7 +30,7 @@ class PreferenciasListAdapter(
     ): ViewHolder =
         ViewHolder(
             PreferencesUsuarioBinding.inflate(
-                LayoutInflater.from(context),
+                LayoutInflater.from(parent.context),
                 parent,
                 false
             )
