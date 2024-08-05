@@ -18,7 +18,6 @@ class MinhacontaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMinhacontaBinding
     private val dados = User()
-
     private lateinit var preferencesManager: PreferencesManager
 
 

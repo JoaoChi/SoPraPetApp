@@ -1,13 +1,10 @@
 package com.angellira.petvital1.recyclerview.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.angellira.petvital1.databinding.PreferencesUsuarioBinding
-import com.angellira.petvital1.preferences.PreferencesManager
 
 class PreferenciasListAdapter(
     private val preferencias: List<String>
