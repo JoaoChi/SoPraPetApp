@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -25,20 +27,10 @@ class MinhacontaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        Intent(this, MinhacontaActivity::class.java)
-        binding = ActivityMinhacontaBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
+        setupView()
+        setSupportActionBar(findViewById(R.id.barra_tarefas))
         preferencesManager = PreferencesManager(this)
-        botaoVoltar()
         botaoPropaganda()
-        botaoEditProfile()
         printPreferences()
         botaoDeslogarPreferences()
 
@@ -66,6 +58,18 @@ class MinhacontaActivity : AppCompatActivity() {
         binding.textItensRecyclerview.adapter = adapter
     }
 
+    private fun setupView() {
+        Intent(this, MinhacontaActivity::class.java)
+        binding = ActivityMinhacontaBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+
     private fun printPreferences() {
 
         dados.username = preferencesManager.username ?: dados.username
@@ -90,21 +94,30 @@ class MinhacontaActivity : AppCompatActivity() {
         }
     }
 
-    private fun botaoVoltar() {
-        binding.buttonVoltapaginainicial.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-    }
-
     private fun botaoPropaganda() {
         binding.botaopetshop.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
     }
 
-    private fun botaoEditProfile() {
-        binding.buttoneditprofile.setOnClickListener {
-            startActivity(Intent(this, EditarPerfilActivity::class.java))
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.profile, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.voltarPagina -> {
+                startActivity(Intent(this, MainActivity::class.java))
+                true
+            }
+            R.id.profile_edit ->{
+                startActivity(Intent(this, EditarPerfilActivity::class.java))
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
         }
     }
+
 }

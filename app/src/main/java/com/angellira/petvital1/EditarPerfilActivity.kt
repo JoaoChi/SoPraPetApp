@@ -2,6 +2,8 @@ package com.angellira.petvital1
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -24,13 +26,29 @@ class EditarPerfilActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
+        setSupportActionBar(findViewById(R.id.barra_tarefas))
         botaoVoltarCadastro()
     }
 
     private fun botaoVoltarCadastro() {
         binding.buttonVoltacadastrocliente.setOnClickListener {
             startActivity(Intent(this, MinhacontaActivity::class.java))
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.editprofile, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.voltarPagina -> {
+                startActivity(Intent(this, MinhacontaActivity::class.java))
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

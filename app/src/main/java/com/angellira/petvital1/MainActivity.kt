@@ -22,30 +22,34 @@ import com.angellira.petvital1.preferences.preferenciaCadastro
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var preferencesManager: PreferencesManager
 
     val cadastro = User()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setSupportActionBar(findViewById(R.id.barra_tarefas))
-
 
         setupView()
+        setSupportActionBar(findViewById(R.id.barra_tarefas))
         preferencesManager = PreferencesManager(this)
         escreverString()
-        botaoCadastro()
     }
 
     private fun escreverString() {
         cadastro.username = preferencesManager.username ?: cadastro.username
-        binding.textPet.text = "Bem vindo:\n ${cadastro.username}"
+        binding.textPet.text = "Bem vindo ${cadastro.username}!"
     }
 
-    private fun botaoCadastro(){
-        binding.imageAddcat.setOnClickListener{
-            startActivity(Intent(this, CadastrarPet::class.java))
+
+    private fun setupView() {
+        enableEdgeToEdge()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
     }
 
@@ -60,19 +64,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, MinhacontaActivity::class.java))
                 true
             }
+            R.id.action_favorite ->{
+                startActivity(Intent(this, CadastrarPet::class.java))
+                true
+            }
 
             else -> super.onOptionsItemSelected(item)
-        }
-    }
-    private fun setupView() {
-        enableEdgeToEdge()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-
-        setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
         }
     }
 }

@@ -14,7 +14,7 @@
         android:id="@+id/barra_tarefas"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#009688"
+        android:background="#56D1C5"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,19 +25,19 @@
 
     <TextView
         android:id="@+id/textPet"
-        android:layout_width="210dp"
-        android:layout_height="87dp"
+        android:layout_width="wrap_content"
+        android:layout_height="29dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
         android:rotationX="0"
         android:text=""
-        android:textColor="#3e2b05"
-        android:textSize="30dp"
+        android:textColor="#323232"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.027" />
+        app:layout_constraintVertical_bias="0.09" />
 
     <ImageView
         android:id="@+id/imageCat1"
@@ -100,18 +100,6 @@
         app:layout_constraintTop_toBottomOf="@id/imageCat1"
         tools:layout_editor_absoluteX="66dp"
         tools:layout_editor_absoluteY="369dp" />
-
-    <ImageButton
-        android:id="@+id/imageAddcat"
-        android:layout_width="261dp"
-        android:layout_height="307dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.467"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageCat1"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/add_pet__2_" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
