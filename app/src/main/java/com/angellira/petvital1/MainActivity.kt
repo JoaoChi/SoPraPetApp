@@ -3,6 +3,8 @@ package com.angellira.petvital1
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -11,6 +13,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.databinding.ActivityMainBinding
 import com.angellira.petvital1.model.User
 import com.angellira.petvital1.preferences.PreferencesManager
@@ -26,13 +29,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setSupportActionBar(findViewById(R.id.barra_tarefas))
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
+        setupView()
         preferencesManager = PreferencesManager(this)
         escreverString()
-        botaoConta()
         botaoCadastro()
     }
 
@@ -41,15 +43,36 @@ class MainActivity : AppCompatActivity() {
         binding.textPet.text = "Bem vindo:\n ${cadastro.username}"
     }
 
-    private fun botaoConta() {
-        binding.botaoConta.setOnClickListener {
-            startActivity(Intent(this, MinhacontaActivity::class.java))
-        }
-    }
-
     private fun botaoCadastro(){
         binding.imageAddcat.setOnClickListener{
             startActivity(Intent(this, CadastrarPet::class.java))
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.itens, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.profile_action -> {
+                startActivity(Intent(this, MinhacontaActivity::class.java))
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+    private fun setupView() {
+        enableEdgeToEdge()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
     }
 }

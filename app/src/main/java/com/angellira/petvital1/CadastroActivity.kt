@@ -26,9 +26,7 @@ class CadastroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityCadastroBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+        setupView()
         preferencesManager = PreferencesManager(this)
         funcPegarDadosRegistro()
     }
@@ -75,6 +73,18 @@ class CadastroActivity : AppCompatActivity() {
         preferencesManager.password = cadastro.password
         preferencesManager.username = cadastro.username
         botaoRegistrar()
+    }
+
+    private fun setupView() {
+        enableEdgeToEdge()
+        binding = ActivityCadastroBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
     }
 }
 

@@ -9,11 +9,24 @@
     android:backgroundTint="#FFFFFF"
     tools:context=".MainActivity">
 
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/barra_tarefas"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#009688"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
     <TextView
         android:id="@+id/textPet"
         android:layout_width="210dp"
         android:layout_height="87dp"
-        android:layout_marginStart="16dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
         android:rotationX="0"
@@ -21,31 +34,10 @@
         android:textColor="#3e2b05"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/botaoConta"
-        app:layout_constraintHorizontal_bias="0.101"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.041" />
-
-    <Button
-        android:id="@+id/botaoConta"
-        android:layout_width="93dp"
-        android:layout_height="39dp"
-        android:backgroundTint="#3e2b05"
-        android:ellipsize="middle"
-        android:text="Conta"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textColorHighlight="#EB8F8F"
-        android:textColorHint="#F08B8B"
-        android:textColorLink="#FB8585"
-        android:textSize="14dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.858"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.037" />
+        app:layout_constraintVertical_bias="0.027" />
 
     <ImageView
         android:id="@+id/imageCat1"
