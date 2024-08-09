@@ -9,19 +9,51 @@
     android:backgroundTint="#FFFFFF"
     tools:context=".MainActivity">
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/barra_tarefas"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#56D1C5"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/barra_tarefas"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#56D1C5"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        <ImageView
+            android:id="@+id/imageView_logo"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="150dp"
+            android:alpha="0.1"
+            android:contentDescription="logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/petvital__4__removebg_preview" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/textItensRecyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:layout_marginTop="16dp"
+            android:textSize="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
+            tools:ignore="MissingConstraints"
+            tools:itemCount="200"
+            tools:layout_editor_absoluteX="14dp"
+            tools:text="" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textPet"
@@ -39,67 +71,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.09" />
 
-    <ImageView
-        android:id="@+id/imageCat1"
-        android:layout_width="279dp"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.197"
-        app:srcCompat="@drawable/gato_cinza"
-        tools:srcCompat="@drawable/gato_cinza" />
 
-    <TextView
-        android:id="@+id/textPeso1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="4kg"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="@id/imageCat1"
-        app:layout_constraintTop_toBottomOf="@id/imageCat1"
-        tools:layout_editor_absoluteX="276dp"
-        tools:layout_editor_absoluteY="369dp" />
-
-    <TextView
-        android:id="@+id/textType1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Cinza"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="@id/imageCat1"
-        app:layout_constraintTop_toBottomOf="@id/imageCat1"
-        tools:layout_editor_absoluteX="278dp"
-        tools:layout_editor_absoluteY="323dp" />
-
-    <TextView
-        android:id="@+id/textIdadeGato1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="3 Anos"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="@id/imageCat1"
-        app:layout_constraintTop_toBottomOf="@id/imageCat1"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="322dp" />
-
-    <TextView
-        android:id="@+id/textNamecat1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:scrollbarSize="8dp"
-        android:text="Anderson"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="@id/imageCat1"
-        app:layout_constraintTop_toBottomOf="@id/imageCat1"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="369dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.angellira.petvital1.network
 
+import com.angellira.petvital1.model.Pet
 import com.angellira.petvital1.model.Usuario
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.Serializable
@@ -36,7 +37,11 @@ interface UsuariosApiService{
 
     @DELETE("users/{id}.json")
     suspend fun deleteUser(@Path("id") id: String)
+
+    @GET("sports.json")
+    suspend fun getPets() : Map<String, Pet>
 }
+
 
 object UsersApi{
     val retrofitService : UsuariosApiService by lazy{

@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 data class Pet(
     var id: String,
     var name: String,
-    var tipo: String,
-    var peso: Int,
-    var idade: Int,
+    var descricao: String,
+    var peso: String,
+    var idade: String,
     var imagem: String
 )
