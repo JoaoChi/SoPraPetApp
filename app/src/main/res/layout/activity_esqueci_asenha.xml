@@ -7,41 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".EsqueciASenha">
 
-    <TextView
-        android:id="@+id/textLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Redefinição de senha"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.263" />
-
     <EditText
-        android:id="@+id/editTextNumberPassword"
+        android:id="@+id/editTextNumberPassword2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="numberPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textSenha"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textLogin"
-        app:layout_constraintVertical_bias="0.457" />
-
-    <TextView
-        android:id="@+id/textemail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nova Senha"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNumberPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/textemail"
+        app:layout_constraintVertical_bias="0.367" />
 
     <TextView
         android:id="@+id/textSenha"
@@ -53,13 +30,13 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textemail"
-        app:layout_constraintVertical_bias="0.63" />
+        app:layout_constraintVertical_bias="0.803" />
 
     <Button
         android:id="@+id/botaoRedefinirEVoltar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#3e2b05"
+        android:backgroundTint="#FFC107"
         android:ellipsize="middle"
         android:text="Redefinir e voltar"
         android:textColorLink="#673AB7"
@@ -67,7 +44,32 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumberPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumberPassword"
+        app:layout_constraintVertical_bias="0.49" />
+
+    <TextView
+        android:id="@+id/textemail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nova Senha"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNumberPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.64" />
+
+    <EditText
+        android:id="@+id/editTextNumberPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.689" />
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -76,40 +78,19 @@
         android:text="Não Sou um Robo"
         app:layout_constraintBottom_toTopOf="@+id/botaoRedefinirEVoltar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumberPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumberPassword"
+        app:layout_constraintVertical_bias="0.487" />
 
     <ImageView
-        android:id="@+id/imageicon2"
-        android:layout_width="130dp"
-        android:layout_height="120dp"
-        app:layout_constraintBottom_toTopOf="@+id/textLogin"
+        android:id="@+id/imageView2"
+        android:layout_width="176dp"
+        android:layout_height="266dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ca4af20b57850bdc75c69d7da3a1fc25" />
-
-    <EditText
-        android:id="@+id/editTextNumberPassword2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="numberPassword"
-        app:layout_constraintBottom_toTopOf="@+id/textSenha"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textemail" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="250dp"
-        android:layout_height="300dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/green_leaf_png_hd_image" />
+        app:srcCompat="@drawable/petvital__3__removebg_preview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

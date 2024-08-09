@@ -7,32 +7,19 @@
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/textLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:textSize="34dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.183" />
-
     <EditText
         android:id="@+id/textEmailLogin"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="124dp"
         android:ems="10"
         android:inputType="textEmailAddress"
+        android:hint="Email"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textLogin"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.936" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -40,97 +27,63 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
+        android:hint="Senha"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textLogin"
-        app:layout_constraintVertical_bias="0.419" />
-
-    <TextView
-        android:id="@+id/textemail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:text="E-mail"
-        app:layout_constraintBottom_toTopOf="@+id/textEmailLogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textLogin"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textSenha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Senha"
-        app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEmailLogin" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/botaoLogin"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="148dp"
-        android:backgroundTint="#33691E"
+        android:backgroundTint="#56D1C5"
         android:ellipsize="middle"
         android:text="Login"
         app:iconSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+        app:layout_constraintVertical_bias="0.251" />
 
     <Button
         android:id="@+id/button2esquecisenha"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#3e2b05"
+        android:backgroundTint="#FFC107"
         android:text="Esqueci Minha Senha"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/botaoLogin"
-        app:layout_constraintVertical_bias="0.236" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="130dp"
-        android:layout_height="120dp"
-        app:layout_constraintBottom_toTopOf="@+id/textLogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ca4af20b57850bdc75c69d7da3a1fc25" />
+        app:layout_constraintVertical_bias="0.114" />
 
     <Button
         android:id="@+id/BotaoRegistrar"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#33691E"
+        android:backgroundTint="#56D1C5"
         android:text="Criar Conta"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2esquecisenha" />
+        app:layout_constraintTop_toBottomOf="@+id/button2esquecisenha"
+        app:layout_constraintVertical_bias="0.217" />
 
     <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="500dp"
-        android:layout_height="320dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/imageView7"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/_1538598_8887804" />
+        app:srcCompat="@drawable/petvital__1__removebg_preview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

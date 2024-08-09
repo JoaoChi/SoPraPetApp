@@ -16,4 +16,11 @@
         app:showAsAction="ifRoom"
         />
 
+    <item
+        android:id="@+id/logo"
+        android:icon="@drawable/petvital__4__removebg_preview"
+        android:title="profile"
+        app:showAsAction="ifRoom"
+        />
+
 </menu>
