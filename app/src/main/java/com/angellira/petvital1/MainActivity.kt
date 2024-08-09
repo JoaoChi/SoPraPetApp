@@ -1,17 +1,10 @@
 package com.angellira.petvital1
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -19,12 +12,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.databinding.ActivityMainBinding
 import com.angellira.petvital1.model.User
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
-import com.angellira.petvital1.preferences.preferenciaCadastro
 import com.angellira.petvital1.recyclerview.adapter.ListaFotos
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -46,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         preferencesManager = PreferencesManager(this)
         mandandoImagens()
-        escreverString()
     }
 
     private fun mandandoImagens() {
@@ -59,23 +49,18 @@ class MainActivity : AppCompatActivity() {
                     LinearLayoutManager(this@MainActivity)
                 val adapter = ListaFotos(
                     listaPet,
-                    onItemClickListener = { descricao, imagem, nome, idade, peso ->
+                    onItemClickListener = { pet ->
                         val intent = Intent(this@MainActivity, PetProfileActivity::class.java)
-                        intent.putExtra("descricao", descricao)
-                        intent.putExtra("foto_pet", imagem)
-                        intent.putExtra("nome_pet", nome)
-                        intent.putExtra("idade", idade)
-                        intent.putExtra("peso", peso)
+                        intent.putExtra("descricao", pet.descricao)
+                        intent.putExtra("foto_pet", pet.imagem)
+                        intent.putExtra("nome_pet", pet.name)
+                        intent.putExtra("idade", pet.idade)
+                        intent.putExtra("peso", pet.peso)
                         startActivity(intent)
                     }
                 )
             recyclerView.adapter = adapter
         }
-    }
-
-    private fun escreverString() {
-        cadastro.username = preferencesManager.username ?: cadastro.username
-        binding.textPet.text = "Bem vindo ${cadastro.username}!"
     }
 
 
@@ -103,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_favorite ->{
-                startActivity(Intent(this, CadastrarPet::class.java))
+                startActivity(Intent(this, CadastrarPetActivity::class.java))
                 true
             }
 

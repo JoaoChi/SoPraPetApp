@@ -21,7 +21,7 @@
             android:name=".ui.theme.SplashActivity"
             android:exported="false" />
         <activity
-            android:name=".CadastrarPet"
+            android:name=".CadastrarPetActivity"
             android:exported="false" />
         <activity
             android:name=".CadastroActivity"
@@ -30,7 +30,7 @@
             android:name=".EditarPerfilActivity"
             android:exported="false" />
         <activity
-            android:name=".EsqueciASenha"
+            android:name=".EsqueciASenhaActivity"
             android:exported="false" />
         <activity
             android:name=".MinhacontaActivity"

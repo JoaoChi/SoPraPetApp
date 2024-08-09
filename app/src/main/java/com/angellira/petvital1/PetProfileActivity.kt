@@ -1,6 +1,9 @@
 package com.angellira.petvital1
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -19,6 +22,7 @@ class PetProfileActivity : AppCompatActivity() {
 
 
         setupView()
+        setSupportActionBar(findViewById(R.id.barra_tarefas))
         carregandoPet()
         }
 
@@ -47,5 +51,21 @@ class PetProfileActivity : AppCompatActivity() {
         binding.textPeso.text = "Peso: $pegandoPeso"
         binding.textIdade.text = "Idade: $pegandoIdade"
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.editprofile, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.voltarPagina -> {
+                startActivity(Intent(this, MainActivity::class.java))
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

@@ -7,9 +7,9 @@ import coil.load
 import com.angellira.petvital1.databinding.ActivityRecyclerBinding
 import com.angellira.petvital1.model.Pet
 
-class ListaFotos(
+    class ListaFotos(
     private val posts: List<Pet>,
-    private val onItemClickListener: (String, String, String, String, String) -> Unit
+    private val onItemClickListener: (Pet) -> Unit
 ) : RecyclerView.Adapter<ListaFotos.ViewHolder>() {
 
     inner class ViewHolder(
@@ -22,7 +22,7 @@ class ListaFotos(
         init {
             preferencesUsuarioBinding.root.setOnClickListener {
                 if (::cadaPet.isInitialized) {
-                    onItemClickListener(cadaPet.descricao, cadaPet.imagem, cadaPet.name, cadaPet.idade, cadaPet.peso)
+                    onItemClickListener(cadaPet)
                 }
             }
         }

@@ -6,7 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.angellira.petvital1.databinding.ActivityEsqueciAsenhaBinding
 
-class EsqueciASenha : AppCompatActivity() {
+class EsqueciASenhaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEsqueciAsenhaBinding
 

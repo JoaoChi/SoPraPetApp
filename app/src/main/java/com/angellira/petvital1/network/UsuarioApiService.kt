@@ -15,7 +15,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-private const val BASE_URL = ""
+private const val BASE_URL = "https://pets-f26d1-default-rtdb.firebaseio.com/"
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
@@ -38,8 +38,11 @@ interface UsuariosApiService{
     @DELETE("users/{id}.json")
     suspend fun deleteUser(@Path("id") id: String)
 
-    @GET("sports.json")
+    @GET("pets.json")
     suspend fun getPets() : Map<String, Pet>
+
+    @POST("pets.json")
+    suspend fun savePets(@Body pet: Pet)
 }
 
 

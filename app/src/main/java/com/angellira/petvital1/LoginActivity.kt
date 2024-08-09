@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         preferencesManager = PreferencesManager(this)
-        sharedPreferences(intent)
+        verificaLogin()
         recebendoDados()
         funcaoVerificacaoLogin(intent)
         botaoRegistro()
@@ -58,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.editTextPassword.text.toString()
             if (cadastrado.authenticate(email = email, password = password)) {
                 preferencesManager.isAuthenticated = true
-                startActivity(intent)
+                sharedPreferences(intent)
             } else {
                 Toast.makeText(this, "Erro no login", Toast.LENGTH_SHORT).show()
             }
@@ -67,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun botaoEsqueciaSenha() {
         binding.button2esquecisenha.setOnClickListener {
-            startActivity(Intent(this, EsqueciASenha::class.java))
+            startActivity(Intent(this, EsqueciASenhaActivity::class.java))
         }
     }
 
@@ -77,12 +77,18 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun sharedPreferences(mainActivity: Intent){
+    private fun verificaLogin(){
         val estaLogado = preferencesManager.estaLogado
-
-        if (estaLogado) {
-            startActivity(mainActivity)
+        if(estaLogado){
+        startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }
+
+    private fun sharedPreferences(mainActivity: Intent) {
+        preferencesManager.estaLogado = true
+        startActivity(mainActivity)
+        finish()
+    }
 }
+

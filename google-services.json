@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1088505704842",
+    "project_id": "pets-f26d1",
+    "storage_bucket": "pets-f26d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088505704842:android:99157bf25867b9b72fd873",
+        "android_client_info": {
+          "package_name": "com.angellira.petvital1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEKjPe3_umsjmqVl_PqPYO88XoeZ-5zM0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
