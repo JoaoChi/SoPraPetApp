@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.angellira.petvital1.databinding.ActivityMainBinding
+import com.angellira.petvital1.model.Petshops
 import com.angellira.petvital1.model.User
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var preferencesManager: PreferencesManager
     private val pets = UsersApi.retrofitService
+    private val petshop = UsersApi.retrofitService
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,10 +43,23 @@ class MainActivity : AppCompatActivity() {
         setupView()
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         preferencesManager = PreferencesManager(this)
-        mandandoImagens(preferencia)
+        mandandoImagens()
+        cadastrarPetshop()
     }
 
-    private fun mandandoImagens(preferencia: SharedPreferences) {
+    private fun cadastrarPetshop() {
+            val petshops = Petshops(
+                "1234", "Petshop Mark",
+                "https://firebasestorage.googleapis.com/v0/b/pets-f26d1.appspot.com/o/bg1.png?alt=media&token=06dec40f-ad9b-4826-9930-9fa45141713f",
+                "Rua blabla", "Petshop banho", "Banho"
+            )
+        lifecycleScope.launch {
+            petshop.savePetshop(petshops)
+        }
+    }
+
+
+    private fun mandandoImagens() {
         lifecycleScope.launch {
                 delay(1.seconds)
                 val listaPet = pets.getPets().values.toList()
@@ -55,7 +70,6 @@ class MainActivity : AppCompatActivity() {
                 val adapter = ListaFotos(
                     listaPet,
                     onItemClickListener = { pet ->
-                        criarId(preferencia)
                         val intent = Intent(this@MainActivity, PetProfileActivity::class.java)
                         intent.putExtra("descricao", pet.descricao)
                         intent.putExtra("foto_pet", pet.imagem)
@@ -67,19 +81,6 @@ class MainActivity : AppCompatActivity() {
                 )
             recyclerView.adapter = adapter
         }
-    }
-
-    private fun criarId(preferencia: SharedPreferences) {
-        val petId = gerarIdPet()
-        preferencesManager.petId = petId
-        preferencia.edit().putString("Idpet", petId).apply()
-    }
-
-    private fun gerarIdPet(length: Int = 8): String {
-        val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-        return (1..length)
-            .map { chars.random() }
-            .joinToString("")
     }
 
     private fun setupView() {
@@ -106,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_favorite ->{
-                startActivity(Intent(this, CadastrarPetActivity::class.java))
+                startActivity(Intent(this, PetshopsActivity::class.java))
                 true
             }
 

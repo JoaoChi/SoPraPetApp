@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 data class Petshops(
     var id: String,
     var name: String,
+    var imagem: String,
     var localizacao: String,
     var descricao: String,
     var servicos: String

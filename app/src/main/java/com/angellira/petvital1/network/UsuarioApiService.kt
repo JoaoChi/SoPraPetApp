@@ -1,6 +1,7 @@
 package com.angellira.petvital1.network
 
 import com.angellira.petvital1.model.Pet
+import com.angellira.petvital1.model.Petshops
 import com.angellira.petvital1.model.Usuario
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.Serializable
@@ -44,8 +45,17 @@ interface UsuariosApiService{
     @POST("pets.json")
     suspend fun savePets(@Body pet: Pet)
 
+    @POST("pets/{id}.json")
+    suspend fun savePetId(@Body pet: Pet, @Path("id")id: String)
+
     @DELETE("pets/{id}.json")
     suspend fun deletePet(@Path("id")id: String)
+
+    @POST("Petshops.json")
+    suspend fun savePetshop(@Body petshops: Petshops)
+
+    @GET("Petshops.json")
+    suspend fun getPetshop() : Map<String, Pet>
 }
 
 

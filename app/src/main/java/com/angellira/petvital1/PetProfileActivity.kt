@@ -69,11 +69,11 @@ class PetProfileActivity : AppCompatActivity() {
             .setTitle("Excluir Pet!")
             .setPositiveButton("Sim") { dialog, wich ->
                 try {
-                    deletePet()
-                    startActivity(Intent(this, MainActivity::class.java))
-                    Toast.makeText(this, "Seu pet foi excluido!", Toast.LENGTH_SHORT).show()
-                    preferencesManager.logout()
-                    finishAffinity()
+                        deletePet()
+                        startActivity(Intent(this, MainActivity::class.java))
+                        Toast.makeText(this, "Seu pet foi excluido!", Toast.LENGTH_SHORT).show()
+                        preferencesManager.logout()
+                        finishAffinity()
                 } catch (e: Exception) {
                     Toast.makeText(this, "Erro", Toast.LENGTH_SHORT).show()
                 }
