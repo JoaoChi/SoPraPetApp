@@ -49,7 +49,7 @@ class CadastrarPetActivity : AppCompatActivity() {
             val peso = binding.editPeso.text.toString()
             val idade = binding.editIdade.text.toString()
             val imagem = binding.editImagem.text.toString()
-            val id = ""
+            val id = "2"
             val pet = Pet(id, nome, description, peso, idade, imagem)
 
             if (nome.isNotEmpty() &&
@@ -59,7 +59,7 @@ class CadastrarPetActivity : AppCompatActivity() {
                 imagem.isNotEmpty()
             ) {
                 lifecycleScope.launch {
-                    pets.savePetId(pet, id)
+                    pets.savePets(pet)
                     startActivity(Intent(this@CadastrarPetActivity, MainActivity::class.java))
                 }
             } else {

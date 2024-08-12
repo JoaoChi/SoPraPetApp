@@ -23,6 +23,10 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
 
+val json = Json {
+    ignoreUnknownKeys = true
+}
+
 interface UsuariosApiService{
     @GET("Usuario.json")
     suspend fun getUsers() :Map<String, Usuario>

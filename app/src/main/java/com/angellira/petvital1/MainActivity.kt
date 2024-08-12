@@ -36,26 +36,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val preferencia = getSharedPreferences(
-            "USER_PREFERENCES", Context.MODE_PRIVATE
-        )
-
         setupView()
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         preferencesManager = PreferencesManager(this)
         mandandoImagens()
-        cadastrarPetshop()
-    }
-
-    private fun cadastrarPetshop() {
-            val petshops = Petshops(
-                "1234", "Petshop Mark",
-                "https://firebasestorage.googleapis.com/v0/b/pets-f26d1.appspot.com/o/bg1.png?alt=media&token=06dec40f-ad9b-4826-9930-9fa45141713f",
-                "Rua blabla", "Petshop banho", "Banho"
-            )
-        lifecycleScope.launch {
-            petshop.savePetshop(petshops)
-        }
     }
 
 
