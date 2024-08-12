@@ -43,7 +43,6 @@ class CadastrarPetActivity : AppCompatActivity() {
             val idade = binding.editIdade.text.toString()
             val imagem = binding.editImagem.text.toString()
             val id = ""
-            val context = this
             val pet = Pet(id, nome, description, peso, idade, imagem)
 
             if (nome.isNotEmpty() &&

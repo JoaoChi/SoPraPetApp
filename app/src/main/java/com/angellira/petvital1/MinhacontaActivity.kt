@@ -31,31 +31,7 @@ class MinhacontaActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         preferencesManager = PreferencesManager(this)
         botaoPropaganda()
-        printPreferences()
         botaoDeslogarPreferences()
-
-        val preferences = listOf(
-            "Banho",
-            "Tosa Máquina",
-            "Tosa Tesoura",
-            "Tosa higiênica",
-            "Doença",
-            "Medicamentos",
-            "Tratamentos",
-            "Produtos",
-            "Ração",
-            "Brinquedos",
-            "Hidratação",
-            "Escovação",
-            "Tingimento",
-            "Corte de Unhas",
-            "Limpeza Ouvidos",
-
-        )
-        val adapter = PreferenciasListAdapter(
-            preferencias = preferences
-        )
-        binding.textItensRecyclerview.adapter = adapter
     }
 
     private fun setupView() {
@@ -70,17 +46,6 @@ class MinhacontaActivity : AppCompatActivity() {
         }
     }
 
-    private fun printPreferences() {
-
-        dados.username = preferencesManager.username ?: dados.username
-        val textNomeCadastro = binding.textnomecadastro
-        textNomeCadastro.text = "Nome: ${dados.username}"
-
-        dados.email = preferencesManager.email ?: dados.email
-        val textEmailCadastro = binding.textemailcadastro
-        textEmailCadastro.text = "Email: ${dados.email}"
-    }
-
     private fun botaoDeslogarPreferences() {
 
         val buttonDeslogar = binding.buttonsair
@@ -90,7 +55,7 @@ class MinhacontaActivity : AppCompatActivity() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
             startActivity(deslogarLogin)
-            finish()
+            finishAffinity()
         }
     }
 

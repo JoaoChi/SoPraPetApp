@@ -15,6 +15,9 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".PetshopsActivity"
+            android:exported="false" />
+        <activity
             android:name=".PetProfileActivity"
             android:exported="false" />
         <activity

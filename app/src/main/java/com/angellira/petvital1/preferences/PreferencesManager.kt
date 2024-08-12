@@ -9,11 +9,15 @@ class PreferencesManager (context: Context){
         context.getSharedPreferences(preferenciaCadastro, Context.MODE_PRIVATE)
 
     companion object {
+        private const val ID_USUARIO = "Id"
         private const val KEY_GMAIL = "gmail"
         private const val KEY_PASSWORD = "senha"
         private const val KEY_USERNAME = "nome"
         private const val KEY_AUTHENTICATED = "autenticado"
     }
+    var userId: String?
+        get() = sharedPreferences.getString(ID_USUARIO, null)
+        set(value) = sharedPreferences.edit().putString(ID_USUARIO, value).apply()
 
     var email: String?
         get() = sharedPreferences.getString(KEY_GMAIL, null)

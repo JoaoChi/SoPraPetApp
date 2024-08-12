@@ -1,28 +1,36 @@
 package com.angellira.petvital1
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.angellira.petvital1.databinding.ActivityLoginBinding
 import com.angellira.petvital1.model.User
+import com.angellira.petvital1.model.Usuario
+import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    val cadastrado = User()
-
+    private val users = UsersApi.retrofitService
     private lateinit var preferencesManager: PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val intent = Intent(this, MainActivity::class.java)
+        val preferencia = getSharedPreferences(
+            "USER_PREFERENCES", Context.MODE_PRIVATE
+        )
+
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -34,34 +42,43 @@ class LoginActivity : AppCompatActivity() {
 
         preferencesManager = PreferencesManager(this)
         verificaLogin()
-        recebendoDados()
-        funcaoVerificacaoLogin(intent)
         botaoRegistro()
+        botaoLogin(preferencia)
         botaoEsqueciaSenha()
     }
 
-    private fun recebendoDados() {
-        val recebernome = intent.getStringExtra("nome")
-        val recebergmail = intent.getStringExtra("gmail")
-        val recebersenha = intent.getStringExtra("senha")
+    private fun botaoLogin(preferencia: SharedPreferences) {
+        binding.botaoLogin.setOnClickListener {
+            val email = binding.textEmailLogin.text.toString()
+            val senha = binding.editTextPassword.text.toString()
+            val context = this
 
-        cadastrado.username = recebernome.toString()
-        cadastrado.email = recebergmail.toString()
-        cadastrado.password = recebersenha.toString()
+            lifecycleScope.launch {
+                val validacao = verificarLogin(email, senha, preferencia)
+                if (validacao) {
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    finishAffinity()
+                    preferencesManager.estaLogado = true
+                } else {
+                    preferencesManager.estaLogado = false
+                    Toast.makeText(context, "Email ou senha incorretos!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
-    private fun funcaoVerificacaoLogin(intent: Intent) {
-        val botaoLogin = binding.botaoLogin
-        botaoLogin.setOnClickListener {
-
-            val email = binding.textEmailLogin.text.toString()
-            val password = binding.editTextPassword.text.toString()
-            if (cadastrado.authenticate(email = email, password = password)) {
-                preferencesManager.isAuthenticated = true
-                sharedPreferences(intent)
-            } else {
-                Toast.makeText(this, "Erro no login", Toast.LENGTH_SHORT).show()
-            }
+    private suspend fun verificarLogin(
+        email: String,
+        senha: String,
+        preferencia: SharedPreferences
+    ): Boolean {
+        return if (email.isNotEmpty() && senha.isNotEmpty()) {
+            val usuarios = users.getUsers()
+            preferencesManager.userId = usuarios.entries.find { it.value.email == email }?.key
+            preferencia.edit().putString("Id", preferencesManager.userId).apply()
+            usuarios.values.any { it.email == email && it.password == senha }
+        } else {
+            false
         }
     }
 
@@ -77,18 +94,12 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun verificaLogin(){
+    private fun verificaLogin() {
         val estaLogado = preferencesManager.estaLogado
-        if(estaLogado){
-        startActivity(Intent(this, MainActivity::class.java))
+        if (estaLogado) {
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
-    }
-
-    private fun sharedPreferences(mainActivity: Intent) {
-        preferencesManager.estaLogado = true
-        startActivity(mainActivity)
-        finish()
     }
 }
 

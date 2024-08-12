@@ -11,68 +11,55 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.databinding.ActivityMainBinding
 import com.angellira.petvital1.model.User
+import com.angellira.petvital1.model.Usuario
+import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
 import com.angellira.petvital1.preferences.preferenciaCadastro
+import kotlinx.coroutines.launch
 
 class CadastroActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCadastroBinding
-
     private lateinit var preferencesManager: PreferencesManager
+    private val users = UsersApi.retrofitService
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setupView()
         preferencesManager = PreferencesManager(this)
-        funcPegarDadosRegistro()
+        cadastrarUsuario()
     }
 
-    private fun botaoRegistrar() {
+    private fun cadastrarUsuario() {
+        binding.BotaoRegistrar.setOnClickListener {
+            val email = binding.textoregistroEmail.text.toString()
+            val password = binding.passwordEditText.text.toString()
+            val confirmpassword = binding.password2.text.toString()
+            val name = binding.usernameEditText.text.toString()
+            val id = ""
+            val imagem = ""
 
-        val loginIntent = Intent(this, LoginActivity::class.java)
-
-        loginIntent.putExtra("nome", cadastro.username)
-        loginIntent.putExtra("gmail", cadastro.email)
-        loginIntent.putExtra("senha", cadastro.password)
-
-        startActivity(loginIntent)
-    }
-
-    val cadastro = User()
-
-    private fun funcPegarDadosRegistro() {
-
-        val botaoRegisto = binding.BotaoRegistrar
-        botaoRegisto.setOnClickListener {
-
-            cadastro.email = binding.textoregistroEmail.text.toString()
-            cadastro.password = binding.passwordEditText.text.toString()
-            cadastro.username = binding.usernameEditText.text.toString()
-
-            if (validacaoInput(cadastro.username, cadastro.email, cadastro.password)) {
-                val user = User(cadastro.username, cadastro.email, cadastro.password)
-                registerUser(user)
+            val usuario = Usuario(id, name, email, password, imagem)
+            if (password != confirmpassword) {
+                Toast.makeText(this, "As senhas devem ser iguais!", Toast.LENGTH_SHORT).show()
+            } else if (email.isEmpty() || password.isEmpty() || confirmpassword.isEmpty() || name.isEmpty()) {
+                Toast.makeText(this, "Insira todos os dados!", Toast.LENGTH_SHORT).show()
+            } else if (email.contains("@")) {
+                lifecycleScope.launch {
+                    users.saveUser(usuario)
+                    startActivity(Intent(this@CadastroActivity, LoginActivity::class.java))
+                }
             } else {
-                Toast.makeText(this, "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Adicione um email Válido!", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    private fun validacaoInput(username: String, email: String, password: String): Boolean {
-        return username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()
-
-    }
-
-    private fun registerUser(cadastro: User) {
-        preferencesManager.email = cadastro.email
-        preferencesManager.password = cadastro.password
-        preferencesManager.username = cadastro.username
-        botaoRegistrar()
     }
 
     private fun setupView() {
