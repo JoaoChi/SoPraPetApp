@@ -43,6 +43,9 @@ interface UsuariosApiService{
 
     @POST("pets.json")
     suspend fun savePets(@Body pet: Pet)
+
+    @DELETE("pets/{id}.json")
+    suspend fun deletePet(@Path("id")id: String)
 }
 
 

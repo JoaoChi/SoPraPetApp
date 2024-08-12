@@ -1,6 +1,8 @@
 package com.angellira.petvital1
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -28,18 +30,22 @@ class MainActivity : AppCompatActivity() {
     private val pets = UsersApi.retrofitService
     private lateinit var recyclerView: RecyclerView
 
-    val cadastro = User()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        val preferencia = getSharedPreferences(
+            "USER_PREFERENCES", Context.MODE_PRIVATE
+        )
+
         setupView()
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         preferencesManager = PreferencesManager(this)
-        mandandoImagens()
+        mandandoImagens(preferencia)
     }
 
-    private fun mandandoImagens() {
+    private fun mandandoImagens(preferencia: SharedPreferences) {
+        criarId(preferencia)
         lifecycleScope.launch {
                 delay(1.seconds)
                 val listaPet = pets.getPets().values.toList()
@@ -50,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                 val adapter = ListaFotos(
                     listaPet,
                     onItemClickListener = { pet ->
+
                         val intent = Intent(this@MainActivity, PetProfileActivity::class.java)
                         intent.putExtra("descricao", pet.descricao)
                         intent.putExtra("foto_pet", pet.imagem)
@@ -63,6 +70,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun criarId(preferencia: SharedPreferences) : Boolean{
+        val pet = pets.getPets()
+        preferencesManager.userId = pet.entries.find ?.key
+        preferencia.edit().putString("Idpet", preferencesManager.petId).apply()
+    }
 
     private fun setupView() {
         enableEdgeToEdge()

@@ -22,6 +22,7 @@ class EsqueciASenhaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        preferencesManager = PreferencesManager(this)
         binding = ActivityEsqueciAsenhaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -83,7 +84,7 @@ class EsqueciASenhaActivity : AppCompatActivity() {
                             startActivity(
                                 Intent(
                                     this@EsqueciASenhaActivity,
-                                    LoginActivity::class.java
+                                    EditarPerfilActivity::class.java
                                 )
                             )
                         } else {

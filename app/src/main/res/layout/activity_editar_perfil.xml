@@ -21,10 +21,10 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <Button
-        android:id="@+id/buttonVoltacadastrocliente"
+        android:id="@+id/buttonExcluirConta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FFC107"
+        android:backgroundTint="#FF0000"
         android:hapticFeedbackEnabled="false"
         android:text="Excluir Conta"
         android:textColor="@color/black"
@@ -39,7 +39,7 @@
         android:id="@+id/button2esquecisenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FFC107"
+        android:backgroundTint="#4CAF50"
         android:hapticFeedbackEnabled="false"
         android:text="Alterar senha"
         android:textColor="@color/black"

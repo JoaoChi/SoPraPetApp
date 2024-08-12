@@ -31,6 +31,14 @@ class LoginActivity : AppCompatActivity() {
             "USER_PREFERENCES", Context.MODE_PRIVATE
         )
 
+        setupView()
+        preferencesManager = PreferencesManager(this)
+        verificaLogin()
+        botaoRegistro()
+        botaoLogin(preferencia)
+    }
+
+    private fun setupView() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -39,11 +47,6 @@ class LoginActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        preferencesManager = PreferencesManager(this)
-        verificaLogin()
-        botaoRegistro()
-        botaoLogin(preferencia)
     }
 
     private fun botaoLogin(preferencia: SharedPreferences) {

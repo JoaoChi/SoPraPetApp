@@ -1,29 +1,38 @@
 package com.angellira.petvital1
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.angellira.petvital1.databinding.ActivityMainBinding
 import com.angellira.petvital1.databinding.ActivityPetProfileBinding
+import com.angellira.petvital1.network.UsersApi
+import com.angellira.petvital1.preferences.PreferencesManager
+import kotlinx.coroutines.launch
 
 class PetProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPetProfileBinding
+    private val pets = UsersApi.retrofitService
+    private lateinit var preferencesManager: PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
+        preferencesManager = PreferencesManager(this)
 
         setupView()
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         carregandoPet()
+        excluirPet()
         }
 
 
@@ -51,6 +60,35 @@ class PetProfileActivity : AppCompatActivity() {
         binding.textPeso.text = "Peso: $pegandoPeso"
         binding.textIdade.text = "Idade: $pegandoIdade"
 
+    }
+
+    private fun excluirPet(){
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder
+            .setMessage("Certeza que deseja apagar seu pet?")
+            .setTitle("Excluir Pet!")
+            .setPositiveButton("Sim") { dialog, wich ->
+                try {
+                    deletePet()
+                    startActivity(Intent(this, MainActivity::class.java))
+                    Toast.makeText(this, "Seu pet foi excluido!", Toast.LENGTH_SHORT).show()
+                    preferencesManager.logout()
+                    finishAffinity()
+                } catch (e: Exception) {
+                    Toast.makeText(this, "Erro", Toast.LENGTH_SHORT).show()
+                }
+            }
+        val dialog: AlertDialog = builder.create()
+        binding.excluirPet.setOnClickListener {
+            dialog.show()
+        }
+    }
+
+    private fun deletePet(){
+        lifecycleScope.launch {
+            val id = preferencesManager.petId
+            pets.deletePet(id.toString())
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

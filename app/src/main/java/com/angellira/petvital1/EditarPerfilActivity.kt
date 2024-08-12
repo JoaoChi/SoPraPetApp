@@ -1,23 +1,39 @@
 package com.angellira.petvital1
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.angellira.petvital1.databinding.ActivityEditarPerfilBinding
+import com.angellira.petvital1.network.UsersApi
+import com.angellira.petvital1.preferences.PreferencesManager
+import kotlinx.coroutines.launch
 
 class EditarPerfilActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditarPerfilBinding
+    private val users = UsersApi.retrofitService
+    private lateinit var preferencesManager: PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        preferencesManager = PreferencesManager(this)
 
+        setupView()
+        setSupportActionBar(findViewById(R.id.barra_tarefas))
+        botaoExcluirConta()
+        botaoEsqueciaSenha()
+    }
+
+    private fun setupView() {
         binding = ActivityEditarPerfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -26,14 +42,35 @@ class EditarPerfilActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        setSupportActionBar(findViewById(R.id.barra_tarefas))
-        botaoVoltarCadastro()
-        botaoEsqueciaSenha()
     }
 
-    private fun botaoVoltarCadastro() {
-        binding.buttonVoltacadastrocliente.setOnClickListener {
-            startActivity(Intent(this, MinhacontaActivity::class.java))
+    private fun botaoExcluirConta() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder
+            .setMessage("Certeza que deseja excluir sua conta? você não poderá recuperá-la depois!")
+            .setTitle("*Excluir Conta!*")
+            .setPositiveButton("Sim") { dialog, wich ->
+                try {
+                    deleteUser()
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    Toast.makeText(this, "Sua conta foi deletada!", Toast.LENGTH_SHORT).show()
+                    preferencesManager.logout()
+                    finishAffinity()
+                } catch (e: Exception) {
+                    Toast.makeText(this, "Erro", Toast.LENGTH_SHORT).show()
+                }
+            }
+        val dialog: AlertDialog = builder.create()
+        binding.buttonExcluirConta.setOnClickListener {
+            dialog.show()
+        }
+    }
+
+
+    private fun deleteUser() {
+        lifecycleScope.launch {
+            val id = preferencesManager.userId
+            users.deleteUser(id.toString())
         }
     }
 
