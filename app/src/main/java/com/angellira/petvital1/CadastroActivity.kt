@@ -1,25 +1,17 @@
 package com.angellira.petvital1
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
 import com.angellira.petvital1.databinding.ActivityCadastroBinding
-import com.angellira.petvital1.databinding.ActivityMainBinding
-import com.angellira.petvital1.model.User
 import com.angellira.petvital1.model.Usuario
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
-import com.angellira.petvital1.preferences.preferenciaCadastro
 import kotlinx.coroutines.launch
 
 class CadastroActivity : AppCompatActivity() {
@@ -27,7 +19,6 @@ class CadastroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCadastroBinding
     private lateinit var preferencesManager: PreferencesManager
     private val users = UsersApi.retrofitService
-    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

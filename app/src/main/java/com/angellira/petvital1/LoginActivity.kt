@@ -44,7 +44,6 @@ class LoginActivity : AppCompatActivity() {
         verificaLogin()
         botaoRegistro()
         botaoLogin(preferencia)
-        botaoEsqueciaSenha()
     }
 
     private fun botaoLogin(preferencia: SharedPreferences) {
@@ -82,11 +81,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun botaoEsqueciaSenha() {
-        binding.button2esquecisenha.setOnClickListener {
-            startActivity(Intent(this, EsqueciASenhaActivity::class.java))
-        }
-    }
 
     private fun botaoRegistro() {
         binding.BotaoRegistrar.setOnClickListener {

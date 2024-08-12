@@ -26,16 +26,16 @@ interface UsuariosApiService{
     @GET("Usuario.json")
     suspend fun getUsers() :Map<String, Usuario>
 
-    @GET("users/{id}.json")
+    @GET("Usuario/{id}.json")
     suspend fun getUser(@Path("id") id: String) : Usuario
 
     @POST("Usuario.json")
     suspend fun saveUser(@Body user: Usuario)
 
-    @PUT("users/{id}.json")
+    @PUT("Usuario/{id}.json")
     suspend fun editUser(@Path("id") id: String, @Body user: Usuario): Response<Unit>
 
-    @DELETE("users/{id}.json")
+    @DELETE("Usuario/{id}.json")
     suspend fun deleteUser(@Path("id") id: String)
 
     @GET("pets.json")

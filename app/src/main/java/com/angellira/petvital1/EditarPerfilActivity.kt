@@ -28,6 +28,7 @@ class EditarPerfilActivity : AppCompatActivity() {
         }
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         botaoVoltarCadastro()
+        botaoEsqueciaSenha()
     }
 
     private fun botaoVoltarCadastro() {
@@ -39,6 +40,12 @@ class EditarPerfilActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.editprofile, menu)
         return true
+    }
+
+    private fun botaoEsqueciaSenha() {
+        binding.button2esquecisenha.setOnClickListener {
+            startActivity(Intent(this, EsqueciASenhaActivity::class.java))
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
