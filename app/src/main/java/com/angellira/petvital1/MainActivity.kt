@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun mandandoImagens(preferencia: SharedPreferences) {
-        criarId(preferencia)
         lifecycleScope.launch {
                 delay(1.seconds)
                 val listaPet = pets.getPets().values.toList()
@@ -56,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                 val adapter = ListaFotos(
                     listaPet,
                     onItemClickListener = { pet ->
-
+                        criarId(preferencia)
                         val intent = Intent(this@MainActivity, PetProfileActivity::class.java)
                         intent.putExtra("descricao", pet.descricao)
                         intent.putExtra("foto_pet", pet.imagem)
@@ -70,10 +69,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun criarId(preferencia: SharedPreferences) : Boolean{
-        val pet = pets.getPets()
-        preferencesManager.userId = pet.entries.find ?.key
-        preferencia.edit().putString("Idpet", preferencesManager.petId).apply()
+    private fun criarId(preferencia: SharedPreferences) {
+        val petId = gerarIdPet()
+        preferencesManager.petId = petId
+        preferencia.edit().putString("Idpet", petId).apply()
+    }
+
+    private fun gerarIdPet(length: Int = 8): String {
+        val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+        return (1..length)
+            .map { chars.random() }
+            .joinToString("")
     }
 
     private fun setupView() {
