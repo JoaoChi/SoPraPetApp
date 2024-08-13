@@ -11,7 +11,8 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/design_sem_nome"/>
+        android:scaleType="centerCrop"
+        android:background="@drawable/fundo"/>
 
 
     <androidx.appcompat.widget.Toolbar

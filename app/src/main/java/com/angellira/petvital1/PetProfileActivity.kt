@@ -53,7 +53,7 @@ class PetProfileActivity : AppCompatActivity() {
             }
             .build()
 
-        binding.background.load(R.drawable.design_sem_nome, imageLoader)
+        binding.background.load(R.drawable.fundo, imageLoader)
     }
 
     private fun setupView() {

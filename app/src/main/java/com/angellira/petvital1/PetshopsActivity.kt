@@ -1,6 +1,7 @@
 package com.angellira.petvital1
 
 import android.content.Intent
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -12,6 +13,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.load
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import com.angellira.petvital1.databinding.ActivityPetshopsBinding
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
@@ -34,6 +39,21 @@ class PetshopsActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.barra_petshops))
         preferencesManager = PreferencesManager(this)
         mostrarPetshops()
+        botaoPropaganda()
+    }
+
+    private fun botaoPropaganda(){
+        val imageLoader = ImageLoader.Builder(this)
+            .components {
+                if (SDK_INT >= 28) {
+                    add(ImageDecoderDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
+            .build()
+
+        binding.bannerPromo.load(R.drawable.mereceomelhor , imageLoader)
     }
 
     private fun setupView() {
