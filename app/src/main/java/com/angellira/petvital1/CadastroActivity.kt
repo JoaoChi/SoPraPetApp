@@ -1,6 +1,7 @@
 package com.angellira.petvital1
 
 import android.content.Intent
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -8,6 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.load
 import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.model.Usuario
 import com.angellira.petvital1.network.UsersApi
@@ -26,6 +31,21 @@ class CadastroActivity : AppCompatActivity() {
         setupView()
         preferencesManager = PreferencesManager(this)
         cadastrarUsuario()
+        fundoAnimado()
+    }
+
+    private fun fundoAnimado() {
+        val imageLoader = ImageLoader.Builder(this)
+            .components {
+                if (SDK_INT >= 28) {
+                    add(ImageDecoderDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
+            .build()
+
+        binding.background.load(R.drawable.fundo, imageLoader)
     }
 
     private fun cadastrarUsuario() {

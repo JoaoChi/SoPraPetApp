@@ -2,6 +2,7 @@ package com.angellira.petvital1
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import coil.load
 import com.angellira.petvital1.databinding.ActivityMainBinding
 import com.angellira.petvital1.databinding.ActivityPetProfileBinding
@@ -23,6 +28,7 @@ class PetProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPetProfileBinding
     private val pets = UsersApi.retrofitService
     private lateinit var preferencesManager: PreferencesManager
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +37,24 @@ class PetProfileActivity : AppCompatActivity() {
 
         setupView()
         setSupportActionBar(findViewById(R.id.barra_tarefas))
+        fundoAnimado()
         carregandoPet()
         excluirPet()
         }
 
+    private fun fundoAnimado() {
+        val imageLoader = ImageLoader.Builder(this)
+            .components {
+                if (SDK_INT >= 28) {
+                    add(ImageDecoderDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
+            .build()
+
+        binding.background.load(R.drawable.design_sem_nome, imageLoader)
+    }
 
     private fun setupView() {
         binding = ActivityPetProfileBinding.inflate(layoutInflater)

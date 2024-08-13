@@ -1,8 +1,7 @@
 package com.angellira.petvital1
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -14,9 +13,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.load
 import com.angellira.petvital1.databinding.ActivityMainBinding
-import com.angellira.petvital1.model.Petshops
-import com.angellira.petvital1.model.User
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
 import com.angellira.petvital1.recyclerview.adapter.ListaFotos
@@ -39,6 +40,25 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         preferencesManager = PreferencesManager(this)
         mandandoImagens()
+        botaoPropaganda()
+    }
+
+    private fun botaoPropaganda(){
+        val imageLoader = ImageLoader.Builder(this)
+            .components {
+                if (SDK_INT >= 28) {
+                    add(ImageDecoderDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
+            .build()
+
+        binding.bannerPromo.load(R.drawable.ver_ofertas, imageLoader)
+
+        binding.bannerPromo.setOnClickListener {
+            startActivity(Intent(this, PetshopsActivity::class.java))
+        }
     }
 
     private fun mandandoImagens() {
@@ -89,6 +109,11 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_favorite ->{
+                startActivity(Intent(this, CadastrarPetActivity::class.java))
+                true
+            }
+
+            R.id.logo ->{
                 startActivity(Intent(this, PetshopsActivity::class.java))
                 true
             }

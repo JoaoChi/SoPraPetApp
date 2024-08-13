@@ -6,12 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/fundoamarelo"
+        android:scaleType="centerCrop"
+        />
 
     <EditText
         android:id="@+id/textEmailLogin"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textStyle="bold"
         android:inputType="textEmailAddress"
         android:hint="Email"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
@@ -27,6 +35,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Senha"
+        android:textStyle="bold"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,6 +51,7 @@
         android:layout_marginBottom="148dp"
         android:backgroundTint="#56D1C5"
         android:ellipsize="middle"
+        android:elevation="25dp"
         android:text="Login"
         app:iconSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,6 +67,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#56D1C5"
         android:text="Criar Conta"
+        android:elevation="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"

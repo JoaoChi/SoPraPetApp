@@ -7,12 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".CadastroActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/fundo"
+        android:id="@+id/background"
+        android:scaleType="centerCrop"
+        />
+
 
     <EditText
         android:id="@+id/usernameEditText"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:hint="Nome de usuário"
+        android:textStyle="bold"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="420dp"
         android:hint="Senha"
+        android:textStyle="bold"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/password2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="244dp"
         android:hint="Confirme sua senha"
+        android:textStyle="bold"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -52,6 +63,7 @@
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:hint="Email"
+        android:textStyle="bold"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/usernameEditText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,6 +78,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#FFC107"
         android:text="Registrar"
+        android:elevation="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
