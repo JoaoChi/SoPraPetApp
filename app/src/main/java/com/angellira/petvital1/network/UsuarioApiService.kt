@@ -59,7 +59,7 @@ interface UsuariosApiService{
     suspend fun savePetshop(@Body petshops: Petshops)
 
     @GET("Petshops.json")
-    suspend fun getPetshop() : Map<String, Pet>
+    suspend fun getPetshop() : Map<String, Petshops>
 }
 
 

@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var preferencesManager: PreferencesManager
     private val pets = UsersApi.retrofitService
-    private val petshop = UsersApi.retrofitService
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         preferencesManager = PreferencesManager(this)
         mandandoImagens()
     }
-
 
     private fun mandandoImagens() {
         lifecycleScope.launch {

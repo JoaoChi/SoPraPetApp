@@ -9,7 +9,7 @@
     tools:context=".PetshopsActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/barra_tarefas"
+        android:id="@+id/barra_petshops"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#FFC107"
@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barra_tarefas" />
+        app:layout_constraintTop_toBottomOf="@+id/barra_petshops" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFeed"

@@ -44,13 +44,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="14dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="92dp"
             android:textSize="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
             tools:ignore="MissingConstraints"
             tools:itemCount="200"
-            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteX="14dp"
             tools:text="" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
