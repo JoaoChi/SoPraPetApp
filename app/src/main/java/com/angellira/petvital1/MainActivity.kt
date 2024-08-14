@@ -21,9 +21,11 @@ import coil.decode.ImageDecoderDecoder
 import coil.load
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityMainBinding
+import com.angellira.petvital1.model.Pet
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
 import com.angellira.petvital1.recyclerview.adapter.ListaFotos
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
@@ -47,13 +49,20 @@ class MainActivity : AppCompatActivity() {
         mandandoImagens()
         botaoPropaganda()
 
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "Petvital.db"
-        ).build()
+
+//        lifecycleScope.launch(IO) {
+//            val db = Room.databaseBuilder(
+//                applicationContext,
+//                AppDatabase::class.java, "Petvital.db"
+//            ).build()
+//
+//            val petDao = db.petDao()
+//            petDao.getPet()
+//
+//        }
     }
 
-    private fun botaoPropaganda(){
+    private fun botaoPropaganda() {
         val imageLoader = ImageLoader.Builder(this)
             .components {
                 if (SDK_INT >= 28) {
@@ -73,24 +82,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun mandandoImagens() {
         lifecycleScope.launch {
-                delay(1.seconds)
-                val listaPet = pets.getPets().values.toList()
-                Log.d("ListResult", "ListResult: ${listaPet}")
-                recyclerView = binding.textItensRecyclerview
-                binding.textItensRecyclerview.layoutManager =
-                    LinearLayoutManager(this@MainActivity)
-                val adapter = ListaFotos(
-                    listaPet,
-                    onItemClickListener = { pet ->
-                        val intent = Intent(this@MainActivity, PetProfileActivity::class.java)
-                        intent.putExtra("descricao", pet.descricao)
-                        intent.putExtra("foto_pet", pet.imagem)
-                        intent.putExtra("nome_pet", pet.name)
-                        intent.putExtra("idade", pet.idade)
-                        intent.putExtra("peso", pet.peso)
-                        startActivity(intent)
-                    }
-                )
+            delay(1.seconds)
+            val listaPet = pets.getPets().values.toList()
+            Log.d("ListResult", "ListResult: ${listaPet}")
+            recyclerView = binding.textItensRecyclerview
+            binding.textItensRecyclerview.layoutManager =
+                LinearLayoutManager(this@MainActivity)
+            val adapter = ListaFotos(
+                listaPet,
+                onItemClickListener = { pet ->
+                    val intent = Intent(this@MainActivity, PetProfileActivity::class.java)
+                    intent.putExtra("descricao", pet.descricao)
+                    intent.putExtra("foto_pet", pet.imagem)
+                    intent.putExtra("nome_pet", pet.name)
+                    intent.putExtra("idade", pet.idade)
+                    intent.putExtra("peso", pet.peso)
+                    startActivity(intent)
+                }
+            )
             recyclerView.adapter = adapter
         }
     }
@@ -118,12 +127,13 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, MinhacontaActivity::class.java))
                 true
             }
-            R.id.action_favorite ->{
+
+            R.id.action_favorite -> {
                 startActivity(Intent(this, CadastrarPetActivity::class.java))
                 true
             }
 
-            R.id.logo ->{
+            R.id.logo -> {
                 startActivity(Intent(this, PetshopsActivity::class.java))
                 true
             }

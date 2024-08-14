@@ -34,11 +34,10 @@ class PetProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setupView()
         preferencesManager = PreferencesManager(this)
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundo)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
-
-        setupView()
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         fundoAnimado()
         carregandoPet()

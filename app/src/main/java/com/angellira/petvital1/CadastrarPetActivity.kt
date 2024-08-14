@@ -11,6 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
+import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityCadastrarPetBinding
 import com.angellira.petvital1.model.Pet
 import com.angellira.petvital1.network.UsersApi
@@ -21,16 +23,17 @@ import java.util.UUID
 class CadastrarPetActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCadastrarPetBinding
-    private val pets = UsersApi.retrofitService
-    private lateinit var preferencias: PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setupView()
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
+        cadastrarPet()
+    }
 
-
+    private fun setupView() {
         binding = ActivityCadastrarPetBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -39,20 +42,17 @@ class CadastrarPetActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        cadastrarPet()
     }
 
     private fun cadastrarPet() {
         binding.buttonSalvarPet.setOnClickListener {
-
-//            val randomId = UUID.randomUUID().toString()
 
             val nome = binding.editNomePet.text.toString()
             val description = binding.editRacaPet.text.toString()
             val peso = binding.editPeso.text.toString()
             val idade = binding.editIdade.text.toString()
             val imagem = binding.editImagem.text.toString()
-            val id = "2"
+            val id = 1
             val pet = Pet(id, nome, description, peso, idade, imagem)
 
             if (nome.isNotEmpty() &&
@@ -62,7 +62,12 @@ class CadastrarPetActivity : AppCompatActivity() {
                 imagem.isNotEmpty()
             ) {
                 lifecycleScope.launch {
-                    pets.savePets(pet)
+                    val db = Room.databaseBuilder(
+                        applicationContext,
+                        AppDatabase::class.java, "Petvital.db"
+                    ).build()
+                    val petDao = db.petDao()
+                    petDao.cadastrarPet(pet)
                     startActivity(Intent(this@CadastrarPetActivity, MainActivity::class.java))
                 }
             } else {

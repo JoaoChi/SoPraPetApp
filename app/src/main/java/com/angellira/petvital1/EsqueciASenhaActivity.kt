@@ -6,7 +6,10 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.databinding.ActivityEsqueciAsenhaBinding
 import com.angellira.petvital1.model.Usuario
 import com.angellira.petvital1.network.UsersApi
@@ -22,14 +25,10 @@ class EsqueciASenhaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setupView()
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundo)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
-
-
         preferencesManager = PreferencesManager(this)
-        binding = ActivityEsqueciAsenhaBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
         botaoRedefinir()
         editSenha()
     }
@@ -52,7 +51,7 @@ class EsqueciASenhaActivity : AppCompatActivity() {
                     val senhaAtual = usuarios.password
                     val nome = usuarios.name
                     val email = usuarios.email
-                    val idAntigo = usuarios.id
+                    val idAntigo = usuarios.uid
                     val imagem = usuarios.imagem
 
                     val novaSenha = binding.editTextNumberPassword2.text.toString()
@@ -113,6 +112,18 @@ class EsqueciASenhaActivity : AppCompatActivity() {
     private fun botaoRedefinir() {
         binding.botaoRedefinirEVoltar.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
+        }
+    }
+
+    private fun setupView() {
+        enableEdgeToEdge()
+        binding = ActivityEsqueciAsenhaBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
     }
 }

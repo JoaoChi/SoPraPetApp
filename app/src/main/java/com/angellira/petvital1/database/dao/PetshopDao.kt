@@ -4,20 +4,21 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.angellira.petvital1.model.Petshop
 import com.angellira.petvital1.model.Usuario
 
 @Dao
 interface PetshopDao{
     @Query("SELECT * FROM Petshop")
-    fun getAll(): List<Usuario>
+    fun getAllpetshop(): List<Petshop>
 
     @Insert
-    fun cadastrarPets(usuarios: List<Usuario>)
+    fun cadastrarPetshops(petshops: List<Petshop>)
 
     @Insert
-    fun cadastrarPet(usuarios: Usuario)
+    fun cadastrarPethops(petshops: Petshop)
 
-    @Delete
-    fun deletarPet()
+//    @Delete
+//    fun deletarPetshops()
 
 }

@@ -10,10 +10,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.load
+import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.model.Usuario
 import com.angellira.petvital1.network.UsersApi
@@ -28,11 +30,9 @@ class CadastroActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupView()
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundoazul)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundoazul)
-
-
-        setupView()
         preferencesManager = PreferencesManager(this)
         cadastrarUsuario()
         fundoAnimado()
@@ -58,7 +58,7 @@ class CadastroActivity : AppCompatActivity() {
             val password = binding.passwordEditText.text.toString()
             val confirmpassword = binding.password2.text.toString()
             val name = binding.usernameEditText.text.toString()
-            val id = ""
+            val id = 1
             val imagem = ""
 
             val usuario = Usuario(id, name, email, password, imagem)
@@ -68,7 +68,12 @@ class CadastroActivity : AppCompatActivity() {
                 Toast.makeText(this, "Insira todos os dados!", Toast.LENGTH_SHORT).show()
             } else if (email.contains("@")) {
                 lifecycleScope.launch {
-                    users.saveUser(usuario)
+                    val db = Room.databaseBuilder(
+                        applicationContext,
+                        AppDatabase::class.java, "Petvital.db"
+                    ).build()
+                    val usuarioDao = db.usuarioDao()
+                    usuarioDao.cadastrarUsuario(usuario)
                     startActivity(Intent(this@CadastroActivity, LoginActivity::class.java))
                 }
             } else {

@@ -26,11 +26,10 @@ class EditarPerfilActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setupView()
         preferencesManager = PreferencesManager(this)
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
-
-        setupView()
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         botaoExcluirConta()
         botaoEsqueciaSenha()

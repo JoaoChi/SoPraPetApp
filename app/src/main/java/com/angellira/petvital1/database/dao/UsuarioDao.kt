@@ -5,19 +5,20 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.angellira.petvital1.model.Usuario
+import retrofit2.http.Path
 
 @Dao
 interface UsuarioDao{
     @Query("SELECT * FROM Usuario")
-    fun getAll(): List<Usuario>
+    fun getAllUsuario(): List<Usuario>
 
     @Insert
-    fun cadastrarPets(usuarios: List<Usuario>)
+    fun cadastrarUsuarios(usuarios: List<Usuario>)
 
     @Insert
-    fun cadastrarPet(usuarios: Usuario)
+    fun cadastrarUsuario(usuarios: Usuario)
 
-    @Delete
-    fun deletarPet()
+//    @Delete
+//    fun deletarUsuario(@Path("id") id: Int)
 
 }

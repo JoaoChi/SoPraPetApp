@@ -9,16 +9,16 @@ import com.angellira.petvital1.model.Pet
 @Dao
 interface PetDao{
     @Query("SELECT * FROM Pet")
-    fun getAll(): List<Pet>
+    fun getPet(): List<Pet>
 
     @Insert
-    fun cadastrarPets(pets: List<Pet>)
+    fun cadastrarPets(pet: List<Pet>)
 
     @Insert
-    fun cadastrarPet(pets: Pet)
+    fun cadastrarPet(pet: Pet)
 
-    @Delete
-    fun deletarPet()
+//    @Delete
+//    fun deletarPet()
 
 }
 
