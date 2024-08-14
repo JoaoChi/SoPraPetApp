@@ -13,10 +13,13 @@ interface UsuarioDao{
     fun getAllUsuario(): List<Usuario>
 
     @Insert
-    fun cadastrarUsuarios(usuarios: List<Usuario>)
+    fun cadastrarUsuarios(usuario: List<Usuario>)
 
     @Insert
-    fun cadastrarUsuario(usuarios: Usuario)
+    fun cadastrarUsuario(usuario: Usuario)
+
+    @Query("SELECT * FROM usuario WHERE email = :email LIMIT 1")
+    suspend fun pegarEmailUsuario(email: String): Usuario?
 
 //    @Delete
 //    fun deletarUsuario(@Path("id") id: Int)

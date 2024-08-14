@@ -9,6 +9,7 @@ import kotlinx.serialization.Serializable
 data class Usuario(
     @PrimaryKey(autoGenerate = true)
     val uid: Int = 0,
+    var cpf: String,
     var name: String,
     var email: String,
     var password: String,

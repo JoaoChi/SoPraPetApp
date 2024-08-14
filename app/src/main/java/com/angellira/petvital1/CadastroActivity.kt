@@ -1,6 +1,6 @@
 package com.angellira.petvital1
 
-import android.content.Intent
+import android.content.Context
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.widget.Toast
@@ -20,7 +20,9 @@ import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.model.Usuario
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CadastroActivity : AppCompatActivity() {
 
@@ -34,7 +36,7 @@ class CadastroActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundoazul)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundoazul)
         preferencesManager = PreferencesManager(this)
-        cadastrarUsuario()
+        registroUsuario()
         fundoAnimado()
     }
 
@@ -52,34 +54,86 @@ class CadastroActivity : AppCompatActivity() {
         binding.background.load(R.drawable.fundo, imageLoader)
     }
 
-    private fun cadastrarUsuario() {
+    private fun registroUsuario(){
         binding.BotaoRegistrar.setOnClickListener {
+            val nome = binding.usernameEditText.text.toString()
             val email = binding.textoregistroEmail.text.toString()
-            val password = binding.passwordEditText.text.toString()
-            val confirmpassword = binding.password2.text.toString()
-            val name = binding.usernameEditText.text.toString()
-            val id = 1
+            val senha = binding.passwordEditText.text.toString()
+            val senha2 = binding.password2.text.toString()
+            val cpf = ""
             val imagem = ""
 
-            val usuario = Usuario(id, name, email, password, imagem)
-            if (password != confirmpassword) {
-                Toast.makeText(this, "As senhas devem ser iguais!", Toast.LENGTH_SHORT).show()
-            } else if (email.isEmpty() || password.isEmpty() || confirmpassword.isEmpty() || name.isEmpty()) {
-                Toast.makeText(this, "Insira todos os dados!", Toast.LENGTH_SHORT).show()
-            } else if (email.contains("@")) {
-                lifecycleScope.launch {
-                    val db = Room.databaseBuilder(
-                        applicationContext,
-                        AppDatabase::class.java, "Petvital.db"
-                    ).build()
-                    val usuarioDao = db.usuarioDao()
-                    usuarioDao.cadastrarUsuario(usuario)
-                    startActivity(Intent(this@CadastroActivity, LoginActivity::class.java))
-                }
+            if (senha != senha2) {
+                Toast.makeText(this, "As senhas devem coincidir! ", Toast.LENGTH_SHORT).show()
+            } else if (nome.isNullOrEmpty()
+                || email.isNullOrEmpty()
+                || senha.isNullOrEmpty()
+                || senha2.isNullOrEmpty()
+            ) {
+                Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Adicione um email Válido!", Toast.LENGTH_SHORT).show()
+                lifecycleScope.launch {
+                    try {
+                        cadastrarUsuario(
+                            this@CadastroActivity,
+                            nome,
+                            email,
+                            senha,
+                            cpf,
+                            imagem
+                        )
+                        Toast.makeText(
+                            this@CadastroActivity,
+                            "Usuario Cadastrado!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            this@CadastroActivity,
+                            "Falha no cadastro.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                }
             }
         }
+    }
+
+    private suspend fun cadastrarUsuario(
+        context: Context,
+        nome: String,
+        email: String,
+        senha: String,
+        imagem: String,
+        cpf: String
+    ) {
+        val db = Room.databaseBuilder(
+            context.applicationContext,
+            AppDatabase::class.java, "Petvital.db"
+        ).build()
+
+        val usuarioDao = db.usuarioDao()
+
+        val usuarioExiste = withContext(Dispatchers.IO){
+            usuarioDao.pegarEmailUsuario(email)
+        }
+
+        if(usuarioExiste != null){
+            Toast.makeText(this, "Email Já existe!", Toast.LENGTH_SHORT).show()
+        }
+
+        val novoUsuario = Usuario(
+            name = nome,
+            email = email,
+            password = senha,
+            imagem = imagem,
+            cpf = cpf
+        )
+        return withContext(Dispatchers.IO){
+            usuarioDao.cadastrarUsuario(novoUsuario)
+        }
+
     }
 
     private fun setupView() {

@@ -30,84 +30,84 @@ class EsqueciASenhaActivity : AppCompatActivity() {
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
         preferencesManager = PreferencesManager(this)
         botaoRedefinir()
-        editSenha()
+//        editSenha()
     }
 
-    private fun editSenha() {
-        binding.botaoRedefinirEVoltar.setOnClickListener {
-            lifecycleScope.launch {
-                val idUsuario = preferencesManager.userId
-                if (idUsuario.isNullOrEmpty()) {
-                    Toast.makeText(
-                        this@EsqueciASenhaActivity,
-                        "Id não encontrado.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@launch
-                }
-
-                try {
-                    val usuarios = users.getUser(idUsuario.toString())
-                    val senhaAtual = usuarios.password
-                    val nome = usuarios.name
-                    val email = usuarios.email
-                    val idAntigo = usuarios.uid
-                    val imagem = usuarios.imagem
-
-                    val novaSenha = binding.editTextNumberPassword2.text.toString()
-                    val novaSenha2 = binding.editTextNumberPassword2.text.toString()
-
-                    if (novaSenha != novaSenha2) {
-                        Toast.makeText(
-                            this@EsqueciASenhaActivity,
-                            "Senhas não coincidem!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else if (novaSenha == senhaAtual) {
-                        Toast.makeText(
-                            this@EsqueciASenhaActivity,
-                            "Senha atual deve ser diferente da antiga.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else if (novaSenha.isNullOrEmpty() || novaSenha2.isNullOrEmpty()) {
-                        Toast.makeText(
-                            this@EsqueciASenhaActivity,
-                            "Preencha os dois campos!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        val editarSenha = Usuario(idAntigo, nome, email, novaSenha, imagem)
-                        val editou = users.editUser(idUsuario, editarSenha)
-                        if (editou.isSuccessful) {
-                            Toast.makeText(
-                                this@EsqueciASenhaActivity,
-                                "Editado com sucesso!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            startActivity(
-                                Intent(
-                                    this@EsqueciASenhaActivity,
-                                    EditarPerfilActivity::class.java
-                                )
-                            )
-                        } else {
-                            Toast.makeText(
-                                this@EsqueciASenhaActivity,
-                                "Erro inesperado!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                } catch (e: Exception) {
-                    Toast.makeText(
-                        this@EsqueciASenhaActivity,
-                        "Erro ao buscar usuario!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
-    }
+//    private fun editSenha() {
+//        binding.botaoRedefinirEVoltar.setOnClickListener {
+//            lifecycleScope.launch {
+//                val idUsuario = preferencesManager.userId
+//                if (idUsuario.isNullOrEmpty()) {
+//                    Toast.makeText(
+//                        this@EsqueciASenhaActivity,
+//                        "Id não encontrado.",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    return@launch
+//                }
+//
+//                try {
+//                    val usuarios = users.getUser(idUsuario.toString())
+//                    val senhaAtual = usuarios.password
+//                    val nome = usuarios.name
+//                    val email = usuarios.email
+//                    val idAntigo = usuarios.uid
+//                    val imagem = ""
+//
+//                    val novaSenha = binding.editTextNumberPassword2.text.toString()
+//                    val novaSenha2 = binding.editTextNumberPassword2.text.toString()
+//
+//                    if (novaSenha != novaSenha2) {
+//                        Toast.makeText(
+//                            this@EsqueciASenhaActivity,
+//                            "Senhas não coincidem!",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    } else if (novaSenha == senhaAtual) {
+//                        Toast.makeText(
+//                            this@EsqueciASenhaActivity,
+//                            "Senha atual deve ser diferente da antiga.",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    } else if (novaSenha.isNullOrEmpty() || novaSenha2.isNullOrEmpty()) {
+//                        Toast.makeText(
+//                            this@EsqueciASenhaActivity,
+//                            "Preencha os dois campos!",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    } else {
+//                        val editarSenha = Usuario(idAntigo, nome, email, novaSenha, imagem)
+//                        val editou = users.editUser(idUsuario, editarSenha)
+//                        if (editou.isSuccessful) {
+//                            Toast.makeText(
+//                                this@EsqueciASenhaActivity,
+//                                "Editado com sucesso!",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                            startActivity(
+//                                Intent(
+//                                    this@EsqueciASenhaActivity,
+//                                    EditarPerfilActivity::class.java
+//                                )
+//                            )
+//                        } else {
+//                            Toast.makeText(
+//                                this@EsqueciASenhaActivity,
+//                                "Erro inesperado!",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
+//                    }
+//                } catch (e: Exception) {
+//                    Toast.makeText(
+//                        this@EsqueciASenhaActivity,
+//                        "Erro ao buscar usuario!",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//            }
+//        }
+//    }
 
     private fun botaoRedefinir() {
         binding.botaoRedefinirEVoltar.setOnClickListener {
