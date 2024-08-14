@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -26,6 +27,8 @@ class EditarPerfilActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         preferencesManager = PreferencesManager(this)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
 
         setupView()
         setSupportActionBar(findViewById(R.id.barra_tarefas))
