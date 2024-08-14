@@ -1,10 +1,9 @@
 package com.angellira.petvital1.network
 
 import com.angellira.petvital1.model.Pet
-import com.angellira.petvital1.model.Petshops
+import com.angellira.petvital1.model.Petshop
 import com.angellira.petvital1.model.Usuario
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Response
@@ -56,10 +55,10 @@ interface UsuariosApiService{
     suspend fun deletePet(@Path("id")id: String)
 
     @POST("Petshops.json")
-    suspend fun savePetshop(@Body petshops: Petshops)
+    suspend fun savePetshop(@Body petshop: Petshop)
 
     @GET("Petshops.json")
-    suspend fun getPetshop() : Map<String, Petshops>
+    suspend fun getPetshop() : Map<String, Petshop>
 }
 
 

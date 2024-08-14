@@ -38,7 +38,6 @@ class PetshopsActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundo)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
 
-
         setupView()
         setSupportActionBar(findViewById(R.id.barra_petshops))
         preferencesManager = PreferencesManager(this)
