@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.angellira.petvital1.databinding.ActivityMinhacontaBinding
@@ -26,6 +27,8 @@ class MinhacontaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
 
         setupView()
         setSupportActionBar(findViewById(R.id.barra_tarefas))

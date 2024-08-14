@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -34,6 +35,9 @@ class PetshopsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundo)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
+
 
         setupView()
         setSupportActionBar(findViewById(R.id.barra_petshops))
