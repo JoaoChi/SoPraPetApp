@@ -1,6 +1,5 @@
 package com.angellira.petvital1
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
@@ -13,23 +12,24 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.load
-import com.angellira.petvital1.databinding.ActivityMainBinding
+import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityPetProfileBinding
-import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PetProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPetProfileBinding
-    private val pets = UsersApi.retrofitService
     private lateinit var preferencesManager: PreferencesManager
-    private lateinit var recyclerView: RecyclerView
+    private var petId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,7 @@ class PetProfileActivity : AppCompatActivity() {
         fundoAnimado()
         carregandoPet()
         excluirPet()
-        }
+    }
 
     private fun fundoAnimado() {
         val imageLoader = ImageLoader.Builder(this)
@@ -74,7 +74,7 @@ class PetProfileActivity : AppCompatActivity() {
         val pegandoPhoto = intent.getStringExtra("foto_pet")
         val pegandoDescricao = intent.getStringExtra("descricao")
         val pegandoPeso = intent.getStringExtra("peso")
-        val pegandoIdade =  intent.getStringExtra("idade")
+        val pegandoIdade = intent.getStringExtra("idade")
 
         binding.textDescricao.text = "Descrição: $pegandoDescricao"
         binding.imageOpen.load(pegandoPhoto)
@@ -84,33 +84,30 @@ class PetProfileActivity : AppCompatActivity() {
 
     }
 
-    private fun excluirPet(){
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder
-            .setMessage("Certeza que deseja apagar seu pet?")
-            .setTitle("Excluir Pet!")
-            .setPositiveButton("Sim") { dialog, wich ->
-                try {
-                        deletePet()
-                        startActivity(Intent(this, MainActivity::class.java))
-                        Toast.makeText(this, "Seu pet foi excluido!", Toast.LENGTH_SHORT).show()
-                        preferencesManager.logout()
-                        finishAffinity()
-                } catch (e: Exception) {
-                    Toast.makeText(this, "Erro", Toast.LENGTH_SHORT).show()
+    private fun excluirPet() {
+        binding.excluirPet.setOnClickListener {
+            lifecycleScope.launch(IO) {
+                deletePet()
+                withContext(Main) {
+                    startActivity(Intent(this@PetProfileActivity, MainActivity::class.java))
+                    Toast.makeText(this@PetProfileActivity, "Pet Excluido!", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
-        val dialog: AlertDialog = builder.create()
-        binding.excluirPet.setOnClickListener {
-            dialog.show()
         }
+
     }
 
-    private fun deletePet(){
-        lifecycleScope.launch {
-            val id = preferencesManager.petId
-            pets.deletePet(id.toString())
-        }
+    private fun deletePet() {
+
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "Petvital.db"
+        ).build()
+        val petDao = db.petDao()
+        petId = intent.getLongExtra("id", 0)
+
+        petDao.deletarPet(petId)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

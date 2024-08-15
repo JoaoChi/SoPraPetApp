@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.angellira.petvital1.model.Pet
+import com.angellira.petvital1.model.Usuario
 
 @Dao
 interface PetDao{
@@ -17,8 +18,11 @@ interface PetDao{
     @Insert
     fun cadastrarPet(pet: Pet)
 
-//    @Delete
-//    fun deletarPet()
+//    @Query("SELECT * FROM pet WHERE id = :id LIMIT 1")
+//    suspend fun pegarIdPet(id: Long)
+
+    @Query("delete from Pet where id = (:id)")
+    fun deletarPet(id: Long)
 
 }
 

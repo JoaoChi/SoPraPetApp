@@ -23,7 +23,9 @@ import com.angellira.petvital1.databinding.ActivityMainBinding
 import com.angellira.petvital1.preferences.PreferencesManager
 import com.angellira.petvital1.recyclerview.adapter.ListaFotos
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -64,14 +66,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun mandandoImagens() {
         lifecycleScope.launch(IO) {
-
             val db = Room.databaseBuilder(
                 applicationContext,
                 AppDatabase::class.java, "Petvital.db"
             ).build()
-
             val petDao = db.petDao()
             val listaPet = petDao.getPet()
+
+            withContext(Main){
             recyclerView = binding.textItensRecyclerview
             binding.textItensRecyclerview.layoutManager =
                 LinearLayoutManager(this@MainActivity)
@@ -84,10 +86,12 @@ class MainActivity : AppCompatActivity() {
                     intent.putExtra("nome_pet", pet.name)
                     intent.putExtra("idade", pet.idade)
                     intent.putExtra("peso", pet.peso)
+                    intent.putExtra("id", pet.id)
                     startActivity(intent)
                 }
             )
             recyclerView.adapter = adapter
+        }
         }
     }
 

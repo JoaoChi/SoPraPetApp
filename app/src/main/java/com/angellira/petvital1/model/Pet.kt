@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Entity
 data class Pet(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Long = 0,
     var name: String,
     var descricao: String,
     var peso: String,

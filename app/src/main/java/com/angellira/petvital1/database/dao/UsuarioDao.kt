@@ -24,4 +24,5 @@ interface UsuarioDao{
     @Query("update usuario set password = (:newsenha) where email IN(:email)")
     fun updateSenha(newsenha: String, email: String)
 
+
 }
