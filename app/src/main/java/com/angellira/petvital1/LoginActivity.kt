@@ -2,7 +2,6 @@ package com.angellira.petvital1
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.widget.Toast
@@ -12,21 +11,23 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.load
+import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityLoginBinding
-import com.angellira.petvital1.model.User
-import com.angellira.petvital1.model.Usuario
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private val users = UsersApi.retrofitService
     private lateinit var preferencesManager: PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,15 +36,11 @@ class LoginActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundo)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
 
-        val preferencia = getSharedPreferences(
-            "USER_PREFERENCES", Context.MODE_PRIVATE
-        )
-
         setupView()
         preferencesManager = PreferencesManager(this)
         verificaLogin()
         botaoRegistro()
-        botaoLogin(preferencia)
+        botaoLogin()
         fundoAnimado()
     }
 
@@ -72,38 +69,46 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun botaoLogin(preferencia: SharedPreferences) {
+    private fun botaoLogin() {
         binding.botaoLogin.setOnClickListener {
-            val email = binding.textEmailLogin.text.toString()
-            val senha = binding.editTextPassword.text.toString()
-            val context = this
-
-            lifecycleScope.launch {
-                val validacao = verificarLogin(email, senha, preferencia)
-                if (validacao) {
-                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                    finishAffinity()
-                    preferencesManager.estaLogado = true
-                } else {
-                    preferencesManager.estaLogado = false
-                    Toast.makeText(context, "Email ou senha incorretos!", Toast.LENGTH_SHORT).show()
-                }
+            lifecycleScope.launch(IO) {
+                verificarLogin(this@LoginActivity)
+                finishAffinity()
+                preferencesManager.estaLogado = true
             }
         }
     }
 
     private suspend fun verificarLogin(
-        email: String,
-        senha: String,
-        preferencia: SharedPreferences
-    ): Boolean {
-        return if (email.isNotEmpty() && senha.isNotEmpty()) {
-            val usuarios = users.getUsers()
-            preferencesManager.userId = usuarios.entries.find { it.value.email == email }?.key
-            preferencia.edit().putString("Id", preferencesManager.userId).apply()
-            usuarios.values.any { it.email == email && it.password == senha }
+        context: Context,
+    ) {
+
+        val db = Room.databaseBuilder(
+            context.applicationContext,
+            AppDatabase::class.java, "Petvital.db"
+        ).build()
+
+        val email = binding.textEmailLogin.text.toString()
+        val senha = binding.editTextPassword.text.toString()
+
+        val usuarioDao = db.usuarioDao()
+        val usuario = usuarioDao.pegarEmailUsuario(email)
+
+        if (usuario == null) {
+            withContext(Main) {
+                Toast.makeText(this@LoginActivity, "Esse cadastro não existe!", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        } else if (usuario.email == email && usuario.password == senha) {
+            withContext(Main) {
+                Toast.makeText(this@LoginActivity, "Login efetuado!", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            }
         } else {
-            false
+            withContext(Main) {
+                Toast.makeText(this@LoginActivity, "Email ou senha incorretos!", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
     }
 

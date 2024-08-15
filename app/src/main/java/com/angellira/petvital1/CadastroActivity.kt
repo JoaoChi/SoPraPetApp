@@ -1,6 +1,7 @@
 package com.angellira.petvital1
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.widget.Toast
@@ -84,6 +85,7 @@ class CadastroActivity : AppCompatActivity() {
                             imagem
                         )
                         withContext(Main) {
+                            startActivity(Intent(this@CadastroActivity, LoginActivity::class.java))
                             Toast.makeText(
                                 this@CadastroActivity,
                                 "Usuario Cadastrado!",

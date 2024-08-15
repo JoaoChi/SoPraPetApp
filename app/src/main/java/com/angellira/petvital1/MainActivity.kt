@@ -48,18 +48,6 @@ class MainActivity : AppCompatActivity() {
         preferencesManager = PreferencesManager(this)
         mandandoImagens()
         botaoPropaganda()
-
-
-//        lifecycleScope.launch(IO) {
-//            val db = Room.databaseBuilder(
-//                applicationContext,
-//                AppDatabase::class.java, "Petvital.db"
-//            ).build()
-//
-//            val petDao = db.petDao()
-//            petDao.getPet()
-//
-//        }
     }
 
     private fun botaoPropaganda() {
@@ -81,10 +69,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun mandandoImagens() {
-        lifecycleScope.launch {
-            delay(1.seconds)
-            val listaPet = pets.getPets().values.toList()
-            Log.d("ListResult", "ListResult: ${listaPet}")
+        lifecycleScope.launch(IO) {
+
+            val db = Room.databaseBuilder(
+                applicationContext,
+                AppDatabase::class.java, "Petvital.db"
+            ).build()
+
+            val petDao = db.petDao()
+            val listaPet = petDao.getPet()
             recyclerView = binding.textItensRecyclerview
             binding.textItensRecyclerview.layoutManager =
                 LinearLayoutManager(this@MainActivity)
@@ -103,6 +96,7 @@ class MainActivity : AppCompatActivity() {
             recyclerView.adapter = adapter
         }
     }
+
 
     private fun setupView() {
         enableEdgeToEdge()
