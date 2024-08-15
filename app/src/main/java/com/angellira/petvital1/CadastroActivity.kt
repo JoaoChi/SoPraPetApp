@@ -136,7 +136,7 @@ class CadastroActivity : AppCompatActivity() {
             imagem = imagem,
             cpf = cpf
         )
-        withContext(Main) {
+        withContext(IO) {
             usuarioDao.cadastrarUsuario(novoUsuario)
         }
 
