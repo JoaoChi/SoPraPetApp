@@ -17,7 +17,10 @@ import com.angellira.petvital1.databinding.ActivityCadastrarPetBinding
 import com.angellira.petvital1.model.Pet
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.UUID
 
 class CadastrarPetActivity : AppCompatActivity() {
@@ -52,8 +55,6 @@ class CadastrarPetActivity : AppCompatActivity() {
             val peso = binding.editPeso.text.toString()
             val idade = binding.editIdade.text.toString()
             val imagem = binding.editImagem.text.toString()
-            val id = 1
-            val pet = Pet(id, nome, description, peso, idade, imagem)
 
             if (nome.isNotEmpty() &&
                 description.isNotEmpty() &&
@@ -61,18 +62,46 @@ class CadastrarPetActivity : AppCompatActivity() {
                 idade.isNotEmpty() &&
                 imagem.isNotEmpty()
             ) {
-                lifecycleScope.launch {
-                    val db = Room.databaseBuilder(
-                        applicationContext,
-                        AppDatabase::class.java, "Petvital.db"
-                    ).build()
-                    val petDao = db.petDao()
-                    petDao.cadastrarPet(pet)
-                    startActivity(Intent(this@CadastrarPetActivity, MainActivity::class.java))
+                lifecycleScope.launch(IO) {
+                    registrarPet(
+                        this@CadastrarPetActivity,
+                        nome, description, peso, idade, imagem
+                    )
+                    withContext(Main) {
+                        Toast.makeText(this@CadastrarPetActivity, "Cadastrado", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@CadastrarPetActivity, MainActivity::class.java))
+                    }
                 }
             } else {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private suspend fun registrarPet(
+        context: Context,
+        nome: String,
+        description: String,
+        peso: String,
+        idade: String,
+        imagem: String
+    ) {
+        val db = Room.databaseBuilder(
+            context.applicationContext,
+            AppDatabase::class.java, "Petvital.db"
+        ).build()
+
+        val petDao = db.petDao()
+
+        val novoPet = Pet(
+            name = nome,
+            descricao = description,
+            peso = peso,
+            idade = idade,
+            imagem = imagem
+        )
+        withContext(IO) {
+            petDao.cadastrarPet(novoPet)
         }
     }
 }
