@@ -20,7 +20,8 @@ import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.model.Usuario
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -54,7 +55,7 @@ class CadastroActivity : AppCompatActivity() {
         binding.background.load(R.drawable.fundo, imageLoader)
     }
 
-    private fun registroUsuario(){
+    private fun registroUsuario() {
         binding.BotaoRegistrar.setOnClickListener {
             val nome = binding.usernameEditText.text.toString()
             val email = binding.textoregistroEmail.text.toString()
@@ -72,8 +73,8 @@ class CadastroActivity : AppCompatActivity() {
             ) {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
             } else {
-                lifecycleScope.launch {
-                    try {
+                try {
+                    lifecycleScope.launch(IO) {
                         cadastrarUsuario(
                             this@CadastroActivity,
                             nome,
@@ -82,20 +83,22 @@ class CadastroActivity : AppCompatActivity() {
                             cpf,
                             imagem
                         )
-                        Toast.makeText(
-                            this@CadastroActivity,
-                            "Usuario Cadastrado!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } catch (e: Exception) {
-                        Toast.makeText(
-                            this@CadastroActivity,
-                            "Falha no cadastro.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        withContext(Main) {
+                            Toast.makeText(
+                                this@CadastroActivity,
+                                "Usuario Cadastrado!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
-
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        this@CadastroActivity,
+                        "Falha no cadastro.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+
             }
         }
     }
@@ -115,12 +118,15 @@ class CadastroActivity : AppCompatActivity() {
 
         val usuarioDao = db.usuarioDao()
 
-        val usuarioExiste = withContext(Dispatchers.IO){
+        val usuarioExiste = withContext(Main) {
             usuarioDao.pegarEmailUsuario(email)
         }
 
-        if(usuarioExiste != null){
-            Toast.makeText(this, "Email Já existe!", Toast.LENGTH_SHORT).show()
+        if (usuarioExiste != null) {
+            withContext(Main) {
+                Toast.makeText(this@CadastroActivity, "Email Já existe!", Toast.LENGTH_SHORT).show()
+            }
+            return
         }
 
         val novoUsuario = Usuario(
@@ -130,7 +136,7 @@ class CadastroActivity : AppCompatActivity() {
             imagem = imagem,
             cpf = cpf
         )
-        return withContext(Dispatchers.IO){
+        withContext(Main) {
             usuarioDao.cadastrarUsuario(novoUsuario)
         }
 
@@ -148,4 +154,3 @@ class CadastroActivity : AppCompatActivity() {
         }
     }
 }
-
