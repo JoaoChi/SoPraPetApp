@@ -19,7 +19,6 @@ import coil.load
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.model.Usuario
-import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -30,7 +29,6 @@ class CadastroActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCadastroBinding
     private lateinit var preferencesManager: PreferencesManager
-    private val users = UsersApi.retrofitService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,10 +65,10 @@ class CadastroActivity : AppCompatActivity() {
 
             if (senha != senha2) {
                 Toast.makeText(this, "As senhas devem coincidir! ", Toast.LENGTH_SHORT).show()
-            } else if (nome.isNullOrEmpty()
-                || email.isNullOrEmpty()
-                || senha.isNullOrEmpty()
-                || senha2.isNullOrEmpty()
+            } else if (nome.isEmpty()
+                || email.isEmpty()
+                || senha.isEmpty()
+                || senha2.isEmpty()
             ) {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
             } else {

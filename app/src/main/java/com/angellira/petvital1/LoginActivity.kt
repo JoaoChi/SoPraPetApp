@@ -41,6 +41,7 @@ class LoginActivity : AppCompatActivity() {
         botaoRegistro()
         botaoLogin()
         fundoAnimado()
+        botaoEditSenha()
     }
 
     private fun fundoAnimado() {
@@ -108,6 +109,12 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity, "Email ou senha incorretos!", Toast.LENGTH_SHORT)
                     .show()
             }
+        }
+    }
+
+    private fun botaoEditSenha(){
+        binding.textEsqueciAsenha.setOnClickListener{
+            startActivity(Intent(this, EsqueciASenhaActivity::class.java))
         }
     }
 

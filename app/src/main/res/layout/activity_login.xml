@@ -83,4 +83,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/petvital__1__removebg_preview" />
 
+    <TextView
+        android:id="@+id/textEsqueciAsenha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Esqueci minha senha."
+        android:textColor="#198795"
+        app:layout_constraintBottom_toTopOf="@+id/botaoLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

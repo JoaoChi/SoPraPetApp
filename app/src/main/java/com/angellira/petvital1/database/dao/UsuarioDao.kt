@@ -21,7 +21,7 @@ interface UsuarioDao{
     @Query("SELECT * FROM usuario WHERE email = :email LIMIT 1")
     suspend fun pegarEmailUsuario(email: String): Usuario?
 
-//    @Delete
-//    fun deletarUsuario(@Path("id") id: Int)
+    @Query("update usuario set password = (:newsenha) where email IN(:email)")
+    fun updateSenha(newsenha: String, email: String)
 
 }
