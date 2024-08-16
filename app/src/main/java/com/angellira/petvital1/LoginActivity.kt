@@ -89,6 +89,7 @@ class LoginActivity : AppCompatActivity() {
         ).build()
 
         val email = binding.textEmailLogin.text.toString()
+        preferencesManager.userId = email
         val senha = binding.editTextPassword.text.toString()
 
         val usuarioDao = db.usuarioDao()

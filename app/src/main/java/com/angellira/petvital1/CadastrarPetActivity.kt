@@ -3,6 +3,7 @@ package com.angellira.petvital1
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -12,6 +13,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.load
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityCadastrarPetBinding
 import com.angellira.petvital1.model.Pet
@@ -34,6 +39,22 @@ class CadastrarPetActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
         cadastrarPet()
+        imageLoad()
+    }
+
+    private fun imageLoad() {
+        val imageLoader = ImageLoader.Builder(this)
+            .components {
+                if (SDK_INT >= 28) {
+                    add(ImageDecoderDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
+            .build()
+
+        binding.cadastrarPet.load(R.drawable.cadastrar_pet, imageLoader)
+
     }
 
     private fun setupView() {
