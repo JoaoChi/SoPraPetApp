@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/profile_action"
+        android:icon="@drawable/baseline_perm_identity_24"
+        android:title="profile"
+        app:showAsAction="ifRoom"
+
+        />
+
+    <item
+        android:id="@+id/action_favorite"
+        android:icon="@drawable/baseline_add_24"
+        android:title="add"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/logo"
+        android:icon="@drawable/petvital__4__removebg_preview"
+        android:title="profile"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>

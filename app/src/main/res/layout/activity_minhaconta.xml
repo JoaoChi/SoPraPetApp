@@ -7,127 +7,49 @@
     android:layout_height="match_parent"
     tools:context=".MinhacontaActivity">
 
-    <TextView
-        android:id="@+id/textpetvital"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="1000dp"
-        android:height="60dp"
-        android:background="#33691E"
-        android:text="Petvital"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="34dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-1dp" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="76dp"
-        android:layout_height="61dp"
-        android:maxWidth="20dp"
-        android:maxHeight="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonsair"
-        app:layout_constraintEnd_toStartOf="@+id/buttonVoltapaginainicial"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/textpetvital"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/barra_tarefas"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#56D1C5"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/_736502"
-        tools:ignore="MissingConstraints" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <TextView
-        android:id="@+id/textnomecadastro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/textItensRecyclerview"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_margin="14dp"
         android:textSize="16dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.119" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:spanCount="2"
+        tools:itemCount="20"
+        tools:text="" />
 
-    <TextView
-        android:id="@+id/textemailcadastro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.212" />
-
-    <TextView
-        android:id="@+id/texttelefone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Telefone:   Telefone Cliente"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.309" />
-
-    <TextView
-        android:id="@+id/textPreferencias1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Preferências"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.401" />
-
-    <Button
-        android:id="@+id/buttoneditprofile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#3e2b05"
-        android:text="Editar Preferências"
-        app:layout_constraintBottom_toTopOf="@+id/botaopetshop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonsair"
-        app:layout_constraintVertical_bias="0.321" />
 
     <Button
         android:id="@+id/buttonsair"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#33691E"
+        android:backgroundTint="#FFC107"
         android:text="Sair da conta"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textpetvital" />
-
-    <Button
-        android:id="@+id/buttonVoltapaginainicial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#3e2b05"
-        android:hapticFeedbackEnabled="false"
-        android:text="Voltar"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/textpetvital"
-        app:layout_constraintEnd_toEndOf="@id/textpetvital"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/textpetvital"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/textItensRecyclerview"
+        app:layout_constraintVertical_bias="0.187" />
 
     <ImageView
         android:id="@+id/botaopetshop"
@@ -140,17 +62,5 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonsair"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/_865746" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/buttonsair"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textpetvital"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/duas_folhas_png_floral_flower_wall_mural_2_11562913513jbtydjggdq" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

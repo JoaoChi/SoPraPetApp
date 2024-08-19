@@ -9,39 +9,25 @@ class PreferencesManager (context: Context){
         context.getSharedPreferences(preferenciaCadastro, Context.MODE_PRIVATE)
 
     companion object {
-        private const val KEY_GMAIL = "gmail"
-        private const val KEY_PASSWORD = "senha"
-        private const val KEY_USERNAME = "nome"
-        private const val KEY_AUTHENTICATED = "autenticado"
+        private const val ID_USUARIO = "Id"
+        private const val IS_LOGGED = "logou"
+        private const val ID_PET = "Idpet"
     }
 
-    var email: String?
-        get() = sharedPreferences.getString(KEY_GMAIL, null)
-        set(value) = sharedPreferences.edit().putString(KEY_GMAIL, value).apply()
+    var petId: String?
+        get() = sharedPreferences.getString(ID_PET, null)
+        set(value) = sharedPreferences.edit().putString(ID_PET, value).apply()
 
-    var password: String?
-        get() = sharedPreferences.getString(KEY_PASSWORD, null)
-        set(value) = sharedPreferences.edit().putString(KEY_PASSWORD, value).apply()
-
-    var username: String?
-        get() = sharedPreferences.getString(KEY_USERNAME, null)
-        set(value) = sharedPreferences.edit().putString(KEY_USERNAME, value).apply()
+    var userId: String?
+        get() = sharedPreferences.getString(ID_USUARIO, null)
+        set(value) = sharedPreferences.edit().putString(ID_USUARIO, value).apply()
 
     var estaLogado: Boolean
-        get() = sharedPreferences.getBoolean("logou", false)
-        set(value) {
-            sharedPreferences.edit().putBoolean("logou", value).apply()
-        }
-
-    var isAuthenticated: Boolean
-        get() = sharedPreferences.getBoolean(KEY_AUTHENTICATED, false)
-        set(value) = sharedPreferences.edit().putBoolean(KEY_AUTHENTICATED, value).apply()
+        get() = sharedPreferences.getBoolean(IS_LOGGED, false)
+        set(value) = sharedPreferences.edit().putBoolean(IS_LOGGED, value).apply()
 
     fun logout() {
-        sharedPreferences.edit().putBoolean(KEY_AUTHENTICATED, false).clear().apply()
-        sharedPreferences.edit().putBoolean(KEY_GMAIL, false).clear().apply()
-        sharedPreferences.edit().putBoolean(KEY_PASSWORD, false).clear().apply()
-        sharedPreferences.edit().putBoolean(KEY_USERNAME, false).clear().apply()
+        sharedPreferences.edit().putBoolean(preferenciaCadastro, false).clear().apply()
     }
 
 }

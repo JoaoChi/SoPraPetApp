@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".CadastrarPet">
+    tools:context=".CadastrarPetActivity">
 
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
         android:layout_width="490dp"
         android:layout_height="230dp"
-        android:background="#33691E"
+        android:background="#56D1C5"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cadastro de Pet"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/black"
         android:textSize="24dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/imageCat"
@@ -48,23 +48,11 @@
         app:layout_constraintTop_toTopOf="@+id/materialToolbar"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageView
-        android:id="@+id/imageArara"
-        android:layout_width="210dp"
-        android:layout_height="197dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/papagaio" />
-
     <RadioButton
         android:id="@+id/cachorroBotao"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:background="#388A3E"
+        android:background="#FFC107"
         android:text="Cachorro"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
@@ -79,7 +67,7 @@
         android:id="@+id/gatoBotao"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:background="#388A3E"
+        android:background="#FFC107"
         android:shadowColor="#0D0D0D"
         android:text="Gato"
         android:textColor="#FFFFFF"
@@ -98,7 +86,7 @@
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:background="#388A3E"
+        android:background="#FFC107"
         android:text="Ave"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
@@ -113,7 +101,7 @@
         android:id="@+id/roedorBotao"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:background="#388A3E"
+        android:background="#FFC107"
         android:text="Roedor"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
@@ -130,7 +118,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:text="Nome"
+        android:hint="Nome"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.079"
@@ -144,7 +132,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:text="Raça"
+        android:hint="Descrição"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.079"
@@ -159,8 +147,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="numberDecimal"
-        android:text="Idade"
+        android:hint="Idade"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.079"
@@ -173,8 +160,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="numberDecimal"
-        android:text="Peso"
+        android:hint="Peso"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.079"
@@ -182,17 +168,32 @@
         app:layout_constraintTop_toBottomOf="@+id/editRacaPet"
         app:layout_constraintVertical_bias="0.313" />
 
+    <EditText
+        android:id="@+id/editImagem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Imagem"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editRacaPet"
+        app:layout_constraintVertical_bias="0.592" />
+
     <Button
         android:id="@+id/buttonSalvarPet"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:backgroundTint="#3e2b05"
+        android:backgroundTint="#56D1C5"
         android:text="Salvar Pet"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageArara"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPeso" />
+        app:layout_constraintTop_toBottomOf="@+id/editPeso"
+        app:layout_constraintVertical_bias="0.662" />
 
     <ImageView
         android:id="@+id/imageNuvem"

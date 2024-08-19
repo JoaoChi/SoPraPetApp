@@ -7,34 +7,45 @@
     android:layout_height="match_parent"
     tools:context=".EditarPerfilActivity">
 
-    <TextView
-        android:id="@+id/textpetvitaleditprofile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="1000dp"
-        android:height="60dp"
-        android:background="#60B340"
-        android:text="Petvital"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="34dp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-1dp" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/barra_tarefas"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#56D1C5"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <Button
-        android:id="@+id/buttonVoltacadastrocliente"
+        android:id="@+id/buttonExcluirConta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#3e2b05"
+        android:backgroundTint="#FF0000"
         android:hapticFeedbackEnabled="false"
-
-        android:text="Confirma"
-        android:textColor="#FFFFFF"
+        android:text="Excluir Conta"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.888"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.641" />
+
+    <Button
+        android:id="@+id/button2esquecisenha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#4CAF50"
+        android:hapticFeedbackEnabled="false"
+        android:text="Alterar senha"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.189"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.641" />
@@ -46,10 +57,10 @@
         android:text="Banho"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.177"
+        app:layout_constraintHorizontal_bias="0.176"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textpetvitaleditprofile"
-        app:layout_constraintVertical_bias="0.091" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.165" />
 
     <CheckBox
         android:id="@+id/checkboxTosa"
@@ -115,26 +126,11 @@
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="470dp"
-        android:layout_height="213dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textpetvitaleditprofile"
-        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/shutterstock_1569883195_scaled_2560x1280" />
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="170dp"
-        android:layout_height="200dp"
-        android:rotation="180"
-        app:layout_constraintBottom_toTopOf="@+id/imageView5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textpetvitaleditprofile"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/green_leaf_png_hd_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
