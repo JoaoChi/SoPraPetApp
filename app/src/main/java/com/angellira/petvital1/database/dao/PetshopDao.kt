@@ -16,12 +16,11 @@ interface PetshopDao{
     fun cadastrarPetshops(petshops: List<Petshop>)
 
     @Insert
-    fun cadastrarPethops(petshops: Petshop)
+    fun cadastrarPetshop(petshops: Petshop)
 
     @Query("delete from Petshop where uid = (:uid)")
     fun deletarPetshop(uid: Long)
 
-//    @Delete
-//    fun deletarPetshops()
-
+    @Query("SELECT * FROM petshop WHERE cnpj = :cnpj LIMIT 1")
+    suspend fun pegarCnpj(cnpj: String): Petshop?
 }

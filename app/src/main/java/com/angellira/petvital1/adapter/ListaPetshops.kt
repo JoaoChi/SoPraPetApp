@@ -40,8 +40,8 @@ class ListaPetshops(
     constructor(parcel: Parcel) : this(
         TODO("propaganda"),
         TODO("onItemClickListener")
-    ) {
-    }
+    )
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

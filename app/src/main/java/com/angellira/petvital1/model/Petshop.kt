@@ -13,5 +13,7 @@ data class Petshop(
     var imagem: String,
     var localizacao: String,
     var descricao: String,
-    var servicos: String
-)
+    var servicos: String,
+    val cnpj: String
+
+    )
