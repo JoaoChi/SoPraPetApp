@@ -10,8 +10,8 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
-        android:layout_width="490dp"
-        android:layout_height="230dp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
         android:background="@color/corfundo"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -20,6 +20,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/cadastrarPetshop"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/hit_the_follow_button_now_" />
 
     <EditText
         android:id="@+id/nomePetshop"
@@ -34,7 +43,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/descricaoPetshop"
@@ -62,8 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagemPetshop"
-        app:layout_constraintVertical_bias="0.87" />
+        app:layout_constraintTop_toBottomOf="@+id/imagemPetshop" />
 
     <EditText
         android:id="@+id/servicosPetshop"
@@ -77,7 +85,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/localizacaoPetshop"
-        app:layout_constraintVertical_bias="0.419" />
+        app:layout_constraintVertical_bias="0.591" />
 
     <EditText
         android:id="@+id/imagemPetshop"
@@ -91,7 +99,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descricaoPetshop"
-        app:layout_constraintVertical_bias="0.794" />
+        app:layout_constraintVertical_bias="0.461" />
 
     <Button
         android:id="@+id/buttonSalvarPetshop"
@@ -102,9 +110,10 @@
         android:text="Salvar Petshop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textCnpj" />
+        app:layout_constraintTop_toBottomOf="@+id/textCnpj"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/textCnpj"
@@ -117,6 +126,6 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/servicosPetshop"
-        app:layout_constraintVertical_bias="0.16" />
+        app:layout_constraintVertical_bias="0.158" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

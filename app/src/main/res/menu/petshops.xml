@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/pesquisar"
-        android:icon="@drawable/baseline_search_24"
+        android:icon="@drawable/baseline_add_24"
         android:title="pesquisa"
         app:showAsAction="ifRoom"
         />

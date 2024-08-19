@@ -86,10 +86,10 @@ class PetshopsActivity : AppCompatActivity() {
                 startActivity(Intent(this, MainActivity::class.java))
                 true
             }
-//            R.id.pesquisar ->{
-//                startActivity(Intent(this, CadastrarPetActivity::class.java))
-//                true
-//            }
+            R.id.pesquisar ->{
+                startActivity(Intent(this, CadastrarPetshopActivity::class.java))
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

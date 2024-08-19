@@ -62,8 +62,8 @@ class PetshopProfileActivity : AppCompatActivity() {
         binding.descricaoPetshop.text = "Descrição: $pegandoDescricao"
         binding.imagePetshop.load(pegandoPhoto)
         binding.nomePetshop.text = "Nome: $pegandoNome"
-        binding.servicosPetshop.text = "Peso: $pegandoServicos"
-        binding.localizacaoPetshop.text = "Idade: $pegandolocalizacao"
+        binding.servicosPetshop.text = "Serviços: $pegandoServicos"
+        binding.localizacaoPetshop.text = "Localização: $pegandolocalizacao"
 
     }
 

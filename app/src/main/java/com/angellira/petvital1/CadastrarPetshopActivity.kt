@@ -38,26 +38,26 @@ class CadastrarPetshopActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setupView()
-        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundo)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
         cadastrarPetshop()
-//        imageLoad()
+        imageLoad()
     }
 
-//    private fun imageLoad() {
-//        val imageLoader = ImageLoader.Builder(this)
-//            .components {
-//                if (SDK_INT >= 28) {
-//                    add(ImageDecoderDecoder.Factory())
-//                } else {
-//                    add(GifDecoder.Factory())
-//                }
-//            }
-//            .build()
-//
-//        binding.cadastrarPetshop.load(R.drawable.cadastrar_pet, imageLoader)
-//
-//    }
+    private fun imageLoad() {
+        val imageLoader = ImageLoader.Builder(this)
+            .components {
+                if (SDK_INT >= 28) {
+                    add(ImageDecoderDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
+            .build()
+
+        binding.cadastrarPetshop.load(R.drawable.hit_the_follow_button_now_, imageLoader)
+
+    }
 
     private fun setupView() {
         binding = ActivityCadastrarPetshopBinding.inflate(layoutInflater)
