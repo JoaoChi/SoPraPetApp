@@ -9,7 +9,7 @@ import com.angellira.petvital1.model.Pet
 import com.angellira.petvital1.model.Petshop
 import com.angellira.petvital1.model.Usuario
 
-@Database(entities = [Pet::class, Usuario::class, Petshop::class], version = 2)
+@Database(entities = [Pet::class, Usuario::class, Petshop::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun petDao(): PetDao
     abstract fun usuarioDao(): UsuarioDao
