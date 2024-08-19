@@ -18,6 +18,9 @@ interface PetshopDao{
     @Insert
     fun cadastrarPethops(petshops: Petshop)
 
+    @Query("delete from Petshop where uid = (:uid)")
+    fun deletarPetshop(uid: Long)
+
 //    @Delete
 //    fun deletarPetshops()
 

@@ -14,22 +14,27 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import coil.ImageLoader
 import coil.load
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
+import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityPetshopsBinding
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
+import com.angellira.petvital1.recyclerview.adapter.ListaFotos
 import com.angellira.petvital1.recyclerview.adapter.ListaPetshops
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.time.Duration.Companion.seconds
 
 class PetshopsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPetshopsBinding
-    private val petshops = UsersApi.retrofitService
     private lateinit var recyclerView: RecyclerView
     private lateinit var preferencesManager: PreferencesManager
 
@@ -44,7 +49,7 @@ class PetshopsActivity : AppCompatActivity() {
         botaoPropaganda()
     }
 
-    private fun botaoPropaganda(){
+    private fun botaoPropaganda() {
         val imageLoader = ImageLoader.Builder(this)
             .components {
                 if (SDK_INT >= 28) {
@@ -55,7 +60,7 @@ class PetshopsActivity : AppCompatActivity() {
             }
             .build()
 
-        binding.bannerPromo.load(R.drawable.mereceomelhor , imageLoader)
+        binding.bannerPromo.load(R.drawable.mereceomelhor, imageLoader)
     }
 
     private fun setupView() {
@@ -69,6 +74,7 @@ class PetshopsActivity : AppCompatActivity() {
             insets
         }
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.petshops, menu)
         return true
@@ -89,26 +95,33 @@ class PetshopsActivity : AppCompatActivity() {
     }
 
     private fun mostrarPetshops() {
-        lifecycleScope.launch {
-            delay(1.seconds)
-            val listaPetshop = petshops.getPetshop().values.toList()
-            Log.d("ListResult", "ListResult: ${listaPetshop}")
-            recyclerView = binding.recyclerViewFeed
-            binding.recyclerViewFeed.layoutManager =
-                LinearLayoutManager(this@PetshopsActivity)
-            val adapter = ListaPetshops(
-                listaPetshop,
-                onItemClickListener = { petshop ->
-                    val intent = Intent(this@PetshopsActivity, PetProfileActivity::class.java)
-                    intent.putExtra("descricao", petshop.descricao)
-                    intent.putExtra("foto_petshop", petshop.imagem)
-                    intent.putExtra("nome_petshop", petshop.name)
-                    intent.putExtra("localizacao", petshop.localizacao)
-                    intent.putExtra("servicos", petshop.servicos)
-                    startActivity(intent)
-                }
-            )
-            recyclerView.adapter = adapter
+        lifecycleScope.launch(IO) {
+            val db = Room.databaseBuilder(
+                applicationContext,
+                AppDatabase::class.java, "Petvital.db"
+            ).build()
+            val petshopDao  = db.petshopDao()
+            val listaPetshop = petshopDao.getAllpetshop()
+
+            withContext(Main) {
+                recyclerView = binding.recyclerViewFeed
+                binding.recyclerViewFeed.layoutManager =
+                    LinearLayoutManager(this@PetshopsActivity)
+                val adapter = ListaPetshops(
+                    listaPetshop,
+                    onItemClickListener = { petshop ->
+                        val intent = Intent(this@PetshopsActivity, PetshopProfileActivity::class.java)
+                        intent.putExtra("descricao", petshop.descricao)
+                        intent.putExtra("foto_petshop", petshop.imagem)
+                        intent.putExtra("nome_petshop", petshop.name)
+                        intent.putExtra("servicos", petshop.servicos)
+                        intent.putExtra("localizacao", petshop.localizacao)
+                        intent.putExtra("id", petshop.uid)
+                        startActivity(intent)
+                    }
+                )
+                recyclerView.adapter = adapter
+            }
         }
     }
 }
