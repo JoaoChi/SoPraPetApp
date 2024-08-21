@@ -92,8 +92,4 @@ dependencies {
 
     // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$room_version")
-    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
-    implementation ("com.squareup.moshi:moshi:1.12.0") // Para serialização/deserialização JSON
-    implementation ("com.squareup.moshi:moshi-kotlin:1.12.0")
-
 }

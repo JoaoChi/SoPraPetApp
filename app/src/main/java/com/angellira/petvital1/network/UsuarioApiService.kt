@@ -6,10 +6,6 @@ import com.angellira.petvital1.model.User
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.http.Body
@@ -19,50 +15,46 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-private const val BASE_URL = "http://127.0.0.1:8080/"
+private const val BASE_URL = "http://10.0.2.2:8080/"
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
     .baseUrl(BASE_URL)
     .build()
 
-val client = OkHttpClient()
-
-
-
 interface UsuariosApiService{
+    @GET("users")
+    suspend fun getUsers() :Map<String, User>
 
-    fun getAllUsers(): String? {
-        val request = Request.Builder()
-            .url("http://127.0.0.1:8080/users")
-            .build()
+    @GET("users/{id}")
+    suspend fun getUser(@Path("id") id: String) : User
 
-        client.newCall(request).execute().use { response ->
-            return if (response.isSuccessful) {
-                response.body?.string()
-            } else {
-                null
-            }
-        }
-    }
+    @POST("users")
+    suspend fun saveUser(@Body user: User)
 
-    fun createUser(userRequestJson: String): String? {
-        val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
-        val body = userRequestJson.toRequestBody(mediaType)
+    @PUT("users/{id}")
+    suspend fun editUser(@Path("id") id: String, @Body user: User): Response<Unit>
 
-        val request = Request.Builder()
-            .url("http://127.0.0.1:8080/users")
-            .post(body)
-            .build()
+    @DELETE("users/{id}")
+    suspend fun deleteUser(@Path("id") id: String)
 
-        client.newCall(request).execute().use { response ->
-            return if (response.isSuccessful) {
-                response.body?.string()
-            } else {
-                null
-            }
-        }
-    }
+    @GET("pets")
+    suspend fun getPets() : Map<String, Pet>
+
+    @POST("pets")
+    suspend fun savePets(@Body pet: Pet)
+
+    @POST("pets/{id}")
+    suspend fun savePetId(@Body pet: Pet, @Path("id")id: String)
+
+    @DELETE("pets/{id}")
+    suspend fun deletePet(@Path("id")id: String)
+
+    @POST("Petshops")
+    suspend fun savePetshop(@Body petshop: Petshop)
+
+    @GET("Petshops")
+    suspend fun getPetshop() : Map<String, Petshop>
 }
 
 
