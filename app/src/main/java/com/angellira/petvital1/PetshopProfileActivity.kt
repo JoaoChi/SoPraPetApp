@@ -72,8 +72,8 @@ class PetshopProfileActivity : AppCompatActivity() {
             lifecycleScope.launch(IO) {
                 deletePetshop()
                 withContext(Main) {
-                    startActivity(Intent(this@PetshopProfileActivity, MainActivity::class.java))
-                    Toast.makeText(this@PetshopProfileActivity, "Pet Excluido!", Toast.LENGTH_SHORT)
+                    startActivity(Intent(this@PetshopProfileActivity, PetshopsActivity::class.java))
+                    Toast.makeText(this@PetshopProfileActivity, "Petshop Excluido!", Toast.LENGTH_SHORT)
                         .show()
                 }
             }
@@ -88,7 +88,7 @@ class PetshopProfileActivity : AppCompatActivity() {
             AppDatabase::class.java, "Petvital.db"
         ).build()
         val petshopDao = db.petshopDao()
-        petshopId = intent.getLongExtra("id", 0)
+        petshopId = intent.getLongExtra("uid", 0)
 
         petshopDao.deletarPetshop(petshopId)
     }

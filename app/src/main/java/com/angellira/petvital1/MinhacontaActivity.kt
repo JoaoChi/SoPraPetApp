@@ -1,8 +1,6 @@
 package com.angellira.petvital1
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,15 +10,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.angellira.petvital1.databinding.ActivityMinhacontaBinding
-import com.angellira.petvital1.model.User
 import com.angellira.petvital1.preferences.PreferencesManager
-import com.angellira.petvital1.preferences.preferenciaCadastro
-import com.angellira.petvital1.recyclerview.adapter.PreferenciasListAdapter
 
 class MinhacontaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMinhacontaBinding
-    private val dados = User()
     private lateinit var preferencesManager: PreferencesManager
 
 

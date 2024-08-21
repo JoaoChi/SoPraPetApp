@@ -34,22 +34,21 @@
         android:id="@+id/nomePetshop"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="444dp"
         android:ems="10"
         android:hint="Nome"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/imagemPetshop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.294" />
 
     <EditText
         android:id="@+id/descricaoPetshop"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="376dp"
+        android:layout_marginBottom="356dp"
         android:ems="10"
         android:hint="Descrição"
         android:inputType="text"
@@ -57,8 +56,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomePetshop"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
+        app:layout_constraintVertical_bias="0.875" />
 
     <EditText
         android:id="@+id/localizacaoPetshop"
@@ -84,8 +83,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/localizacaoPetshop"
-        app:layout_constraintVertical_bias="0.591" />
+        app:layout_constraintTop_toBottomOf="@+id/localizacaoPetshop" />
 
     <EditText
         android:id="@+id/imagemPetshop"
@@ -98,8 +96,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descricaoPetshop"
-        app:layout_constraintVertical_bias="0.461" />
+        app:layout_constraintTop_toBottomOf="@+id/descricaoPetshop" />
 
     <Button
         android:id="@+id/buttonSalvarPetshop"
@@ -126,6 +123,6 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/servicosPetshop"
-        app:layout_constraintVertical_bias="0.158" />
+        app:layout_constraintVertical_bias="0.147" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

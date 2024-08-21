@@ -116,7 +116,7 @@ class PetshopsActivity : AppCompatActivity() {
                         intent.putExtra("nome_petshop", petshop.name)
                         intent.putExtra("servicos", petshop.servicos)
                         intent.putExtra("localizacao", petshop.localizacao)
-                        intent.putExtra("id", petshop.uid)
+                        intent.putExtra("uid", petshop.uid)
                         startActivity(intent)
                     }
                 )

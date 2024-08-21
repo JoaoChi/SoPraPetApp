@@ -1,18 +1,17 @@
 package com.angellira.petvital1.model
 
-import com.angellira.petvital1.interfaces.Autenticator
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
 
+@Serializable
+@Entity
 data class User(
-    var username: String = "",
-    var email: String = "",
-    var password: String = ""
-) : Autenticator { // Closeable etc. Nomes de interfaces
-    override fun authenticate(email: String, password: String): Boolean {
-        return if (this.email == email && this.password == password
-            && email.isNotEmpty() && password.isNotEmpty()) {
-            true
-        } else {
-            return false
-        }
-    }
-}
+    @PrimaryKey(autoGenerate = true)
+    val uid: Int = 0,
+    var cpf: String,
+    var name: String,
+    var email: String,
+    var password: String,
+    var imagem: String
+)

@@ -20,7 +20,9 @@ import coil.load
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.database.dao.UsuarioDao
 import com.angellira.petvital1.databinding.ActivityCadastroBinding
+import com.angellira.petvital1.model.User
 import com.angellira.petvital1.model.Usuario
+import com.angellira.petvital1.network.UsuariosApiService
 import com.angellira.petvital1.preferences.PreferencesManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
@@ -32,6 +34,7 @@ class CadastroActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCadastroBinding
     private lateinit var preferencesManager: PreferencesManager
+    private lateinit var userApi: UsuariosApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,8 +141,17 @@ class CadastroActivity : AppCompatActivity() {
                 imagem = imagem,
                 cpf = cpf
             )
+            val novoUser = User(
+                name = nome,
+                email = email,
+                password = senha,
+                imagem = imagem,
+                cpf = cpf
+            )
+
             withContext(IO) {
                 usuarioDao.cadastrarUsuario(novoUsuario)
+                userApi.createUser(novoUser.toString())
             }
 
         }
