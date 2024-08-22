@@ -23,13 +23,13 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface UsuariosApiService{
-    @GET("users")
+    @GET("/users")
     suspend fun getUsers() :Map<String, User>
 
-    @GET("users/{id}")
+    @GET("/users/{id}")
     suspend fun getUser(@Path("id") id: String) : User
 
-    @POST("users")
+    @POST("/users")
     suspend fun saveUser(@Body user: User)
 
     @PUT("users/{id}")

@@ -147,11 +147,10 @@ class CadastroActivity : AppCompatActivity() {
             )
 
         val userApi = UsersApi.retrofitService
-
-            withContext(IO) {
+//            withContext(IO) {
 //                usuarioDao.cadastrarUsuario(novoUsuario)
                 userApi.saveUser(novoUser)
-            }
+//            }
 
         }
 
