@@ -1,5 +1,6 @@
 package com.angellira.petvital1
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -9,8 +10,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
+import coil.load
+import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityMinhacontaBinding
 import com.angellira.petvital1.preferences.PreferencesManager
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MinhacontaActivity : AppCompatActivity() {
 
@@ -22,12 +31,14 @@ class MinhacontaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setupView()
-        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundoazul)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundoazul)
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         preferencesManager = PreferencesManager(this)
-        botaoPropaganda()
         botaoDeslogarPreferences()
+        lifecycleScope.launch {
+            pegarDadosUser(this@MinhacontaActivity)
+        }
     }
 
     private fun setupView() {
@@ -35,12 +46,35 @@ class MinhacontaActivity : AppCompatActivity() {
         binding = ActivityMinhacontaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
     }
+
+    private suspend fun pegarDadosUser(context: Context) {
+        val email = preferencesManager.userId
+        lifecycleScope.launch(IO) {
+            val db = Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java, "Petvital.db"
+            ).build()
+
+            val usuarioDao = db.usuarioDao()
+            val usuario = usuarioDao.pegarEmailUsuario(email.toString())
+            withContext(Main) {
+                binding.textNome.text = usuario!!.name
+                binding.textCpf.text = usuario!!.cpf
+                binding.textTelefone.text = usuario!!.password
+                binding.imageOpen.load(usuario.imagem)
+
+            }
+
+        }
+    }
+
 
     private fun botaoDeslogarPreferences() {
 
@@ -55,12 +89,6 @@ class MinhacontaActivity : AppCompatActivity() {
         }
     }
 
-    private fun botaoPropaganda() {
-        binding.botaopetshop.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.profile, menu)
         return true
@@ -72,7 +100,8 @@ class MinhacontaActivity : AppCompatActivity() {
                 startActivity(Intent(this, MainActivity::class.java))
                 true
             }
-            R.id.profile_edit ->{
+
+            R.id.profile_edit -> {
                 startActivity(Intent(this, EditarPerfilActivity::class.java))
                 true
             }

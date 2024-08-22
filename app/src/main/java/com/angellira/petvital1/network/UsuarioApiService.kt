@@ -15,7 +15,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-private const val BASE_URL = "http://10.0.2.2:8080/"
+private const val BASE_URL = "http://10.0.2.2:8080"
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
@@ -23,8 +23,9 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface UsuariosApiService{
-    @GET("/users")
-    suspend fun getUsers() :Map<String, User>
+
+    @GET("/users/{email}")
+    suspend fun getUsers(@retrofit2.http.Query("email") email: String): User
 
     @GET("/users/{id}")
     suspend fun getUser(@Path("id") id: String) : User

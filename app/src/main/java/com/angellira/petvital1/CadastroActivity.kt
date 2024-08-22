@@ -21,7 +21,6 @@ import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.model.User
 import com.angellira.petvital1.model.Usuario
 import com.angellira.petvital1.network.UsersApi
-import com.angellira.petvital1.network.UsuariosApiService
 import com.angellira.petvital1.preferences.PreferencesManager
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -63,8 +62,8 @@ class CadastroActivity : AppCompatActivity() {
             val email = binding.textoregistroEmail.text.toString()
             val senha = binding.passwordEditText.text.toString()
             val senha2 = binding.password2.text.toString()
-            val cpf = ""
-            val imagem = ""
+            val cpf = "123124"
+            val imagem = "https://pbs.twimg.com/profile_images/1575462499931004929/zis9UHm0_400x400.jpg"
 
             if (senha != senha2) {
                 Toast.makeText(this, "As senhas devem coincidir! ", Toast.LENGTH_SHORT).show()
@@ -76,7 +75,7 @@ class CadastroActivity : AppCompatActivity() {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
             } else {
                 try {
-                    lifecycleScope.launch(IO) {
+                    lifecycleScope.launch {
                         cadastrarUsuario(
                             this@CadastroActivity,
                             nome,
@@ -85,14 +84,12 @@ class CadastroActivity : AppCompatActivity() {
                             cpf,
                             imagem
                         )
-                        withContext(Main) {
                             startActivity(Intent(this@CadastroActivity, LoginActivity::class.java))
                             Toast.makeText(
                                 this@CadastroActivity,
                                 "Usuario Cadastrado!",
                                 Toast.LENGTH_SHORT
                             ).show()
-                        }
                     }
                 } catch (e: Exception) {
                     Toast.makeText(
@@ -111,8 +108,8 @@ class CadastroActivity : AppCompatActivity() {
         nome: String,
         email: String,
         senha: String,
-        imagem: String,
-        cpf: String
+        cpf: String,
+        imagem: String
     ) {
         val db = Room.databaseBuilder(
             context.applicationContext,
@@ -120,7 +117,7 @@ class CadastroActivity : AppCompatActivity() {
         ).build()
 
         val usuarioDao = db.usuarioDao()
-        val usuarioExiste = withContext(Main) {
+        val usuarioExiste = withContext(IO) {
             usuarioDao.pegarEmailUsuario(email)
         }
 
@@ -131,28 +128,28 @@ class CadastroActivity : AppCompatActivity() {
             return
         }
 
-//            val novoUsuario = Usuario(
-//                name = nome,
-//                email = email,
-//                password = senha,
-//                imagem = imagem,
-//                cpf = cpf
-//            )
-            val novoUser = User(
+            val novoUsuario = Usuario(
                 name = nome,
                 email = email,
                 password = senha,
                 imagem = imagem,
                 cpf = cpf
             )
+        val novoUser = User(
+            name = nome,
+            email = email,
+            password = senha,
+            imagem = imagem,
+            cpf = cpf
+        )
 
         val userApi = UsersApi.retrofitService
-//            withContext(IO) {
-//                usuarioDao.cadastrarUsuario(novoUsuario)
-                userApi.saveUser(novoUser)
-//            }
-
+        withContext(IO) {
+                usuarioDao.cadastrarUsuario(novoUsuario)
+            userApi.saveUser(novoUser)
         }
+
+    }
 
 
     private fun setupView() {
