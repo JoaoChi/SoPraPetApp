@@ -10,13 +10,6 @@
         />
 
     <item
-        android:id="@+id/profile_edit"
-        android:icon="@drawable/baseline_manage_accounts_24"
-        android:title="profile"
-        app:showAsAction="ifRoom"
-        />
-
-    <item
         android:id="@+id/configs"
         android:icon="@drawable/baseline_menu_24"
         android:title="profile"

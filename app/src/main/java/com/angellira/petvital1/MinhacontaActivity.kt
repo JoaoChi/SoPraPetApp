@@ -176,11 +176,6 @@ class MinhacontaActivity : AppCompatActivity() {
                 true
             }
 
-            R.id.profile_edit -> {
-                startActivity(Intent(this, EditarPerfilActivity::class.java))
-                true
-            }
-
             R.id.configs -> {
                 showPopupMenu(findViewById(R.id.configs))
                 true
