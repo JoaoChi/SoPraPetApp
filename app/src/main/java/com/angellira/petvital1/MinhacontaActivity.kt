@@ -4,7 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -39,6 +43,7 @@ class MinhacontaActivity : AppCompatActivity() {
         lifecycleScope.launch {
             pegarDadosUser(this@MinhacontaActivity)
         }
+        botaoeditconta()
     }
 
     private fun setupView() {
@@ -75,6 +80,11 @@ class MinhacontaActivity : AppCompatActivity() {
         }
     }
 
+    private fun botaoeditconta(){
+        binding.editProfile.setOnClickListener{
+            startActivity(Intent(this, EditarPerfilActivity::class.java))
+        }
+    }
 
     private fun botaoDeslogarPreferences() {
 
@@ -87,6 +97,71 @@ class MinhacontaActivity : AppCompatActivity() {
             startActivity(deslogarLogin)
             finishAffinity()
         }
+    }
+
+    private fun showPopupMenu(view: View) {
+
+        val popupMenu = PopupMenu(this, view)
+        val inflater: MenuInflater = popupMenu.menuInflater
+        inflater.inflate(R.menu.popup, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.inicio -> {
+                    Toast.makeText(this, "Voltando ao início", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@MinhacontaActivity, MainActivity::class.java))
+                    true
+                }
+                R.id.perfil -> {
+                    Toast.makeText(this, "Já está no perfil", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.ajuda -> {
+                    Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.config -> {
+                    Toast.makeText(this, "Configurações", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@MinhacontaActivity, EditarPerfilActivity::class.java))
+                    true
+                }
+                R.id.sair -> {
+                    showConfirmationDialog(
+                        title = "Deseja sair?",
+                        message = "Certeza que deseja deslogar?",
+                        positiveAction = {
+                            Toast.makeText(this, "Deslogando", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@MinhacontaActivity, LoginActivity::class.java))
+                            preferencesManager.estaLogado = false
+                            finishAffinity()
+                        }
+                    )
+                    true
+                }
+                R.id.privacidade -> {
+                    Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
+        }
+        popupMenu.show()
+    }
+
+    private fun showConfirmationDialog(title: String, message: String, positiveAction: () -> Unit) {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        builder.setTitle(title)
+        builder.setMessage(message)
+
+        builder.setPositiveButton("Sim") { dialog, _ ->
+            positiveAction.invoke()
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("Não") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -103,6 +178,11 @@ class MinhacontaActivity : AppCompatActivity() {
 
             R.id.profile_edit -> {
                 startActivity(Intent(this, EditarPerfilActivity::class.java))
+                true
+            }
+
+            R.id.configs -> {
+                showPopupMenu(findViewById(R.id.configs))
                 true
             }
 

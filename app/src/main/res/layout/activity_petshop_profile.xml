@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".PetshopProfileActivity">
 
+
     <ImageView
         android:id="@+id/background"
         android:layout_width="match_parent"
@@ -22,7 +23,7 @@
         android:id="@+id/barra_tarefas"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#03A9F4"
+        android:background="@color/corfundoazul"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +35,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardpetshop"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@color/white"
         app:cardCornerRadius="8dp"
@@ -52,6 +53,13 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <ImageView
+                android:id="@+id/editProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/baseline_edit_24"
+                />
+
         <ImageView
             android:id="@+id/imagePetshop"
             android:layout_width="match_parent"
@@ -67,38 +75,53 @@
                 android:id="@+id/nomePetshop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="nomee"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:background="#A1FFFFFF"
+                android:elevation="20dp"
+                android:padding="8dp"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imageOpen"
+                app:layout_constraintEnd_toEndOf="@id/cardpet"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@id/cardpet"
+                app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
+                app:layout_constraintVertical_bias="0.206"
+                tools:text="@tools:sample/cities" />
 
             <TextView
                 android:id="@+id/descricaoPetshop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="aaaaa"
-                android:textSize="14sp"
-                android:textColor="@android:color/black" />
+                android:elevation="20dp"
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:textColor="@android:color/black"
+                tools:text="@tools:sample/cities"/>
 
             <TextView
                 android:id="@+id/servicosPetshop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="aaaaa"
-                android:textSize="14sp"
-                android:textColor="@android:color/black" />
+                android:elevation="20dp"
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:textColor="@android:color/black"
+                tools:text="@tools:sample/cities"/>
 
             <TextView
                 android:id="@+id/localizacaoPetshop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="aaaaa"
-                android:textSize="14sp"
-                android:textColor="#373737" />
+                android:elevation="20dp"
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:textColor="#474747"
+                tools:text="@tools:sample/cities" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

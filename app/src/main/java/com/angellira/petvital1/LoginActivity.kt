@@ -74,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
     private fun botaoLogin() {
         binding.botaoLogin.setOnClickListener {
             lifecycleScope.launch(IO) {
-                verificarLogin()
+                verificarLogin(this@LoginActivity)
                 finishAffinity()
                 preferencesManager.estaLogado = true
             }
@@ -82,37 +82,40 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private suspend fun verificarLogin(
-//        context: Context,
+        context: Context,
     ) {
 
-//        val db = Room.databaseBuilder(
-//            context.applicationContext,
-//            AppDatabase::class.java, "Petvital.db"
-//        ).build()
+        val db = Room.databaseBuilder(
+            context.applicationContext,
+            AppDatabase::class.java, "Petvital.db"
+        ).build()
 
         val email = binding.textEmailLogin.text.toString()
         preferencesManager.userId = email
         val senha = binding.editTextPassword.text.toString()
 
-//        val usuarioDao = db.usuarioDao()
-//        val usuario = usuarioDao.pegarEmailUsuario(email)
+        val usuarioDao = db.usuarioDao()
+        val usuario = usuarioDao.pegarEmailUsuario(email)
 
-        val userApi = UsersApi.retrofitService
-        val user = userApi.getUsers(email)
+//        val userApi = UsersApi.retrofitService
+//        val user = userApi.getUsers(email)
 
         if (
-//            usuario == null &&
-            user == null) {
+            usuario == null
+//            &&
+//            user == null
+            ) {
             withContext(Main) {
                 Toast.makeText(this@LoginActivity, "Esse cadastro não existe!", Toast.LENGTH_SHORT)
                     .show()
             }
         } else if (
-//            usuario!!.email == email
-//            && usuario.password == senha
+            usuario.email == email
+            && usuario.password == senha
 //            ||
-                user.email == email
-            && user.password == senha) {
+//                user.email == email
+//            && user.password == senha
+            ) {
             withContext(Main) {
                 Toast.makeText(this@LoginActivity, "Login efetuado!", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))

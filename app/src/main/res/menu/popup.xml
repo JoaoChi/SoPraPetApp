@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/inicio"
+        android:title="Início" />
+    <item
+            android:id="@+id/perfil"
+            android:title="Meu Perfil" />
+        <item
+            android:id="@+id/ajuda"
+            android:title="Ajuda" />
+    <item
+        android:id="@+id/config"
+        android:title="Configurações" />
+        <item
+            android:id="@+id/sair"
+            android:title="Sair da conta" />
+    <item
+        android:id="@+id/privacidade"
+        android:title="Termos de uso" />
+
+
+</menu>

@@ -4,7 +4,10 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -33,8 +36,8 @@ class EditarPerfilActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setupView()
         preferencesManager = PreferencesManager(this)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundo)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         botaoExcluirConta()
         botaoEsqueciaSenha()
@@ -94,6 +97,73 @@ class EditarPerfilActivity : AppCompatActivity() {
         }
     }
 
+    private fun showPopupMenu(view: View) {
+
+        val popupMenu = PopupMenu(this, view)
+        val inflater: MenuInflater = popupMenu.menuInflater
+        inflater.inflate(R.menu.popup, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.inicio -> {
+                    Toast.makeText(this, "Voltando ao início", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@EditarPerfilActivity, MainActivity::class.java))
+                    true
+                }
+                R.id.perfil -> {
+                    Toast.makeText(this, "Perfil", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@EditarPerfilActivity, MinhacontaActivity::class.java))
+                    true
+                }
+                R.id.ajuda -> {
+                    Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.config -> {
+                    Toast.makeText(this, "Configurações", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@EditarPerfilActivity, EditarPerfilActivity::class.java))
+                    true
+                }
+                R.id.sair -> {
+                    showConfirmationDialog(
+                        title = "Deseja sair?",
+                        message = "Certeza que deseja deslogar?",
+                        positiveAction = {
+                            Toast.makeText(this, "Deslogando", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@EditarPerfilActivity, LoginActivity::class.java))
+                            preferencesManager.estaLogado = false
+                            finishAffinity()
+                        }
+                    )
+                    true
+                }
+                R.id.privacidade -> {
+                    Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
+        }
+        popupMenu.show()
+    }
+
+    private fun showConfirmationDialog(title: String, message: String, positiveAction: () -> Unit) {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        builder.setTitle(title)
+        builder.setMessage(message)
+
+        builder.setPositiveButton("Sim") { dialog, _ ->
+            positiveAction.invoke()
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("Não") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.editprofile, menu)
         return true
@@ -109,6 +179,10 @@ class EditarPerfilActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.voltarPagina -> {
                 startActivity(Intent(this, MinhacontaActivity::class.java))
+                true
+            }
+            R.id.configs -> {
+                showPopupMenu(findViewById(R.id.configs))
                 true
             }
 

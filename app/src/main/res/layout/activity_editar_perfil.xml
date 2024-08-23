@@ -11,7 +11,7 @@
         android:id="@+id/barra_tarefas"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#56D1C5"
+        android:background="@color/corfundo"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,30 +24,30 @@
         android:id="@+id/buttonExcluirConta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FF0000"
+        android:backgroundTint="@color/corfundo"
         android:hapticFeedbackEnabled="false"
         android:text="Excluir Conta"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.816"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.641" />
+        app:layout_constraintVertical_bias="0.963" />
 
     <Button
         android:id="@+id/button2esquecisenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#4CAF50"
+        android:backgroundTint="@color/corfundoazul"
         android:hapticFeedbackEnabled="false"
         android:text="Alterar senha"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.189"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.641" />
+        app:layout_constraintVertical_bias="0.877" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,6 +50,13 @@
             android:padding="16dp">
 
             <ImageView
+                android:id="@+id/editProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/baseline_edit_24"
+                />
+
+            <ImageView
                 android:id="@+id/imageOpen"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"

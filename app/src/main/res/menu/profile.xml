@@ -17,10 +17,10 @@
         />
 
     <item
-        android:id="@+id/logo"
-        android:icon="@drawable/petvital__4__removebg_preview"
+        android:id="@+id/configs"
+        android:icon="@drawable/baseline_menu_24"
         android:title="profile"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         />
 
 </menu>
