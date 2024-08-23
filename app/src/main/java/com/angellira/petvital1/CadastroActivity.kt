@@ -26,6 +26,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.UUID
 
 class CadastroActivity : AppCompatActivity() {
 
@@ -63,7 +64,7 @@ class CadastroActivity : AppCompatActivity() {
             val senha = binding.passwordEditText.text.toString()
             val senha2 = binding.password2.text.toString()
             val cpf = "123124"
-            val imagem = "https://pbs.twimg.com/profile_images/1575462499931004929/zis9UHm0_400x400.jpg"
+            val imagem = "https://firebasestorage.googleapis.com/v0/b/pets-f26d1.appspot.com/o/pastor-alemao-filhote.png?alt=media&token=ed8ab0d9-3d4d-466a-b937-e14f7d481886"
 
             if (senha != senha2) {
                 Toast.makeText(this, "As senhas devem coincidir! ", Toast.LENGTH_SHORT).show()
