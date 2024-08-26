@@ -26,6 +26,7 @@ import coil.decode.ImageDecoderDecoder
 import coil.load
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityMainBinding
+import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
 import com.angellira.petvital1.recyclerview.adapter.ListaFotos
 import kotlinx.coroutines.Dispatchers.IO
@@ -78,6 +79,8 @@ class MainActivity : AppCompatActivity() {
                 AppDatabase::class.java, "Petvital.db"
             ).build()
             val petDao = db.petDao()
+//            val userApi = UsersApi.retrofitService
+//            val pets = userApi.getPets()
             val listaPet = petDao.getPet()
 
             withContext(Main) {

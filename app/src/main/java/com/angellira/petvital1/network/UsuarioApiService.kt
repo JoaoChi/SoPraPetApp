@@ -39,10 +39,10 @@ interface UsuariosApiService{
     @DELETE("users/{id}")
     suspend fun deleteUser(@Path("id") id: String)
 
-    @GET("pets")
-    suspend fun getPets() : Map<String, Pet>
+    @GET("/pets")
+    suspend fun getPets() : List<Pet>
 
-    @POST("pets")
+    @POST("/pets")
     suspend fun savePets(@Body pet: Pet)
 
     @POST("pets/{id}")
