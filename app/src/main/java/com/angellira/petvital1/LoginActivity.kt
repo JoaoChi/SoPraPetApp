@@ -97,24 +97,24 @@ class LoginActivity : AppCompatActivity() {
         val usuarioDao = db.usuarioDao()
         val usuario = usuarioDao.pegarEmailUsuario(email)
 
-//        val userApi = UsersApi.retrofitService
-//        val user = userApi.getUsers(email)
+        val userApi = UsersApi.retrofitService
+        val user = userApi.getUsers(email)
 
         if (
             usuario == null
-//            &&
-//            user == null
+            &&
+            user == null
             ) {
             withContext(Main) {
                 Toast.makeText(this@LoginActivity, "Esse cadastro não existe!", Toast.LENGTH_SHORT)
                     .show()
             }
         } else if (
-            usuario.email == email
+            usuario!!.email == email
             && usuario.password == senha
-//            ||
-//                user.email == email
-//            && user.password == senha
+            ||
+                user.email == email
+            && user.password == senha
             ) {
             withContext(Main) {
                 Toast.makeText(this@LoginActivity, "Login efetuado!", Toast.LENGTH_SHORT).show()

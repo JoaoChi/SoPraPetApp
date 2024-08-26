@@ -10,7 +10,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.http.Body
 import retrofit2.http.DELETE
+import retrofit2.http.Field
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -33,8 +35,8 @@ interface UsuariosApiService{
     @POST("/users")
     suspend fun saveUser(@Body user: User)
 
-    @PUT("users/{id}")
-    suspend fun editUser(@Path("id") id: String, @Body user: User): Response<Unit>
+    @PATCH("/users/{email}/password")
+    suspend fun putUser(@retrofit2.http.Query("email") email: String, @retrofit2.http.Query("newPassword") newPassword: String)
 
     @DELETE("users/{id}")
     suspend fun deleteUser(@Path("id") id: String)

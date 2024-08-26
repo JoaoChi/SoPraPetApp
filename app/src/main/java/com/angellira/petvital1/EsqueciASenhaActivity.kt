@@ -14,6 +14,7 @@ import androidx.room.Room
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.databinding.ActivityEsqueciAsenhaBinding
+import com.angellira.petvital1.model.User
 import com.angellira.petvital1.model.Usuario
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
@@ -64,6 +65,9 @@ class EsqueciASenhaActivity : AppCompatActivity() {
         val usuarioDao = db.usuarioDao()
         usuarioDao.pegarEmailUsuario(email)
 
+        val userApi = UsersApi.retrofitService
+        val user = userApi.getUsers(email)
+
         if (novasenha2.isEmpty() || novasenha1.isEmpty() || email.isEmpty()) {
             withContext(Main) {
                 Toast.makeText(this@EsqueciASenhaActivity, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
@@ -73,6 +77,8 @@ class EsqueciASenhaActivity : AppCompatActivity() {
                 Toast.makeText(this@EsqueciASenhaActivity, "As senhas devem ser iguais!", Toast.LENGTH_SHORT).show()
             }
         }else{
+            user.password = novasenha1
+            userApi.putUser(preferencesManager.userId.toString(), novasenha1)
             usuarioDao.updateSenha(novasenha1, email)
         }
 
