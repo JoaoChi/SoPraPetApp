@@ -37,12 +37,12 @@
         android:ems="10"
         android:hint="Nome"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/imagemPetshop"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
-        app:layout_constraintVertical_bias="0.294" />
+        app:layout_constraintVertical_bias="0.032" />
 
     <EditText
         android:id="@+id/descricaoPetshop"
@@ -100,10 +100,10 @@
 
     <Button
         android:id="@+id/buttonSalvarPetshop"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
-        android:backgroundTint="@color/corfundo"
+        android:backgroundTint="@color/corfundoazul"
         android:text="Salvar Petshop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
