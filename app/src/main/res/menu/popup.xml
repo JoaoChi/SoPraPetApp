@@ -10,15 +10,16 @@
         <item
             android:id="@+id/ajuda"
             android:title="Ajuda" />
-    <item
-        android:id="@+id/config"
-        android:title="Configurações" />
+
         <item
             android:id="@+id/sair"
             android:title="Sair da conta" />
     <item
         android:id="@+id/privacidade"
         android:title="Termos de uso" />
+    <item
+        android:id="@+id/config"
+        android:title="Excluir Conta" />
 
 
 </menu>
