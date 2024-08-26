@@ -85,9 +85,11 @@ class EditarPerfilActivity : AppCompatActivity() {
             ).build()
 
             val email = preferencesManager.userId
+            val userApi = UsersApi.retrofitService
 
             val userDao = db.usuarioDao()
             if (email != null) {
+                userApi.deleteUser(email)
                 userDao.deletarUsuario(email)
             }else{
                 withContext(Main){
