@@ -44,9 +44,13 @@ class MinhacontaActivity : AppCompatActivity() {
         lifecycleScope.launch {
             pegarDadosUser(this@MinhacontaActivity)
         }
-        botaoeditconta()
+        botaoEsqueciaSenha()
+        botaoeditarConta()
+    }
+
+    private fun botaoeditarConta() {
         val botaoeditarConta = binding.editProfile
-        botaoeditarConta.setOnClickListener{
+        botaoeditarConta.setOnClickListener {
             val dialogFragment = EditProfileDialogFragment()
             dialogFragment.show(supportFragmentManager, "EditProfileDialogFragment")
         }
@@ -86,12 +90,6 @@ class MinhacontaActivity : AppCompatActivity() {
         }
     }
 
-    private fun botaoeditconta(){
-        binding.editProfile.setOnClickListener{
-            startActivity(Intent(this, EditarPerfilActivity::class.java))
-        }
-    }
-
     private fun botaoDeslogarPreferences() {
 
         val buttonDeslogar = binding.buttonsair
@@ -102,6 +100,12 @@ class MinhacontaActivity : AppCompatActivity() {
             }
             startActivity(deslogarLogin)
             finishAffinity()
+        }
+    }
+
+    private fun botaoEsqueciaSenha() {
+        binding.button2esquecisenha.setOnClickListener {
+            startActivity(Intent(this, EsqueciASenhaActivity::class.java))
         }
     }
 
