@@ -7,6 +7,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -36,11 +38,11 @@ class EditarPerfilActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setupView()
         preferencesManager = PreferencesManager(this)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundo)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundoazul)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundoazul)
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         botaoExcluirConta()
-        botaoEsqueciaSenha()
+        conferirCheck()
     }
 
     private fun setupView() {
@@ -91,11 +93,33 @@ class EditarPerfilActivity : AppCompatActivity() {
             if (email != null) {
                 userApi.deleteUser(email)
                 userDao.deletarUsuario(email)
-            }else{
-                withContext(Main){
-                    Toast.makeText(this@EditarPerfilActivity, "Email não localizado.", Toast.LENGTH_SHORT).show()
+            } else {
+                withContext(Main) {
+                    Toast.makeText(
+                        this@EditarPerfilActivity,
+                        "Email não localizado.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
+        }
+    }
+
+    private fun conferirCheck() {
+        binding.checkBox1.setOnClickListener {
+            verificarCheckBoxes()
+        }
+
+        binding.checkBox2.setOnClickListener {
+            verificarCheckBoxes()
+        }
+    }
+
+    private fun verificarCheckBoxes() {
+        if (binding.checkBox1.isChecked && binding.checkBox2.isChecked) {
+            binding.buttonExcluirConta.visibility = VISIBLE
+        } else {
+            binding.buttonExcluirConta.visibility = GONE
         }
     }
 
@@ -112,37 +136,53 @@ class EditarPerfilActivity : AppCompatActivity() {
                     startActivity(Intent(this@EditarPerfilActivity, MainActivity::class.java))
                     true
                 }
+
                 R.id.perfil -> {
                     Toast.makeText(this, "Perfil", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this@EditarPerfilActivity, MinhacontaActivity::class.java))
                     true
                 }
+
                 R.id.ajuda -> {
                     Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
                     true
                 }
+
                 R.id.config -> {
                     Toast.makeText(this, "Configurações", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@EditarPerfilActivity, EditarPerfilActivity::class.java))
+                    startActivity(
+                        Intent(
+                            this@EditarPerfilActivity,
+                            EditarPerfilActivity::class.java
+                        )
+                    )
                     true
                 }
+
                 R.id.sair -> {
                     showConfirmationDialog(
                         title = "Deseja sair?",
                         message = "Certeza que deseja deslogar?",
                         positiveAction = {
                             Toast.makeText(this, "Deslogando", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@EditarPerfilActivity, LoginActivity::class.java))
+                            startActivity(
+                                Intent(
+                                    this@EditarPerfilActivity,
+                                    LoginActivity::class.java
+                                )
+                            )
                             preferencesManager.estaLogado = false
                             finishAffinity()
                         }
                     )
                     true
                 }
+
                 R.id.privacidade -> {
                     Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
                     true
                 }
+
                 else -> false
             }
         }
@@ -171,18 +211,13 @@ class EditarPerfilActivity : AppCompatActivity() {
         return true
     }
 
-    private fun botaoEsqueciaSenha() {
-        binding.button2esquecisenha.setOnClickListener {
-            startActivity(Intent(this, EsqueciASenhaActivity::class.java))
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.voltarPagina -> {
                 startActivity(Intent(this, MinhacontaActivity::class.java))
                 true
             }
+
             R.id.configs -> {
                 showPopupMenu(findViewById(R.id.configs))
                 true
