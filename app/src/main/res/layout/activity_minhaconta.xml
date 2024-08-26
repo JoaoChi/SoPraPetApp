@@ -134,16 +134,32 @@
 
     <Button
         android:id="@+id/buttonsair"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/corfundoazul"
         android:text="Sair da conta"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2esquecisenha" />
+
+    <Button
+        android:id="@+id/button2esquecisenha"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/corfundoazul"
+        android:hapticFeedbackEnabled="false"
+        android:text="Alterar senha"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardPerfil"
+        app:layout_constraintVertical_bias="0.197" />
 
     <TextView
         android:id="@+id/textProfile"
@@ -161,5 +177,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
         />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

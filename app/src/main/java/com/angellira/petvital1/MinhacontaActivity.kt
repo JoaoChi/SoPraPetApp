@@ -1,5 +1,6 @@
 package com.angellira.petvital1
 
+import EditProfileDialogFragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -44,6 +45,11 @@ class MinhacontaActivity : AppCompatActivity() {
             pegarDadosUser(this@MinhacontaActivity)
         }
         botaoeditconta()
+        val botaoeditarConta = binding.editProfile
+        botaoeditarConta.setOnClickListener{
+            val dialogFragment = EditProfileDialogFragment()
+            dialogFragment.show(supportFragmentManager, "EditProfileDialogFragment")
+        }
     }
 
     private fun setupView() {
