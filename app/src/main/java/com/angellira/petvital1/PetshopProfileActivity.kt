@@ -21,8 +21,8 @@ import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.load
 import com.angellira.petvital1.database.AppDatabase
-import com.angellira.petvital1.databinding.ActivityPetProfileBinding
 import com.angellira.petvital1.databinding.ActivityPetshopProfileBinding
+import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -33,7 +33,6 @@ class PetshopProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPetshopProfileBinding
     private lateinit var preferencesManager: PreferencesManager
-    private var petshopId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,16 +102,21 @@ class PetshopProfileActivity : AppCompatActivity() {
 
     }
 
-    private fun deletePetshop() {
+    private suspend fun deletePetshop() {
 
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "Petvital.db"
         ).build()
-        val petshopDao = db.petshopDao()
-        petshopId = intent.getLongExtra("uid", 0)
+        val userApi = UsersApi.retrofitService
+        val petshopId = intent.getStringExtra("uid")
 
-        petshopDao.deletarPetshop(petshopId)
+        if (petshopId != null) {
+            userApi.deletarPetshop(petshopId)
+            db.petshopDao().deletarPet(petshopId)
+        }else{
+            Toast.makeText(this@PetshopProfileActivity, "Petshop não encontrado", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun showPopupMenu(view: View) {

@@ -75,21 +75,21 @@ class CadastrarPetshopActivity : AppCompatActivity() {
 
             val nome = binding.nomePetshop.text.toString()
             val description = binding.descricaoPetshop.text.toString()
-            val peso = binding.localizacaoPetshop.text.toString()
-            val idade = binding.servicosPetshop.text.toString()
+            val localizacao = binding.localizacaoPetshop.text.toString()
+            val servicos = binding.servicosPetshop.text.toString()
             val imagem = binding.imagemPetshop.text.toString()
             val cnpj = binding.textCnpj.text.toString()
 
             if (nome.isNotEmpty() &&
                 description.isNotEmpty() &&
-                peso.isNotEmpty() &&
-                idade.isNotEmpty() &&
+                localizacao.isNotEmpty() &&
+                servicos.isNotEmpty() &&
                 imagem.isNotEmpty()
             ) {
                 lifecycleScope.launch(IO) {
                     registrarPetshop(
                         this@CadastrarPetshopActivity,
-                        nome, description, peso, idade, imagem, cnpj
+                        nome, description, localizacao, servicos, imagem, cnpj
                     )
                     withContext(Main) {
                         Toast.makeText(this@CadastrarPetshopActivity, "Cadastrado", Toast.LENGTH_SHORT).show()
@@ -128,6 +128,8 @@ class CadastrarPetshopActivity : AppCompatActivity() {
             return
         }
 
+        val petshopApi = UsersApi.retrofitService
+
         val novoPetshop = Petshop(
             name = nome,
             descricao = description,
@@ -137,6 +139,7 @@ class CadastrarPetshopActivity : AppCompatActivity() {
             cnpj = cnpj
         )
         withContext(IO) {
+            petshopApi.savePetshop(novoPetshop)
             petshopDao.cadastrarPetshop(novoPetshop)
         }
     }

@@ -53,8 +53,11 @@ interface UsuariosApiService{
     @DELETE("pets/{id}")
     suspend fun deletePet(@Path("id")id: String)
 
-    @POST("Petshops")
-    suspend fun savePetshop(@Body petshop: Petshop)
+    @DELETE("/petshops/{uid}")
+    suspend fun deletarPetshop(@Path("uid") uid: String)
+
+    @POST("/petshops")
+    suspend fun savePetshop(@Body petshop: Petshop): Response<Void>
 
     @GET("Petshops")
     suspend fun getPetshop() : Map<String, Petshop>

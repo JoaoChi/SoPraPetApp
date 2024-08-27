@@ -83,7 +83,7 @@ class CadastrarPetActivity : AppCompatActivity() {
                 idade.isNotEmpty() &&
                 imagem.isNotEmpty()
             ) {
-                lifecycleScope.launch(IO) {
+                lifecycleScope.launch {
                     registrarPet(
                         this@CadastrarPetActivity,
                         nome, description, peso, idade, imagem

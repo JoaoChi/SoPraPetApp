@@ -22,6 +22,7 @@ import coil.decode.ImageDecoderDecoder
 import coil.load
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityPetProfileBinding
+import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -32,7 +33,6 @@ class PetProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPetProfileBinding
     private lateinit var preferencesManager: PreferencesManager
-    private var petId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,16 +101,22 @@ class PetProfileActivity : AppCompatActivity() {
 
     }
 
-    private fun deletePet() {
+    private suspend fun deletePet() {
 
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "Petvital.db"
         ).build()
+        val userApi = UsersApi.retrofitService
         val petDao = db.petDao()
-        petId = intent.getLongExtra("id", 0)
+        val petId = intent.getStringExtra("id")
 
-        petDao.deletarPet(petId)
+        if (petId != null) {
+            petDao.deletarPet(petId)
+            userApi.deletePet(petId)
+        }else{
+            Toast.makeText(this@PetProfileActivity, "Pet não encontrado", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun showPopupMenu(view: View) {

@@ -81,7 +81,6 @@ class MainActivity : AppCompatActivity() {
             val petDao = db.petDao()
             val userApi = UsersApi.retrofitService
             val pets = userApi.getPets()
-            val listaPet = petDao.getPet()
 
             withContext(Main) {
                 recyclerView = binding.textItensRecyclerview
