@@ -123,7 +123,7 @@ class CadastrarPetshopActivity : AppCompatActivity() {
 
         if (petshopExiste != null) {
             withContext(Main) {
-                Toast.makeText(this@CadastrarPetshopActivity, "Email Já existe!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CadastrarPetshopActivity, "CNPJ já existe!", Toast.LENGTH_SHORT).show()
             }
             return
         }
