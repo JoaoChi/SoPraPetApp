@@ -75,8 +75,6 @@ class LoginActivity : AppCompatActivity() {
         binding.botaoLogin.setOnClickListener {
             lifecycleScope.launch(IO) {
                 verificarLogin(this@LoginActivity)
-                finishAffinity()
-                preferencesManager.estaLogado = true
             }
         }
     }
@@ -98,27 +96,33 @@ class LoginActivity : AppCompatActivity() {
         val usuario = usuarioDao.pegarEmailUsuario(email)
 
         val userApi = UsersApi.retrofitService
-        val user = userApi.getUsers(email)
+        val user = try {
+            userApi.getUsers(email)
+        } catch (e: Exception) {
+            null
+        }
 
         if (
             usuario == null
             &&
             user == null
-            ) {
+        ) {
             withContext(Main) {
                 Toast.makeText(this@LoginActivity, "Esse cadastro não existe!", Toast.LENGTH_SHORT)
                     .show()
             }
         } else if (
-            usuario!!.email == email
+            usuario?.email == email
             && usuario.password == senha
             ||
-                user.email == email
+            user?.email == email
             && user.password == senha
-            ) {
+        ) {
             withContext(Main) {
                 Toast.makeText(this@LoginActivity, "Login efetuado!", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                preferencesManager.estaLogado = true
+                finishAffinity()
             }
         } else {
             withContext(Main) {
@@ -128,8 +132,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun botaoEditSenha(){
-        binding.textEsqueciAsenha.setOnClickListener{
+    private fun botaoEditSenha() {
+        binding.textEsqueciAsenha.setOnClickListener {
             startActivity(Intent(this, EsqueciASenhaActivity::class.java))
         }
     }

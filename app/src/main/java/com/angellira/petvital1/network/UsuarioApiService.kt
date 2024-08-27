@@ -44,8 +44,8 @@ interface UsuariosApiService{
     @GET("/pets")
     suspend fun getPets() : List<Pet>
 
-    @POST("/pets")
-    suspend fun savePets(@Body pet: Pet)
+        @POST("/pets")
+        suspend fun savePets(@Body pet: Pet)
 
     @POST("pets/{id}")
     suspend fun savePetId(@Body pet: Pet, @Path("id")id: String)

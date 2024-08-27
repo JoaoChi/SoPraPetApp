@@ -1,6 +1,7 @@
 package com.angellira.petvital1
 
 import EditProfileDialogFragment
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -20,6 +21,7 @@ import androidx.room.Room
 import coil.load
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityMinhacontaBinding
+import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -79,14 +81,26 @@ class MinhacontaActivity : AppCompatActivity() {
 
             val usuarioDao = db.usuarioDao()
             val usuario = usuarioDao.pegarEmailUsuario(email.toString())
+            val userApi = UsersApi.retrofitService
+            val user = userApi.getUsers(email.toString())
+
+            if(usuario == null){
+                withContext(Main) {
+                    binding.textNome.text = user.name
+                    binding.textCpf.text = user.cpf
+                    binding.textTelefone.text = user.password
+                    binding.imageOpen.load(user.imagem)
+                }
+            }
+            else{
             withContext(Main) {
-                binding.textNome.text = usuario!!.name
-                binding.textCpf.text = usuario!!.cpf
-                binding.textTelefone.text = usuario!!.password
-                binding.imageOpen.load(usuario.imagem)
+                binding.textNome.text = usuario?.name
+                binding.textCpf.text = usuario?.cpf
+                binding.textTelefone.text = usuario?.password
+                binding.imageOpen.load(usuario?.imagem)
 
             }
-
+            }
         }
     }
 
@@ -94,12 +108,21 @@ class MinhacontaActivity : AppCompatActivity() {
 
         val buttonDeslogar = binding.buttonsair
         buttonDeslogar.setOnClickListener {
-            preferencesManager.logout()
-            val deslogarLogin = Intent(this, LoginActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            startActivity(deslogarLogin)
-            finishAffinity()
+            showConfirmationDialog(
+                title = "Deseja sair?",
+                message = "Certeza que deseja deslogar?",
+                positiveAction = {
+                    Toast.makeText(this, "Deslogando", Toast.LENGTH_SHORT).show()
+                    startActivity(
+                        Intent(
+                            this@MinhacontaActivity,
+                            LoginActivity::class.java
+                        )
+                    )
+                    preferencesManager.estaLogado = false
+                    finishAffinity()
+                }
+            )
         }
     }
 
@@ -122,36 +145,47 @@ class MinhacontaActivity : AppCompatActivity() {
                     startActivity(Intent(this@MinhacontaActivity, MainActivity::class.java))
                     true
                 }
+
                 R.id.perfil -> {
                     Toast.makeText(this, "Já está no perfil", Toast.LENGTH_SHORT).show()
                     true
                 }
+
                 R.id.ajuda -> {
                     Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
                     true
                 }
+
                 R.id.config -> {
                     Toast.makeText(this, "Configurações", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this@MinhacontaActivity, EditarPerfilActivity::class.java))
                     true
                 }
+
                 R.id.sair -> {
                     showConfirmationDialog(
                         title = "Deseja sair?",
                         message = "Certeza que deseja deslogar?",
                         positiveAction = {
                             Toast.makeText(this, "Deslogando", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@MinhacontaActivity, LoginActivity::class.java))
+                            startActivity(
+                                Intent(
+                                    this@MinhacontaActivity,
+                                    LoginActivity::class.java
+                                )
+                            )
                             preferencesManager.estaLogado = false
                             finishAffinity()
                         }
                     )
                     true
                 }
+
                 R.id.privacidade -> {
                     Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
                     true
                 }
+
                 else -> false
             }
         }

@@ -113,6 +113,7 @@ class CadastrarPetActivity : AppCompatActivity() {
         ).build()
 
         val petDao = db.petDao()
+        val petApi = UsersApi.retrofitService
 
         val novoPet = Pet(
             name = nome,
@@ -122,6 +123,7 @@ class CadastrarPetActivity : AppCompatActivity() {
             imagem = imagem
         )
         withContext(IO) {
+            petApi.savePets(novoPet)
             petDao.cadastrarPet(novoPet)
         }
     }

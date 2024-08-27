@@ -79,8 +79,8 @@ class MainActivity : AppCompatActivity() {
                 AppDatabase::class.java, "Petvital.db"
             ).build()
             val petDao = db.petDao()
-//            val userApi = UsersApi.retrofitService
-//            val pets = userApi.getPets()
+            val userApi = UsersApi.retrofitService
+            val pets = userApi.getPets()
             val listaPet = petDao.getPet()
 
             withContext(Main) {
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 binding.textItensRecyclerview.layoutManager =
                     LinearLayoutManager(this@MainActivity)
                 val adapter = ListaFotos(
-                    listaPet,
+                    pets,
                     onItemClickListener = { pet ->
                         val intent = Intent(this@MainActivity, PetProfileActivity::class.java)
                         intent.putExtra("descricao", pet.descricao)
