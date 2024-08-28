@@ -38,6 +38,15 @@ interface UsuariosApiService{
     @PATCH("/users/{email}/password")
     suspend fun putUser(@retrofit2.http.Query("email") email: String, @retrofit2.http.Query("newPassword") newPassword: String)
 
+    @PATCH("/users/{email}/details")
+    suspend fun editarPerfilUsuario(
+        @Path("email") meuEmail: String,
+        @retrofit2.http.Query("email") email: String,
+        @retrofit2.http.Query("newNome") newNome: String,
+        @retrofit2.http.Query("newCpf") newCpf: String,
+        @retrofit2.http.Query("newImage") newImage: String
+    )
+
     @DELETE("users/{email}")
     suspend fun deleteUser(@Path("email") email: String)
 

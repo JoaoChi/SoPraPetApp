@@ -30,7 +30,6 @@ import kotlinx.coroutines.withContext
 class EditarPerfilActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditarPerfilBinding
-    private val users = UsersApi.retrofitService
     private lateinit var preferencesManager: PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {

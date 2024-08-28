@@ -6,16 +6,27 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import com.angellira.petvital1.R
+import com.angellira.petvital1.network.UsersApi
+import com.angellira.petvital1.preferences.PreferencesManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class EditProfileDialogFragment : DialogFragment() {
+
+    lateinit var preferencesManager: PreferencesManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        preferencesManager = PreferencesManager(requireContext())
         return inflater.inflate(R.layout.activity_botao_edit, container, false)
     }
 
@@ -32,14 +43,40 @@ class EditProfileDialogFragment : DialogFragment() {
 //        }
 
         buttonSave.setOnClickListener {
-            // Obtenha os dados inseridos
-            val newEmail = editTextEmail.text.toString()
-            val newPhone = editTextPhone.text.toString()
-            val newImage = buttonChooseImage.text.toString()
-            // Lógica para salvar os novos dados
-            dismiss() // Fechar o dialog quando o botão "Salvar" é pressionado
+            val userApi = UsersApi.retrofitService
+
+            var newNome = editTextEmail.text.toString()
+            var newCpf = editTextPhone.text.toString()
+            var newImage = buttonChooseImage.text.toString()
+
+            lifecycleScope.launch(IO) {
+                val antigoUser = withContext(IO) {
+                    userApi.getUsers(preferencesManager.userId.toString())
+                }
+
+                if (newImage.isEmpty()) {
+                    newImage = antigoUser.imagem
+                }
+                if (newCpf.isEmpty()) {
+                    newCpf = antigoUser.cpf
+                }
+                if (newNome.isEmpty()) {
+                    newNome = antigoUser.name
+                }
+                userApi.editarPerfilUsuario(antigoUser.email,
+                    antigoUser.email,
+                    newNome,
+                    newCpf,
+                    newImage)
+                    withContext(Main){
+                        Toast.makeText(requireContext(), "Atualizado com sucesso!", Toast.LENGTH_SHORT).show()
+                        preferencesManager.userId = newNome
+                    }
+                dismiss()
+            }
         }
     }
+
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(
