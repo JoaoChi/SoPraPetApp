@@ -1,7 +1,6 @@
 package com.angellira.petvital1
 
 import EditProfileDialogFragment
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -56,6 +55,9 @@ class MinhacontaActivity : AppCompatActivity() {
             val dialogFragment = EditProfileDialogFragment()
             dialogFragment.show(supportFragmentManager, "EditProfileDialogFragment")
         }
+//        lifecycleScope.launch {
+//            pegarDadosUser(this@MinhacontaActivity)
+//        }
     }
 
     private fun setupView() {
@@ -94,10 +96,10 @@ class MinhacontaActivity : AppCompatActivity() {
             }
             else{
             withContext(Main) {
-                binding.textNome.text = usuario?.name
-                binding.textCpf.text = usuario?.cpf
-                binding.textTelefone.text = usuario?.password
-                binding.imageOpen.load(usuario?.imagem)
+                binding.textNome.text = usuario.name
+                binding.textCpf.text = usuario.cpf
+                binding.textTelefone.text = usuario.password
+                binding.imageOpen.load(usuario.imagem)
 
             }
             }

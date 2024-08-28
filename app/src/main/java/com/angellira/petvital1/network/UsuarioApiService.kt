@@ -42,7 +42,7 @@ interface UsuariosApiService{
     suspend fun editarPerfilUsuario(
         @Path("email") meuEmail: String,
         @retrofit2.http.Query("email") email: String,
-        @retrofit2.http.Query("newNome") newNome: String,
+        @retrofit2.http.Query("newName") newName: String,
         @retrofit2.http.Query("newCpf") newCpf: String,
         @retrofit2.http.Query("newImage") newImage: String
     )
