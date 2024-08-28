@@ -117,6 +117,8 @@ class CadastrarPetshopActivity : AppCompatActivity() {
         ).build()
 
         val petshopDao = db.petshopDao()
+        val petshopApi = UsersApi.retrofitService
+
         val petshopExiste = withContext(Main) {
             petshopDao.pegarCnpj(cnpj)
         }
@@ -128,7 +130,6 @@ class CadastrarPetshopActivity : AppCompatActivity() {
             return
         }
 
-        val petshopApi = UsersApi.retrofitService
 
         val novoPetshop = Petshop(
             name = nome,
