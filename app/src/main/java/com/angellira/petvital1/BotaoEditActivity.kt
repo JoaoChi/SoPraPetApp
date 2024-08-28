@@ -70,7 +70,6 @@ class EditProfileDialogFragment : DialogFragment() {
                     newImage)
                     withContext(Main){
                         Toast.makeText(requireContext(), "Atualizado com sucesso!", Toast.LENGTH_SHORT).show()
-                        preferencesManager.userId = newNome
                     }
                 dismiss()
             }
