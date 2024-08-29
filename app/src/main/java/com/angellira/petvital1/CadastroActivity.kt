@@ -1,7 +1,11 @@
 package com.angellira.petvital1
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.widget.Toast
@@ -26,12 +30,14 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.UUID
+import java.io.ByteArrayOutputStream
 
 class CadastroActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCadastroBinding
     private lateinit var preferencesManager: PreferencesManager
+    private val PICK_IMAGE_REQUEST = 1
+    private var imagemBase64: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +47,9 @@ class CadastroActivity : AppCompatActivity() {
         preferencesManager = PreferencesManager(this)
         registroUsuario()
         fundoAnimado()
+        binding.botaoAddfoto.setOnClickListener {
+            pegarImagem()
+        }
     }
 
     private fun fundoAnimado() {
@@ -57,6 +66,40 @@ class CadastroActivity : AppCompatActivity() {
         binding.background.load(R.drawable.fundo, imageLoader)
     }
 
+    private fun pegarImagem() {
+        binding.botaoAddfoto.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+    super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == PICK_IMAGE_REQUEST
+            && resultCode == Activity.RESULT_OK
+            && data != null){
+            val imageUri = data.data
+
+            imagemBase64 = encodeImageToBase64(imageUri!!)
+        }
+    }
+
+    fun encodeImageToBase64(imageUri: Uri): String? {
+        val imageStream = contentResolver.openInputStream(imageUri)
+        val bitmap = BitmapFactory.decodeStream(imageStream)
+
+        if (bitmap == null) {
+            return null
+        }
+
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        val imageBytes = byteArrayOutputStream.toByteArray()
+
+        return android.util.Base64.encodeToString(imageBytes, android.util.Base64.DEFAULT)
+    }
+
     private fun registroUsuario() {
         binding.BotaoRegistrar.setOnClickListener {
             val nome = binding.usernameEditText.text.toString()
@@ -64,7 +107,7 @@ class CadastroActivity : AppCompatActivity() {
             val senha = binding.passwordEditText.text.toString()
             val senha2 = binding.password2.text.toString()
             val cpf = "123124"
-            val imagem = "https://firebasestorage.googleapis.com/v0/b/pets-f26d1.appspot.com/o/pastor-alemao-filhote.png?alt=media&token=ed8ab0d9-3d4d-466a-b937-e14f7d481886"
+
 
             if (senha != senha2) {
                 Toast.makeText(this, "As senhas devem coincidir! ", Toast.LENGTH_SHORT).show()
@@ -83,7 +126,7 @@ class CadastroActivity : AppCompatActivity() {
                             email,
                             senha,
                             cpf,
-                            imagem
+                            imagemBase64 ?: ""
                         )
                             startActivity(Intent(this@CadastroActivity, LoginActivity::class.java))
                             Toast.makeText(
