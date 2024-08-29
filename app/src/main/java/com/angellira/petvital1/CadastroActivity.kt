@@ -47,9 +47,7 @@ class CadastroActivity : AppCompatActivity() {
         preferencesManager = PreferencesManager(this)
         registroUsuario()
         fundoAnimado()
-        binding.botaoAddfoto.setOnClickListener {
-            pegarImagem()
-        }
+        pegarImagem()
     }
 
     private fun fundoAnimado() {
@@ -107,7 +105,6 @@ class CadastroActivity : AppCompatActivity() {
             val senha = binding.passwordEditText.text.toString()
             val senha2 = binding.password2.text.toString()
             val cpf = "123124"
-
 
             if (senha != senha2) {
                 Toast.makeText(this, "As senhas devem coincidir! ", Toast.LENGTH_SHORT).show()

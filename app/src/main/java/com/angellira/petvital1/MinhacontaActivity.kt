@@ -1,10 +1,12 @@
 package com.angellira.petvital1
 
 import EditProfileDialogFragment
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
 import android.view.Menu
@@ -16,6 +18,7 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -30,12 +33,14 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
 
 class MinhacontaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMinhacontaBinding
     private lateinit var preferencesManager: PreferencesManager
-
+//    private val PICK_IMAGE_REQUEST = 1
+//    private var imagemBase64: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,9 +64,6 @@ class MinhacontaActivity : AppCompatActivity() {
             val dialogFragment = EditProfileDialogFragment()
             dialogFragment.show(supportFragmentManager, "EditProfileDialogFragment")
         }
-//        lifecycleScope.launch {
-//            pegarDadosUser(this@MinhacontaActivity)
-//        }
     }
 
     private fun setupView() {
@@ -76,6 +78,38 @@ class MinhacontaActivity : AppCompatActivity() {
             insets
         }
     }
+
+//    private fun pegarImagem() {
+//            val intent = Intent(Intent.ACTION_PICK)
+//            intent.type = "image/*"
+//            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+//    }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if(requestCode == PICK_IMAGE_REQUEST
+//            && resultCode == Activity.RESULT_OK
+//            && data != null){
+//            val imageUri = data.data
+//
+//            imagemBase64 = encodeImageToBase64(imageUri!!)
+//            trocarfoto()
+//        }
+//    }
+
+//    fun encodeImageToBase64(imageUri: Uri): String? {
+//        val imageStream = contentResolver.openInputStream(imageUri)
+//        val bitmap = BitmapFactory.decodeStream(imageStream)
+//
+//        if (bitmap == null) {
+//            Toast.makeText(this@MinhacontaActivity, "erro", Toast.LENGTH_SHORT).show()        }
+//
+//        val byteArrayOutputStream = ByteArrayOutputStream()
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+//        val imageBytes = byteArrayOutputStream.toByteArray()
+//
+//        return Base64.encodeToString(imageBytes, Base64.DEFAULT)
+//    }
 
     private suspend fun pegarDadosUser(context: Context) {
         val email = preferencesManager.userId
@@ -118,7 +152,35 @@ class MinhacontaActivity : AppCompatActivity() {
                 }
             }
         }
+//        binding.trocarimagem.setOnClickListener{
+//            pegarImagem()
+//        }
     }
+
+//    private fun trocarfoto() {
+//        val email = preferencesManager.userId
+//        lifecycleScope.launch(IO) {
+//            val userApi = UsersApi.retrofitService
+//            val user = userApi.getUsers(email.toString())
+//
+//            userApi.editarPerfilUsuario(
+//                user.email,
+//                user.email,
+//                user.name,
+//                user.cpf,
+//                imagemBase64 ?: ""
+//            )
+//            withContext(Main) {
+//                Toast.makeText(
+//                    this@MinhacontaActivity,
+//                    "Atualizado com sucesso!",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//                startActivity(Intent(this@MinhacontaActivity, MainActivity::class.java))
+//            }
+//
+//        }
+//    }
 
     fun decodeBase64ToBitmap(base64Str: String): Bitmap? {
         return try {

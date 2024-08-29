@@ -39,11 +39,34 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <TextView
+                android:id="@+id/textProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#A1FFFFFF"
+                android:padding="8dp"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16dp"
+                android:text="Perfil"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/cardPerfil"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
+                />
+
             <ImageView
                 android:id="@+id/editProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/baseline_edit_24" />
+
+            <ImageView
+                android:id="@+id/trocarimagem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/baseline_image_search_24" />
 
             <ImageView
                 android:id="@+id/imageOpen"
@@ -127,7 +150,6 @@
                 tools:text="@tools:sample/cities" />
 
 
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -160,23 +182,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardPerfil"
         app:layout_constraintVertical_bias="0.197" />
-
-    <TextView
-        android:id="@+id/textProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#A1FFFFFF"
-        android:padding="8dp"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="16dp"
-        android:text="Perfil"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/cardPerfil"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
-        />
 
 
 
