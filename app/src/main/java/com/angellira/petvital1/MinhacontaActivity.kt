@@ -3,11 +3,15 @@ package com.angellira.petvital1
 import EditProfileDialogFragment
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -86,23 +90,42 @@ class MinhacontaActivity : AppCompatActivity() {
             val userApi = UsersApi.retrofitService
             val user = userApi.getUsers(email.toString())
 
-            if(usuario == null){
+            if (user.name.isNotEmpty()) {
                 withContext(Main) {
                     binding.textNome.text = user.name
                     binding.textCpf.text = user.cpf
                     binding.textTelefone.text = user.password
-                    binding.imageOpen.load(user.imagem)
+
+                    val imageView: ImageView = binding.imageOpen
+                    val imageBase64 = user.imagem
+                    if (imageBase64 != null) {
+                        val bitmap = decodeBase64ToBitmap(imageBase64)
+                        imageView.setImageBitmap(bitmap)
+                        if(bitmap != null){
+                            binding.imageOpen.setImageBitmap(bitmap)
+                        }else {
+                            Toast.makeText(this@MinhacontaActivity, "Erro ao decodificar a imagem!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            } else {
+                withContext(Main) {
+                    binding.textNome.text = usuario!!.name
+                    binding.textCpf.text = usuario.cpf
+                    binding.textTelefone.text = usuario.password
+                    binding.imageOpen.load(usuario.imagem)
+
                 }
             }
-            else{
-            withContext(Main) {
-                binding.textNome.text = usuario.name
-                binding.textCpf.text = usuario.cpf
-                binding.textTelefone.text = usuario.password
-                binding.imageOpen.load(usuario.imagem)
+        }
+    }
 
-            }
-            }
+    fun decodeBase64ToBitmap(base64Str: String): Bitmap? {
+        return try {
+            val decodedBytes = Base64.decode(base64Str, Base64.DEFAULT)
+            BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+        } catch (e: IllegalArgumentException) {
+            null
         }
     }
 
