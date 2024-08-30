@@ -50,21 +50,6 @@ class PetshopsActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.barra_petshops))
         preferencesManager = PreferencesManager(this)
         mostrarPetshops()
-        botaoPropaganda()
-    }
-
-    private fun botaoPropaganda() {
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
-
-        binding.bannerPromo.load(R.drawable.mereceomelhor, imageLoader)
     }
 
     private fun setupView() {

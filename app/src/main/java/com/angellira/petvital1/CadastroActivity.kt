@@ -46,22 +46,7 @@ class CadastroActivity : AppCompatActivity() {
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundoazul)
         preferencesManager = PreferencesManager(this)
         registroUsuario()
-        fundoAnimado()
         pegarImagem()
-    }
-
-    private fun fundoAnimado() {
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
-
-        binding.background.load(R.drawable.fundo, imageLoader)
     }
 
     private fun pegarImagem() {

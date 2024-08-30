@@ -17,7 +17,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-private const val BASE_URL = "http://10.0.2.2:8080"
+private const val BASE_URL = "http://192.168.115.240:8080"
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))

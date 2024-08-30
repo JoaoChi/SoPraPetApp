@@ -42,23 +42,8 @@ class PetProfileActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundo)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
         setSupportActionBar(findViewById(R.id.barra_tarefas))
-        fundoAnimado()
         carregandoPet()
         excluirPet()
-    }
-
-    private fun fundoAnimado() {
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
-
-        binding.background.load(R.drawable.fundo, imageLoader)
     }
 
     private fun setupView() {

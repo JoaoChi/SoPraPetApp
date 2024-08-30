@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setupView()
-        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundoazul)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundoazul)
 
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         preferencesManager = PreferencesManager(this)
@@ -55,18 +55,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun botaoPropaganda() {
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
-
-        binding.bannerPromo.load(R.drawable.ver_ofertas, imageLoader)
-
         binding.bannerPromo.setOnClickListener {
             startActivity(Intent(this, PetshopsActivity::class.java))
         }

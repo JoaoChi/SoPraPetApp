@@ -42,22 +42,7 @@ class LoginActivity : AppCompatActivity() {
         verificaLogin()
         botaoRegistro()
         botaoLogin()
-        fundoAnimado()
         botaoEditSenha()
-    }
-
-    private fun fundoAnimado() {
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
-
-        binding.background.load(R.drawable.fundoamarelo, imageLoader)
     }
 
     private fun setupView() {

@@ -45,22 +45,7 @@ class PetshopProfileActivity : AppCompatActivity() {
             setSupportActionBar(findViewById(R.id.barra_tarefas))
             carregandoPet()
             excluirPet()
-            fundoAnimado()
         }
-
-    private fun fundoAnimado() {
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
-
-        binding.background.load(R.drawable.fundoamarelo, imageLoader)
-    }
 
     private fun setupView() {
         binding = ActivityPetshopProfileBinding.inflate(layoutInflater)

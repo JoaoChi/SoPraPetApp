@@ -39,22 +39,6 @@ class CadastrarPetActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
         cadastrarPet()
-        imageLoad()
-    }
-
-    private fun imageLoad() {
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
-
-        binding.cadastrarPet.load(R.drawable.cadastrar_pet, imageLoader)
-
     }
 
     private fun setupView() {

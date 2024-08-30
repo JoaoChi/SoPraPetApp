@@ -39,8 +39,8 @@ class MinhacontaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMinhacontaBinding
     private lateinit var preferencesManager: PreferencesManager
-//    private val PICK_IMAGE_REQUEST = 1
-//    private var imagemBase64: String? = null
+    private val PICK_IMAGE_REQUEST = 1
+    private var imagemBase64: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,37 +79,37 @@ class MinhacontaActivity : AppCompatActivity() {
         }
     }
 
-//    private fun pegarImagem() {
-//            val intent = Intent(Intent.ACTION_PICK)
-//            intent.type = "image/*"
-//            startActivityForResult(intent, PICK_IMAGE_REQUEST)
-//    }
+    private fun pegarImagem() {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if(requestCode == PICK_IMAGE_REQUEST
-//            && resultCode == Activity.RESULT_OK
-//            && data != null){
-//            val imageUri = data.data
-//
-//            imagemBase64 = encodeImageToBase64(imageUri!!)
-//            trocarfoto()
-//        }
-//    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == PICK_IMAGE_REQUEST
+            && resultCode == Activity.RESULT_OK
+            && data != null){
+            val imageUri = data.data
 
-//    fun encodeImageToBase64(imageUri: Uri): String? {
-//        val imageStream = contentResolver.openInputStream(imageUri)
-//        val bitmap = BitmapFactory.decodeStream(imageStream)
-//
-//        if (bitmap == null) {
-//            Toast.makeText(this@MinhacontaActivity, "erro", Toast.LENGTH_SHORT).show()        }
-//
-//        val byteArrayOutputStream = ByteArrayOutputStream()
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-//        val imageBytes = byteArrayOutputStream.toByteArray()
-//
-//        return Base64.encodeToString(imageBytes, Base64.DEFAULT)
-//    }
+            imagemBase64 = encodeImageToBase64(imageUri!!)
+            trocarfoto()
+        }
+    }
+
+    fun encodeImageToBase64(imageUri: Uri): String? {
+        val imageStream = contentResolver.openInputStream(imageUri)
+        val bitmap = BitmapFactory.decodeStream(imageStream)
+
+        if (bitmap == null) {
+            Toast.makeText(this@MinhacontaActivity, "erro", Toast.LENGTH_SHORT).show()        }
+
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        val imageBytes = byteArrayOutputStream.toByteArray()
+
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT)
+    }
 
     private suspend fun pegarDadosUser(context: Context) {
         val email = preferencesManager.userId
@@ -152,35 +152,35 @@ class MinhacontaActivity : AppCompatActivity() {
                 }
             }
         }
-//        binding.trocarimagem.setOnClickListener{
-//            pegarImagem()
-//        }
+        binding.trocarimagem.setOnClickListener{
+            pegarImagem()
+        }
     }
 
-//    private fun trocarfoto() {
-//        val email = preferencesManager.userId
-//        lifecycleScope.launch(IO) {
-//            val userApi = UsersApi.retrofitService
-//            val user = userApi.getUsers(email.toString())
-//
-//            userApi.editarPerfilUsuario(
-//                user.email,
-//                user.email,
-//                user.name,
-//                user.cpf,
-//                imagemBase64 ?: ""
-//            )
-//            withContext(Main) {
-//                Toast.makeText(
-//                    this@MinhacontaActivity,
-//                    "Atualizado com sucesso!",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//                startActivity(Intent(this@MinhacontaActivity, MainActivity::class.java))
-//            }
-//
-//        }
-//    }
+    private fun trocarfoto() {
+        val email = preferencesManager.userId
+        lifecycleScope.launch(IO) {
+            val userApi = UsersApi.retrofitService
+            val user = userApi.getUsers(email.toString())
+
+            userApi.editarPerfilUsuario(
+                user.email,
+                user.email,
+                user.name,
+                user.cpf,
+                imagemBase64 ?: ""
+            )
+            withContext(Main) {
+                Toast.makeText(
+                    this@MinhacontaActivity,
+                    "Atualizado com sucesso!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                startActivity(Intent(this@MinhacontaActivity, MainActivity::class.java))
+            }
+
+        }
+    }
 
     fun decodeBase64ToBitmap(base64Str: String): Bitmap? {
         return try {

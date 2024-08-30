@@ -18,7 +18,7 @@
             android:id="@+id/barra_tarefas"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/corfundociano"
+            android:background="@color/corfundoazul"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
