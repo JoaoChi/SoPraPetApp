@@ -80,16 +80,17 @@ class MinhacontaActivity : AppCompatActivity() {
     }
 
     private fun pegarImagem() {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == PICK_IMAGE_REQUEST
+        if (requestCode == PICK_IMAGE_REQUEST
             && resultCode == Activity.RESULT_OK
-            && data != null){
+            && data != null
+        ) {
             val imageUri = data.data
 
             imagemBase64 = encodeImageToBase64(imageUri!!)
@@ -102,7 +103,8 @@ class MinhacontaActivity : AppCompatActivity() {
         val bitmap = BitmapFactory.decodeStream(imageStream)
 
         if (bitmap == null) {
-            Toast.makeText(this@MinhacontaActivity, "erro", Toast.LENGTH_SHORT).show()        }
+            Toast.makeText(this@MinhacontaActivity, "erro", Toast.LENGTH_SHORT).show()
+        }
 
         val byteArrayOutputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
@@ -135,10 +137,14 @@ class MinhacontaActivity : AppCompatActivity() {
                     if (imageBase64 != null) {
                         val bitmap = decodeBase64ToBitmap(imageBase64)
                         imageView.setImageBitmap(bitmap)
-                        if(bitmap != null){
+                        if (bitmap != null) {
                             binding.imageOpen.setImageBitmap(bitmap)
-                        }else {
-                            Toast.makeText(this@MinhacontaActivity, "Erro ao decodificar a imagem!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(
+                                this@MinhacontaActivity,
+                                "Erro ao decodificar a imagem!",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
@@ -152,7 +158,7 @@ class MinhacontaActivity : AppCompatActivity() {
                 }
             }
         }
-        binding.trocarimagem.setOnClickListener{
+        binding.trocarimagem.setOnClickListener {
             pegarImagem()
         }
     }
@@ -239,7 +245,8 @@ class MinhacontaActivity : AppCompatActivity() {
                 }
 
                 R.id.ajuda -> {
-                    Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Petshops", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@MinhacontaActivity, PetshopsActivity::class.java))
                     true
                 }
 

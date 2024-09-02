@@ -82,7 +82,8 @@ class PetshopsActivity : AppCompatActivity() {
                     true
                 }
                 R.id.ajuda -> {
-                    Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Já está nesta página.", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@PetshopsActivity, PetshopsActivity::class.java))
                     true
                 }
                 R.id.config -> {

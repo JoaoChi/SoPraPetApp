@@ -143,7 +143,8 @@ class EditarPerfilActivity : AppCompatActivity() {
                 }
 
                 R.id.ajuda -> {
-                    Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Petshops", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@EditarPerfilActivity, PetshopsActivity::class.java))
                     true
                 }
 

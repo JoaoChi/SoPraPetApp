@@ -9,7 +9,7 @@
             android:title="Meu Perfil" />
         <item
             android:id="@+id/ajuda"
-            android:title="Ajuda" />
+            android:title="Acessar Petshops" />
 
         <item
             android:id="@+id/sair"
