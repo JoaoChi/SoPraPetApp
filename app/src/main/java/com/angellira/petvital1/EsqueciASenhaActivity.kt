@@ -94,7 +94,11 @@ class EsqueciASenhaActivity : AppCompatActivity() {
                     ).show()
                 }
             }
-            if (email == user.email && senhaAntiga == user.password && novasenha1.isNotEmpty() && novasenha2.isNotEmpty()) {
+            if (email == user.email
+                && senhaAntiga == user.password
+                && novasenha1.isNotEmpty()
+                && novasenha2.isNotEmpty()
+                && novasenha2 == novasenha1) {
                 user.password = novasenha1
                 userApi.putUser(preferencesManager.userId.toString(), novasenha1)
                 usuarioDao.updateSenha(novasenha1, email)
