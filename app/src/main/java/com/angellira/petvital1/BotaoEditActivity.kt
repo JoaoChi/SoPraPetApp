@@ -37,7 +37,7 @@ class EditProfileDialogFragment : DialogFragment() {
 
         val editTextNome = view.findViewById<EditText>(R.id.textemaileditprofile)
         val editTextPhone = view.findViewById<EditText>(R.id.textTelefoneeditProfile)
-        val buttonChooseImage = view.findViewById<EditText>(R.id.textimagemeditprofile)
+//        val buttonChooseImage = view.findViewById<EditText>(R.id.textimagemeditprofile)
         val buttonSave = view.findViewById<Button>(R.id.botaoconfirmaredicaoconta)
 
         buttonSave.setOnClickListener {
@@ -45,15 +45,15 @@ class EditProfileDialogFragment : DialogFragment() {
 
             var newName = editTextNome.text.toString()
             var newCpf = editTextPhone.text.toString()
-            var newImage = buttonChooseImage.text.toString()
+//            var newImage = buttonChooseImage.text.toString()
 
             lifecycleScope.launch(IO) {
                 val antigoUser = withContext(IO) {
                     userApi.getUsers(preferencesManager.userId.toString())
                 }
-                if(newImage.isEmpty()){
-                    newImage = antigoUser.imagem
-                }
+//                if(newImage.isEmpty()){
+//                    newImage = antigoUser.imagem
+//                }
                 if(newCpf.isEmpty()){
                     newCpf = antigoUser.cpf
                 }
@@ -66,7 +66,7 @@ class EditProfileDialogFragment : DialogFragment() {
                     antigoUser.email,
                     newName,
                     newCpf,
-                    newImage)
+                    antigoUser.imagem)
                     withContext(Main){
                         Toast.makeText(requireContext(), "Atualizado com sucesso!", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(requireContext(), MinhacontaActivity::class.java))

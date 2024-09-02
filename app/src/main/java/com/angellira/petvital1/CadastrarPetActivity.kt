@@ -39,6 +39,7 @@ class CadastrarPetActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
         cadastrarPet()
+        botaoVoltar()
     }
 
     private fun setupView() {
@@ -49,6 +50,12 @@ class CadastrarPetActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+    }
+
+    private fun botaoVoltar(){
+        binding.voltarMain.setOnClickListener{
+            startActivity(Intent(this@CadastrarPetActivity, MainActivity::class.java))
         }
     }
 

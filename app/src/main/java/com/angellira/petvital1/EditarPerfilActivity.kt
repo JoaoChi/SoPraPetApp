@@ -71,6 +71,9 @@ class EditarPerfilActivity : AppCompatActivity() {
                     Toast.makeText(this, "Erro", Toast.LENGTH_SHORT).show()
                 }
             }
+            .setNegativeButton("Não"){ dialog, which ->
+                dialog.dismiss()
+            }
         val dialog: AlertDialog = builder.create()
         binding.buttonExcluirConta.setOnClickListener {
             dialog.show()
