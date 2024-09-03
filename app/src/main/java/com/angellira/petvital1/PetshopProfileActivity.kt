@@ -38,14 +38,14 @@ class PetshopProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-            setupView()
-            preferencesManager = PreferencesManager(this)
-            window.statusBarColor = ContextCompat.getColor(this, R.color.corfundoazul)
-            window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
-            setSupportActionBar(findViewById(R.id.barra_tarefas))
-            carregandoPet()
-            excluirPet()
-        }
+        setupView()
+        preferencesManager = PreferencesManager(this)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundoazul)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
+        setSupportActionBar(findViewById(R.id.barra_tarefas))
+        carregandoPet()
+        excluirPet()
+    }
 
     private fun setupView() {
         binding = ActivityPetshopProfileBinding.inflate(layoutInflater)
@@ -79,7 +79,11 @@ class PetshopProfileActivity : AppCompatActivity() {
                 deletePetshop()
                 withContext(Main) {
                     startActivity(Intent(this@PetshopProfileActivity, PetshopsActivity::class.java))
-                    Toast.makeText(this@PetshopProfileActivity, "Petshop Excluido!", Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        this@PetshopProfileActivity,
+                        "Petshop Excluido!",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 }
             }
@@ -97,10 +101,21 @@ class PetshopProfileActivity : AppCompatActivity() {
         val petshopId = intent.getStringExtra("uid")
 
         if (petshopId != null) {
-            userApi.deletarPetshop(petshopId)
-            db.petshopDao().deletarPet(petshopId)
-        }else{
-            Toast.makeText(this@PetshopProfileActivity, "Petshop não encontrado", Toast.LENGTH_SHORT).show()
+            try {
+
+                userApi.deletarPetshop(petshopId)
+                db.petshopDao().deletarPet(petshopId)
+            }catch (e: Exception){
+                withContext(Main){
+                    Toast.makeText(this@PetshopProfileActivity, "Não pode ser excluído offline!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
+            Toast.makeText(
+                this@PetshopProfileActivity,
+                "Petshop não encontrado",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -117,38 +132,54 @@ class PetshopProfileActivity : AppCompatActivity() {
                     startActivity(Intent(this@PetshopProfileActivity, MainActivity::class.java))
                     true
                 }
+
                 R.id.perfil -> {
                     Toast.makeText(this, "Seu perfil", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, MinhacontaActivity::class.java))
                     true
                 }
+
                 R.id.ajuda -> {
                     Toast.makeText(this, "Petshops", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this@PetshopProfileActivity, PetshopsActivity::class.java))
                     true
                 }
+
                 R.id.config -> {
                     Toast.makeText(this, "Configurações", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@PetshopProfileActivity, EditarPerfilActivity::class.java))
+                    startActivity(
+                        Intent(
+                            this@PetshopProfileActivity,
+                            EditarPerfilActivity::class.java
+                        )
+                    )
                     true
                 }
+
                 R.id.sair -> {
                     showConfirmationDialog(
                         title = "Deseja sair?",
                         message = "Certeza que deseja deslogar?",
                         positiveAction = {
                             Toast.makeText(this, "Deslogando", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@PetshopProfileActivity, LoginActivity::class.java))
+                            startActivity(
+                                Intent(
+                                    this@PetshopProfileActivity,
+                                    LoginActivity::class.java
+                                )
+                            )
                             preferencesManager.estaLogado = false
                             finishAffinity()
                         }
                     )
                     true
                 }
+
                 R.id.privacidade -> {
                     Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
                     true
                 }
+
                 else -> false
             }
         }

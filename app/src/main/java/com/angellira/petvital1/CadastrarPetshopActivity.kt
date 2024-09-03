@@ -75,10 +75,6 @@ class CadastrarPetshopActivity : AppCompatActivity() {
                         this@CadastrarPetshopActivity,
                         nome, description, localizacao, servicos, imagem, cnpj
                     )
-                    withContext(Main) {
-                        Toast.makeText(this@CadastrarPetshopActivity, "Cadastrado", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@CadastrarPetshopActivity, PetshopsActivity::class.java))
-                    }
                 }
             } else {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
@@ -109,7 +105,8 @@ class CadastrarPetshopActivity : AppCompatActivity() {
 
         if (petshopExiste != null) {
             withContext(Main) {
-                Toast.makeText(this@CadastrarPetshopActivity, "CNPJ já existe!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CadastrarPetshopActivity, "CNPJ já existe!", Toast.LENGTH_SHORT)
+                    .show()
             }
             return
         }
@@ -124,8 +121,31 @@ class CadastrarPetshopActivity : AppCompatActivity() {
             cnpj = cnpj
         )
         withContext(IO) {
-            petshopApi.savePetshop(novoPetshop)
-            petshopDao.cadastrarPetshop(novoPetshop)
+            try {
+                petshopApi.savePetshop(novoPetshop)
+                petshopDao.cadastrarPetshop(novoPetshop)
+                withContext(Main) {
+                    startActivity(
+                        Intent(
+                            this@CadastrarPetshopActivity,
+                            PetshopsActivity::class.java
+                        )
+                    )
+                    Toast.makeText(
+                        this@CadastrarPetshopActivity,
+                        "Petshop Cadastrado!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                withContext(Main) {
+                    Toast.makeText(
+                        this@CadastrarPetshopActivity,
+                        "Não é possível cadastrar Petshops offline!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
     }
 }

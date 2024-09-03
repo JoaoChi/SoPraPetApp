@@ -63,10 +63,6 @@ class EditarPerfilActivity : AppCompatActivity() {
             .setPositiveButton("Sim") { dialog, wich ->
                 try {
                     deleteUser()
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    Toast.makeText(this, "Sua conta foi deletada!", Toast.LENGTH_SHORT).show()
-                    preferencesManager.logout()
-                    finishAffinity()
                 } catch (e: Exception) {
                     Toast.makeText(this, "Erro", Toast.LENGTH_SHORT).show()
                 }
@@ -93,8 +89,20 @@ class EditarPerfilActivity : AppCompatActivity() {
 
             val userDao = db.usuarioDao()
             if (email != null) {
-                userApi.deleteUser(email)
-                userDao.deletarUsuario(email)
+                try {
+                    userApi.deleteUser(email)
+                    userDao.deletarUsuario(email)
+                    withContext(Main) {
+                        startActivity(Intent(this@EditarPerfilActivity, LoginActivity::class.java))
+                        Toast.makeText(this@EditarPerfilActivity, "Sua conta foi deletada!", Toast.LENGTH_SHORT).show()
+                    }
+                        preferencesManager.logout()
+                    finishAffinity()
+                }catch (e: Exception){
+                    withContext(Main){
+                        Toast.makeText(this@EditarPerfilActivity, "Não é possível deletar conta offline!", Toast.LENGTH_SHORT).show()
+                    }
+                }
             } else {
                 withContext(Main) {
                     Toast.makeText(

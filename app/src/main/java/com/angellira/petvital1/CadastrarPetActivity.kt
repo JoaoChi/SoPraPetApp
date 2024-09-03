@@ -79,10 +79,6 @@ class CadastrarPetActivity : AppCompatActivity() {
                         this@CadastrarPetActivity,
                         nome, description, peso, idade, imagem
                     )
-                    withContext(Main) {
-                        Toast.makeText(this@CadastrarPetActivity, "Cadastrado", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@CadastrarPetActivity, MainActivity::class.java))
-                    }
                 }
             } else {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
@@ -114,9 +110,26 @@ class CadastrarPetActivity : AppCompatActivity() {
             imagem = imagem
         )
         withContext(IO) {
-            petApi.savePets(novoPet)
-            petDao.cadastrarPet(novoPet)
+            try {
+                petApi.savePets(novoPet)
+                petDao.cadastrarPet(novoPet)
+                withContext(Main) {
+                    startActivity(Intent(this@CadastrarPetActivity, MainActivity::class.java))
+                    Toast.makeText(
+                        this@CadastrarPetActivity,
+                        "Pet Cadastrado!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                withContext(Main) {
+                    Toast.makeText(
+                        this@CadastrarPetActivity,
+                        "Não é possível cadastrar Pets offline!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
     }
 }
-

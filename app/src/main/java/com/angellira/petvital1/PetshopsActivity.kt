@@ -63,6 +63,7 @@ class PetshopsActivity : AppCompatActivity() {
             insets
         }
     }
+
     private fun showPopupMenu(view: View) {
 
         val popupMenu = PopupMenu(this, view)
@@ -76,20 +77,24 @@ class PetshopsActivity : AppCompatActivity() {
                     startActivity(Intent(this@PetshopsActivity, MainActivity::class.java))
                     true
                 }
+
                 R.id.perfil -> {
                     Toast.makeText(this, "Seu perfil", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, MinhacontaActivity::class.java))
                     true
                 }
+
                 R.id.ajuda -> {
                     Toast.makeText(this, "Já está nesta página.", Toast.LENGTH_SHORT).show()
                     true
                 }
+
                 R.id.config -> {
                     Toast.makeText(this, "Configurações", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this@PetshopsActivity, EditarPerfilActivity::class.java))
                     true
                 }
+
                 R.id.sair -> {
                     showConfirmationDialog(
                         title = "Deseja sair?",
@@ -103,10 +108,12 @@ class PetshopsActivity : AppCompatActivity() {
                     )
                     true
                 }
+
                 R.id.privacidade -> {
                     Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
                     true
                 }
+
                 else -> false
             }
         }
@@ -140,7 +147,8 @@ class PetshopsActivity : AppCompatActivity() {
                 startActivity(Intent(this, MainActivity::class.java))
                 true
             }
-            R.id.pesquisar ->{
+
+            R.id.pesquisar -> {
                 startActivity(Intent(this, CadastrarPetshopActivity::class.java))
                 true
             }
@@ -149,37 +157,64 @@ class PetshopsActivity : AppCompatActivity() {
                 showPopupMenu(findViewById(R.id.configs))
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     private fun mostrarPetshops() {
         lifecycleScope.launch(IO) {
-            val db = Room.databaseBuilder(
-                applicationContext,
-                AppDatabase::class.java, "Petvital.db"
-            ).build()
-            val petshopDao  = db.petshopDao()
-            val listaPetshop = petshopDao.getAllpetshop()
+            try {
+                val userApi = UsersApi.retrofitService
+                val petshops = userApi.getPetshop()
 
-            withContext(Main) {
-                recyclerView = binding.recyclerViewFeed
-                binding.recyclerViewFeed.layoutManager =
-                    LinearLayoutManager(this@PetshopsActivity)
-                val adapter = ListaPetshops(
-                    listaPetshop,
-                    onItemClickListener = { petshop ->
-                        val intent = Intent(this@PetshopsActivity, PetshopProfileActivity::class.java)
-                        intent.putExtra("descricao", petshop.descricao)
-                        intent.putExtra("foto_petshop", petshop.imagem)
-                        intent.putExtra("nome_petshop", petshop.name)
-                        intent.putExtra("servicos", petshop.servicos)
-                        intent.putExtra("localizacao", petshop.localizacao)
-                        intent.putExtra("uid", petshop.uid)
-                        startActivity(intent)
-                    }
-                )
-                recyclerView.adapter = adapter
+                withContext(Main) {
+                    recyclerView = binding.recyclerViewFeed
+                    binding.recyclerViewFeed.layoutManager =
+                        LinearLayoutManager(this@PetshopsActivity)
+                    val adapter = ListaPetshops(
+                        petshops,
+                        onItemClickListener = { petshop ->
+                            val intent =
+                                Intent(this@PetshopsActivity, PetshopProfileActivity::class.java)
+                            intent.putExtra("descricao", petshop.descricao)
+                            intent.putExtra("foto_petshop", petshop.imagem)
+                            intent.putExtra("nome_petshop", petshop.name)
+                            intent.putExtra("servicos", petshop.servicos)
+                            intent.putExtra("localizacao", petshop.localizacao)
+                            intent.putExtra("uid", petshop.uid)
+                            startActivity(intent)
+                        }
+                    )
+                    recyclerView.adapter = adapter
+                }
+            } catch (e: Exception) {
+                val db = Room.databaseBuilder(
+                    applicationContext,
+                    AppDatabase::class.java, "Petvital.db"
+                ).build()
+                val petshopDao = db.petshopDao()
+                val listaPetshop = petshopDao.getAllpetshop()
+                withContext(Main) {
+                    recyclerView = binding.recyclerViewFeed
+                    binding.recyclerViewFeed.layoutManager =
+                        LinearLayoutManager(this@PetshopsActivity)
+                    val adapter = ListaPetshops(
+                        listaPetshop,
+                        onItemClickListener = { petshop ->
+                            val intent =
+                                Intent(this@PetshopsActivity, PetshopProfileActivity::class.java)
+                            intent.putExtra("descricao", petshop.descricao)
+                            intent.putExtra("foto_petshop", petshop.imagem)
+                            intent.putExtra("nome_petshop", petshop.name)
+                            intent.putExtra("servicos", petshop.servicos)
+                            intent.putExtra("localizacao", petshop.localizacao)
+                            intent.putExtra("uid", petshop.uid)
+                            startActivity(intent)
+                        }
+                    )
+                    recyclerView.adapter = adapter
+                }
             }
         }
     }

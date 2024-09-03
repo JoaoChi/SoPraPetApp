@@ -41,37 +41,50 @@ class EditProfileDialogFragment : DialogFragment() {
         val buttonSave = view.findViewById<Button>(R.id.botaoconfirmaredicaoconta)
 
         buttonSave.setOnClickListener {
-            val userApi = UsersApi.retrofitService
+            try {
+                val userApi = UsersApi.retrofitService
 
-            var newName = editTextNome.text.toString()
-            var newCpf = editTextPhone.text.toString()
+                var newName = editTextNome.text.toString()
+                var newCpf = editTextPhone.text.toString()
 //            var newImage = buttonChooseImage.text.toString()
 
-            lifecycleScope.launch(IO) {
-                val antigoUser = withContext(IO) {
-                    userApi.getUsers(preferencesManager.userId.toString())
-                }
+                lifecycleScope.launch(IO) {
+                    val antigoUser = withContext(IO) {
+                        userApi.getUsers(preferencesManager.userId.toString())
+                    }
 //                if(newImage.isEmpty()){
 //                    newImage = antigoUser.imagem
 //                }
-                if(newCpf.isEmpty()){
-                    newCpf = antigoUser.cpf
-                }
-                if(newName.isEmpty()){
-                    newName = antigoUser.name
-                }
+                    if (newCpf.isEmpty()) {
+                        newCpf = antigoUser.cpf
+                    }
+                    if (newName.isEmpty()) {
+                        newName = antigoUser.name
+                    }
 
-                userApi.editarPerfilUsuario(
-                    antigoUser.email,
-                    antigoUser.email,
-                    newName,
-                    newCpf,
-                    antigoUser.imagem)
-                    withContext(Main){
-                        Toast.makeText(requireContext(), "Atualizado com sucesso!", Toast.LENGTH_SHORT).show()
+                    userApi.editarPerfilUsuario(
+                        antigoUser.email,
+                        antigoUser.email,
+                        newName,
+                        newCpf,
+                        antigoUser.imagem
+                    )
+                    withContext(Main) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Atualizado com sucesso!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         startActivity(Intent(requireContext(), MinhacontaActivity::class.java))
                     }
-                dismiss()
+                    dismiss()
+                }
+            } catch (e: Exception) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Não é possível editar offline!",
+                        Toast.LENGTH_SHORT
+                    ).show()
             }
         }
     }

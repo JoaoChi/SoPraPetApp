@@ -62,36 +62,59 @@ class MainActivity : AppCompatActivity() {
 
     private fun mandandoImagens() {
         lifecycleScope.launch(IO) {
-            val db = Room.databaseBuilder(
-                applicationContext,
-                AppDatabase::class.java, "Petvital.db"
-            ).build()
-            val petDao = db.petDao()
-            val userApi = UsersApi.retrofitService
-            val pets = userApi.getPets()
+            try {
+                val userApi = UsersApi.retrofitService
+                val pets = userApi.getPets()
 
-            withContext(Main) {
-                recyclerView = binding.textItensRecyclerview
-                binding.textItensRecyclerview.layoutManager =
-                    LinearLayoutManager(this@MainActivity)
-                val adapter = ListaFotos(
-                    pets,
-                    onItemClickListener = { pet ->
-                        val intent = Intent(this@MainActivity, PetProfileActivity::class.java)
-                        intent.putExtra("descricao", pet.descricao)
-                        intent.putExtra("foto_pet", pet.imagem)
-                        intent.putExtra("nome_pet", pet.name)
-                        intent.putExtra("idade", pet.idade)
-                        intent.putExtra("peso", pet.peso)
-                        intent.putExtra("id", pet.id)
-                        startActivity(intent)
-                    }
-                )
-                recyclerView.adapter = adapter
+                withContext(Main) {
+                    recyclerView = binding.textItensRecyclerview
+                    binding.textItensRecyclerview.layoutManager =
+                        LinearLayoutManager(this@MainActivity)
+                    val adapter = ListaFotos(
+                        pets,
+                        onItemClickListener = { pet ->
+                            val intent = Intent(this@MainActivity, PetProfileActivity::class.java)
+                            intent.putExtra("descricao", pet.descricao)
+                            intent.putExtra("foto_pet", pet.imagem)
+                            intent.putExtra("nome_pet", pet.name)
+                            intent.putExtra("idade", pet.idade)
+                            intent.putExtra("peso", pet.peso)
+                            intent.putExtra("id", pet.id)
+                            startActivity(intent)
+                        }
+                    )
+                    recyclerView.adapter = adapter
+                }
+            } catch (e: Exception) {
+                val db = Room.databaseBuilder(
+                    applicationContext,
+                    AppDatabase::class.java, "Petvital.db"
+                ).build()
+                val petDao = db.petDao()
+                val pets = petDao.getPet()
+
+                withContext(Main) {
+                    recyclerView = binding.textItensRecyclerview
+                    binding.textItensRecyclerview.layoutManager =
+                        LinearLayoutManager(this@MainActivity)
+                    val adapter = ListaFotos(
+                        pets,
+                        onItemClickListener = { pet ->
+                            val intent = Intent(this@MainActivity, PetProfileActivity::class.java)
+                            intent.putExtra("descricao", pet.descricao)
+                            intent.putExtra("foto_pet", pet.imagem)
+                            intent.putExtra("nome_pet", pet.name)
+                            intent.putExtra("idade", pet.idade)
+                            intent.putExtra("peso", pet.peso)
+                            intent.putExtra("id", pet.id)
+                            startActivity(intent)
+                        }
+                    )
+                    recyclerView.adapter = adapter
+                }
             }
         }
     }
-
     private fun showPopupMenu(view: View) {
 
         val popupMenu = PopupMenu(this, view)

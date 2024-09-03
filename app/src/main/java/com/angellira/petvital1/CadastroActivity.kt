@@ -57,11 +57,12 @@ class CadastroActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
-    super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == PICK_IMAGE_REQUEST
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST
             && resultCode == Activity.RESULT_OK
-            && data != null){
+            && data != null
+        ) {
             val imageUri = data.data
 
             imagemBase64 = encodeImageToBase64(imageUri!!)
@@ -110,12 +111,6 @@ class CadastroActivity : AppCompatActivity() {
                             cpf,
                             imagemBase64 ?: ""
                         )
-                            startActivity(Intent(this@CadastroActivity, LoginActivity::class.java))
-                            Toast.makeText(
-                                this@CadastroActivity,
-                                "Usuario Cadastrado!",
-                                Toast.LENGTH_SHORT
-                            ).show()
                     }
                 } catch (e: Exception) {
                     Toast.makeText(
@@ -154,13 +149,13 @@ class CadastroActivity : AppCompatActivity() {
             return
         }
 
-            val novoUsuario = Usuario(
-                name = nome,
-                email = email,
-                password = senha,
-                imagem = imagem,
-                cpf = cpf
-            )
+        val novoUsuario = Usuario(
+            name = nome,
+            email = email,
+            password = senha,
+            imagem = imagem,
+            cpf = cpf
+        )
         val novoUser = User(
             name = nome,
             email = email,
@@ -171,8 +166,27 @@ class CadastroActivity : AppCompatActivity() {
 
         val userApi = UsersApi.retrofitService
         withContext(IO) {
+            try {
+                userApi.saveUser(novoUser)
                 usuarioDao.cadastrarUsuario(novoUsuario)
-            userApi.saveUser(novoUser)
+                withContext(Main) {
+                    startActivity(Intent(this@CadastroActivity, LoginActivity::class.java))
+                    Toast.makeText(
+                        this@CadastroActivity,
+                        "Usuario Cadastrado!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                withContext(Main) {
+                    Toast.makeText(
+                        this@CadastroActivity,
+                        "Não é possível criar cadastro offline!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
         }
 
     }

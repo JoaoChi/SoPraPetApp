@@ -121,8 +121,7 @@ class MinhacontaActivity : AppCompatActivity() {
                 AppDatabase::class.java, "Petvital.db"
             ).build()
 
-            val usuarioDao = db.usuarioDao()
-            val usuario = usuarioDao.pegarEmailUsuario(email.toString())
+            try {
             val userApi = UsersApi.retrofitService
             val user = userApi.getUsers(email.toString())
 
@@ -148,43 +147,52 @@ class MinhacontaActivity : AppCompatActivity() {
                         }
                     }
                 }
-            } else {
+            }
+            } catch (e: Exception) {
+
+                val usuarioDao = db.usuarioDao()
+                val usuario = usuarioDao.pegarEmailUsuario(email.toString())
                 withContext(Main) {
                     binding.textNome.text = usuario!!.name
                     binding.textCpf.text = usuario.cpf
                     binding.textTelefone.text = usuario.password
                     binding.imageOpen.load(usuario.imagem)
-
                 }
             }
         }
-        binding.trocarimagem.setOnClickListener {
-            pegarImagem()
-        }
+//        binding.trocarimagem.setOnClickListener {
+//            pegarImagem()
+//        }
     }
 
     private fun trocarfoto() {
         val email = preferencesManager.userId
         lifecycleScope.launch(IO) {
-            val userApi = UsersApi.retrofitService
-            val user = userApi.getUsers(email.toString())
+            try {
+                val userApi = UsersApi.retrofitService
+                val user = userApi.getUsers(email.toString())
 
-            userApi.editarPerfilUsuario(
-                user.email,
-                user.email,
-                user.name,
-                user.cpf,
-                imagemBase64 ?: ""
-            )
-            withContext(Main) {
-                Toast.makeText(
-                    this@MinhacontaActivity,
-                    "Atualizado com sucesso!",
-                    Toast.LENGTH_SHORT
-                ).show()
-                startActivity(Intent(this@MinhacontaActivity, MainActivity::class.java))
+                userApi.editarPerfilUsuario(
+                    user.email,
+                    user.email,
+                    user.name,
+                    user.cpf,
+                    imagemBase64 ?: ""
+                )
+                withContext(Main) {
+                    Toast.makeText(
+                        this@MinhacontaActivity,
+                        "Atualizado com sucesso!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    startActivity(Intent(this@MinhacontaActivity, MainActivity::class.java))
+                }
+
+            }catch (e: Exception){
+                withContext(Main){
+                    Toast.makeText(this@MinhacontaActivity, "Não pode atualizar seus dados offline!", Toast.LENGTH_SHORT).show()
+                }
             }
-
         }
     }
 

@@ -97,8 +97,14 @@ class PetProfileActivity : AppCompatActivity() {
         val petId = intent.getStringExtra("id")
 
         if (petId != null) {
-            petDao.deletarPet(petId)
-            userApi.deletePet(petId)
+            try {
+                petDao.deletarPet(petId)
+                userApi.deletePet(petId)
+            }catch (e: Exception){
+                withContext(Main){
+                    Toast.makeText(this@PetProfileActivity, "Não pode excluir offline!", Toast.LENGTH_SHORT).show()
+                }
+            }
         }else{
             Toast.makeText(this@PetProfileActivity, "Pet não encontrado", Toast.LENGTH_SHORT).show()
         }

@@ -115,7 +115,7 @@ class EsqueciASenhaActivity : AppCompatActivity() {
             withContext(Main) {
                 Toast.makeText(
                     this@EsqueciASenhaActivity,
-                    "Esse email não existe.",
+                    "Esse email não existe, ou você está offline.",
                     Toast.LENGTH_SHORT
                 ).show()
             }

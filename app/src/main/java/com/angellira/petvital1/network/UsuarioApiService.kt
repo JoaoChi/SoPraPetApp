@@ -68,8 +68,8 @@ interface UsuariosApiService{
     @POST("/petshops")
     suspend fun savePetshop(@Body petshop: Petshop): Response<Void>
 
-    @GET("Petshops")
-    suspend fun getPetshop() : Map<String, Petshop>
+    @GET("/Petshops")
+    suspend fun getPetshop(): List<Petshop>
 }
 
 

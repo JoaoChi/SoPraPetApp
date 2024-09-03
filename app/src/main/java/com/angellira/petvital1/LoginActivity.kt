@@ -78,7 +78,11 @@ class LoginActivity : AppCompatActivity() {
         val senha = binding.editTextPassword.text.toString()
 
         val usuarioDao = db.usuarioDao()
-        val usuario = usuarioDao.pegarEmailUsuario(email)
+        val usuario = try {
+            usuarioDao.pegarEmailUsuario(email)
+        } catch (e: Exception) {
+            null
+        }
 
         val userApi = UsersApi.retrofitService
         val user = try {
