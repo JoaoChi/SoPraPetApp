@@ -41,14 +41,15 @@ class EditProfileDialogFragment : DialogFragment() {
         val buttonSave = view.findViewById<Button>(R.id.botaoconfirmaredicaoconta)
 
         buttonSave.setOnClickListener {
-            try {
-                val userApi = UsersApi.retrofitService
 
-                var newName = editTextNome.text.toString()
-                var newCpf = editTextPhone.text.toString()
+            val userApi = UsersApi.retrofitService
+
+            var newName = editTextNome.text.toString()
+            var newCpf = editTextPhone.text.toString()
 //            var newImage = buttonChooseImage.text.toString()
 
-                lifecycleScope.launch(IO) {
+            lifecycleScope.launch(IO) {
+                try {
                     val antigoUser = withContext(IO) {
                         userApi.getUsers(preferencesManager.userId.toString())
                     }
@@ -78,13 +79,15 @@ class EditProfileDialogFragment : DialogFragment() {
                         startActivity(Intent(requireContext(), MinhacontaActivity::class.java))
                     }
                     dismiss()
+                } catch (e: Exception) {
+                    withContext(Main) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Não é possível editar offline!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            } catch (e: Exception) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Não é possível editar offline!",
-                        Toast.LENGTH_SHORT
-                    ).show()
             }
         }
     }
