@@ -42,17 +42,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="16dp"/>
 
-    <ImageView
-        android:id="@+id/imageView_logo"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="316dp"
-        android:alpha="0.1"
-        android:contentDescription="logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/petvital__4__removebg_preview" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

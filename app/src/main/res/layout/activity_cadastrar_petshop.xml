@@ -28,43 +28,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/hit_the_follow_button_now_" />
+        app:srcCompat="@drawable/hit_the_follow_button_now___1_" />
 
     <EditText
         android:id="@+id/nomePetshop"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:ems="10"
+        android:maxLength="30"
         android:hint="Nome"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/imagemPetshop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
-        app:layout_constraintVertical_bias="0.294" />
-
-    <EditText
-        android:id="@+id/descricaoPetshop"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="356dp"
-        android:ems="10"
-        android:hint="Descrição"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
-        app:layout_constraintVertical_bias="0.875" />
+        app:layout_constraintVertical_bias="0.032" />
+
+    <EditText
+        android:id="@+id/descricaoPetshop"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="356dp"
+        android:ems="10"
+        android:hint="Descrição"
+        android:inputType="text"
+        android:maxLength="100"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nomePetshop" />
 
     <EditText
         android:id="@+id/localizacaoPetshop"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginBottom="224dp"
         android:ems="10"
+        android:maxLength="50"
         android:hint="Localização"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,9 +77,10 @@
     <EditText
         android:id="@+id/servicosPetshop"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginBottom="152dp"
         android:ems="10"
+        android:maxLength="20"
         android:hint="Serviços"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,9 +91,10 @@
     <EditText
         android:id="@+id/imagemPetshop"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginBottom="292dp"
         android:ems="10"
+        android:maxLength="100"
         android:hint="Imagem (Url)"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -100,10 +104,10 @@
 
     <Button
         android:id="@+id/buttonSalvarPetshop"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
-        android:backgroundTint="@color/corfundo"
+        android:backgroundTint="@color/corfundoazul"
         android:text="Salvar Petshop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -115,8 +119,9 @@
     <EditText
         android:id="@+id/textCnpj"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:ems="10"
+        android:maxLength="11"
         android:hint="Cnpj"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

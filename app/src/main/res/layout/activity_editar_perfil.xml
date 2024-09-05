@@ -11,7 +11,7 @@
         android:id="@+id/barra_tarefas"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#56D1C5"
+        android:background="@color/corfundoazul"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,117 +20,85 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aceito os termos de\n Exclusão de conta."
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonExcluirConta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.383"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
+        app:layout_constraintVertical_bias="0.787" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="Estou ciente de que \n não conseguirei recuperar\n minha conta após excluí-la."
+        app:layout_constraintBottom_toTopOf="@+id/checkBox1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
+        app:layout_constraintVertical_bias="0.931" />
+
     <Button
         android:id="@+id/buttonExcluirConta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FF0000"
+        android:backgroundTint="#FF6262"
         android:hapticFeedbackEnabled="false"
         android:text="Excluir Conta"
         android:textColor="@color/black"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.888"
+        app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.641" />
+        app:layout_constraintVertical_bias="0.581" />
 
-    <Button
-        android:id="@+id/button2esquecisenha"
+    <TextView
+        android:id="@+id/textexcluir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#4CAF50"
-        android:hapticFeedbackEnabled="false"
-        android:text="Alterar senha"
+        android:text="*Excluir conta*"
+        android:textStyle="bold"
+        android:textSize="20dp"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.189"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.641" />
+        app:layout_constraintTop_toBottomOf="@+id/barra_tarefas" />
 
-    <CheckBox
-        android:id="@+id/checkboxBanho"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Banho"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="12dp"
+        android:text="Para excluir sua conta, você precisa confirmar os seguintes temos:"
+        android:textAlignment="center"
+        android:textColor="#FF6262"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.176"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.165" />
-
-    <CheckBox
-        android:id="@+id/checkboxTosa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tosa"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.172"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkboxBanho"
-        app:layout_constraintVertical_bias="0.038" />
-
-    <CheckBox
-        android:id="@+id/checkBoxmedicamentos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Medicamentos"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.212"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkboxTosa"
-        app:layout_constraintVertical_bias="0.044" />
-
-    <CheckBox
-        android:id="@+id/checkboxDoencas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Doencas"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.185"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxmedicamentos"
-        app:layout_constraintVertical_bias="0.046" />
-
-    <CheckBox
-        android:id="@+id/checkBoxOutro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Outro?"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.178"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkboxDoencas"
-        app:layout_constraintVertical_bias="0.059" />
-
-    <EditText
-        android:id="@+id/editTextOutros"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Cite:"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.298"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxOutro"
-        app:layout_constraintVertical_bias="0.035" />
+        app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageView3"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/shutterstock_1569883195_scaled_2560x1280" />
+        app:srcCompat="@drawable/leia_os_termos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

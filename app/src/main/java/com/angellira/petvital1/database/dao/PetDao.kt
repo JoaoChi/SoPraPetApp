@@ -22,7 +22,7 @@ interface PetDao{
 //    suspend fun pegarIdPet(id: Long)
 
     @Query("delete from Pet where id = (:id)")
-    fun deletarPet(id: Long)
+    fun deletarPet(id: String)
 
 }
 

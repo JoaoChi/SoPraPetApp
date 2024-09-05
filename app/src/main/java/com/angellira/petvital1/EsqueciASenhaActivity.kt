@@ -14,6 +14,7 @@ import androidx.room.Room
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.databinding.ActivityEsqueciAsenhaBinding
+import com.angellira.petvital1.model.User
 import com.angellira.petvital1.model.Usuario
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
@@ -41,10 +42,6 @@ class EsqueciASenhaActivity : AppCompatActivity() {
         binding.botaoRedefinirEVoltar.setOnClickListener {
             lifecycleScope.launch(IO) {
                 trocarSenha(this@EsqueciASenhaActivity)
-                withContext(Main){
-                    Toast.makeText(this@EsqueciASenhaActivity, "Senha Atualizada!", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@EsqueciASenhaActivity, LoginActivity::class.java))
-                }
             }
         }
     }
@@ -60,22 +57,69 @@ class EsqueciASenhaActivity : AppCompatActivity() {
         val email = binding.editEmail.text.toString()
         val novasenha1 = binding.editTextNumberPassword.text.toString()
         val novasenha2 = binding.editTextNumberPassword2.text.toString()
+        val senhaAntiga = binding.senhaAntiga.text.toString()
 
-        val usuarioDao = db.usuarioDao()
-        usuarioDao.pegarEmailUsuario(email)
+        try {
 
-        if (novasenha2.isEmpty() || novasenha1.isEmpty() || email.isEmpty()) {
+            val usuarioDao = db.usuarioDao()
+            usuarioDao.pegarEmailUsuario(email)
+
+            val userApi = UsersApi.retrofitService
+            val user = userApi.getUsers(email)
+
+            if (senhaAntiga != user.password) {
+                withContext(Main) {
+                    Toast.makeText(
+                        this@EsqueciASenhaActivity,
+                        "Senha incorreta!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            if (novasenha2.isEmpty() || novasenha1.isEmpty() || email.isEmpty()) {
+                withContext(Main) {
+                    Toast.makeText(
+                        this@EsqueciASenhaActivity,
+                        "Preencha todos os campos!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            if (novasenha2 != novasenha1) {
+                withContext(Main) {
+                    Toast.makeText(
+                        this@EsqueciASenhaActivity,
+                        "As senhas devem ser iguais!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            if (email == user.email
+                && senhaAntiga == user.password
+                && novasenha1.isNotEmpty()
+                && novasenha2.isNotEmpty()
+                && novasenha2 == novasenha1) {
+                user.password = novasenha1
+                userApi.putUser(preferencesManager.userId.toString(), novasenha1)
+                usuarioDao.updateSenha(novasenha1, email)
+                withContext(Main) {
+                    Toast.makeText(
+                        this@EsqueciASenhaActivity,
+                        "Senha Atualizada!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    startActivity(Intent(this@EsqueciASenhaActivity, LoginActivity::class.java))
+                }
+            }
+        } catch (e: Exception) {
             withContext(Main) {
-                Toast.makeText(this@EsqueciASenhaActivity, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@EsqueciASenhaActivity,
+                    "Esse email não existe, ou você está offline.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        }else if(novasenha2 != novasenha1){
-            withContext(Main){
-                Toast.makeText(this@EsqueciASenhaActivity, "As senhas devem ser iguais!", Toast.LENGTH_SHORT).show()
-            }
-        }else{
-            usuarioDao.updateSenha(novasenha1, email)
         }
-
     }
 
     private fun setupView() {

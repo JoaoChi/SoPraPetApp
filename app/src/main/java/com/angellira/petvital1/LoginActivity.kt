@@ -18,6 +18,8 @@ import coil.decode.ImageDecoderDecoder
 import coil.load
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityLoginBinding
+import com.angellira.petvital1.network.UsersApi
+import com.angellira.petvital1.network.UsuariosApiService
 import com.angellira.petvital1.preferences.PreferencesManager
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -40,22 +42,7 @@ class LoginActivity : AppCompatActivity() {
         verificaLogin()
         botaoRegistro()
         botaoLogin()
-        fundoAnimado()
         botaoEditSenha()
-    }
-
-    private fun fundoAnimado() {
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
-
-        binding.background.load(R.drawable.fundoamarelo, imageLoader)
     }
 
     private fun setupView() {
@@ -73,8 +60,6 @@ class LoginActivity : AppCompatActivity() {
         binding.botaoLogin.setOnClickListener {
             lifecycleScope.launch(IO) {
                 verificarLogin(this@LoginActivity)
-                finishAffinity()
-                preferencesManager.estaLogado = true
             }
         }
     }
@@ -93,17 +78,40 @@ class LoginActivity : AppCompatActivity() {
         val senha = binding.editTextPassword.text.toString()
 
         val usuarioDao = db.usuarioDao()
-        val usuario = usuarioDao.pegarEmailUsuario(email)
+        val usuario = try {
+            usuarioDao.pegarEmailUsuario(email)
+        } catch (e: Exception) {
+            null
+        }
 
-        if (usuario == null) {
+        val userApi = UsersApi.retrofitService
+        val user = try {
+            userApi.getUsers(email)
+        } catch (e: Exception) {
+            null
+        }
+
+        if (
+            usuario == null
+            &&
+            user == null
+        ) {
             withContext(Main) {
                 Toast.makeText(this@LoginActivity, "Esse cadastro não existe!", Toast.LENGTH_SHORT)
                     .show()
             }
-        } else if (usuario.email == email && usuario.password == senha) {
+        } else if (
+            usuario?.email == email
+            && usuario.password == senha
+            ||
+            user?.email == email
+            && user.password == senha
+        ) {
             withContext(Main) {
                 Toast.makeText(this@LoginActivity, "Login efetuado!", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                preferencesManager.estaLogado = true
+                finishAffinity()
             }
         } else {
             withContext(Main) {
@@ -113,8 +121,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun botaoEditSenha(){
-        binding.textEsqueciAsenha.setOnClickListener{
+    private fun botaoEditSenha() {
+        binding.textEsqueciAsenha.setOnClickListener {
             startActivity(Intent(this, EsqueciASenhaActivity::class.java))
         }
     }

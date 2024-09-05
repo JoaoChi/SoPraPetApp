@@ -1,7 +1,11 @@
 package com.angellira.petvital1
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.widget.Toast
@@ -21,17 +25,19 @@ import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.model.User
 import com.angellira.petvital1.model.Usuario
 import com.angellira.petvital1.network.UsersApi
-import com.angellira.petvital1.network.UsuariosApiService
 import com.angellira.petvital1.preferences.PreferencesManager
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
 
 class CadastroActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCadastroBinding
     private lateinit var preferencesManager: PreferencesManager
+    private val PICK_IMAGE_REQUEST = 1
+    private var imagemBase64: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,21 +46,42 @@ class CadastroActivity : AppCompatActivity() {
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundoazul)
         preferencesManager = PreferencesManager(this)
         registroUsuario()
-        fundoAnimado()
+        pegarImagem()
     }
 
-    private fun fundoAnimado() {
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
+    private fun pegarImagem() {
+        binding.botaoAddfoto.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        }
+    }
 
-        binding.background.load(R.drawable.fundo, imageLoader)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST
+            && resultCode == Activity.RESULT_OK
+            && data != null
+        ) {
+            val imageUri = data.data
+
+            imagemBase64 = encodeImageToBase64(imageUri!!)
+        }
+    }
+
+    fun encodeImageToBase64(imageUri: Uri): String? {
+        val imageStream = contentResolver.openInputStream(imageUri)
+        val bitmap = BitmapFactory.decodeStream(imageStream)
+
+        if (bitmap == null) {
+            return null
+        }
+
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        val imageBytes = byteArrayOutputStream.toByteArray()
+
+        return android.util.Base64.encodeToString(imageBytes, android.util.Base64.DEFAULT)
     }
 
     private fun registroUsuario() {
@@ -63,8 +90,7 @@ class CadastroActivity : AppCompatActivity() {
             val email = binding.textoregistroEmail.text.toString()
             val senha = binding.passwordEditText.text.toString()
             val senha2 = binding.password2.text.toString()
-            val cpf = ""
-            val imagem = ""
+            val cpf = "123124"
 
             if (senha != senha2) {
                 Toast.makeText(this, "As senhas devem coincidir! ", Toast.LENGTH_SHORT).show()
@@ -76,23 +102,15 @@ class CadastroActivity : AppCompatActivity() {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
             } else {
                 try {
-                    lifecycleScope.launch(IO) {
+                    lifecycleScope.launch {
                         cadastrarUsuario(
                             this@CadastroActivity,
                             nome,
                             email,
                             senha,
                             cpf,
-                            imagem
+                            imagemBase64 ?: ""
                         )
-                        withContext(Main) {
-                            startActivity(Intent(this@CadastroActivity, LoginActivity::class.java))
-                            Toast.makeText(
-                                this@CadastroActivity,
-                                "Usuario Cadastrado!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
                     }
                 } catch (e: Exception) {
                     Toast.makeText(
@@ -111,8 +129,8 @@ class CadastroActivity : AppCompatActivity() {
         nome: String,
         email: String,
         senha: String,
-        imagem: String,
-        cpf: String
+        cpf: String,
+        imagem: String
     ) {
         val db = Room.databaseBuilder(
             context.applicationContext,
@@ -120,7 +138,7 @@ class CadastroActivity : AppCompatActivity() {
         ).build()
 
         val usuarioDao = db.usuarioDao()
-        val usuarioExiste = withContext(Main) {
+        val usuarioExiste = withContext(IO) {
             usuarioDao.pegarEmailUsuario(email)
         }
 
@@ -131,29 +149,47 @@ class CadastroActivity : AppCompatActivity() {
             return
         }
 
-//            val novoUsuario = Usuario(
-//                name = nome,
-//                email = email,
-//                password = senha,
-//                imagem = imagem,
-//                cpf = cpf
-//            )
-            val novoUser = User(
-                name = nome,
-                email = email,
-                password = senha,
-                imagem = imagem,
-                cpf = cpf
-            )
+        val novoUsuario = Usuario(
+            name = nome,
+            email = email,
+            password = senha,
+            imagem = imagem,
+            cpf = cpf
+        )
+        val novoUser = User(
+            name = nome,
+            email = email,
+            password = senha,
+            imagem = imagem,
+            cpf = cpf
+        )
 
         val userApi = UsersApi.retrofitService
-
-            withContext(IO) {
-//                usuarioDao.cadastrarUsuario(novoUsuario)
+        withContext(IO) {
+            try {
                 userApi.saveUser(novoUser)
+                usuarioDao.cadastrarUsuario(novoUsuario)
+                withContext(Main) {
+                    startActivity(Intent(this@CadastroActivity, LoginActivity::class.java))
+                    Toast.makeText(
+                        this@CadastroActivity,
+                        "Usuario Cadastrado!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                withContext(Main) {
+                    Toast.makeText(
+                        this@CadastroActivity,
+                        "Não é possível criar cadastro offline!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
 
         }
+
+    }
 
 
     private fun setupView() {

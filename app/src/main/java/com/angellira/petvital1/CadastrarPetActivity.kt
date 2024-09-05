@@ -39,22 +39,7 @@ class CadastrarPetActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
         cadastrarPet()
-        imageLoad()
-    }
-
-    private fun imageLoad() {
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
-
-        binding.cadastrarPet.load(R.drawable.cadastrar_pet, imageLoader)
-
+        botaoVoltar()
     }
 
     private fun setupView() {
@@ -65,6 +50,12 @@ class CadastrarPetActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+    }
+
+    private fun botaoVoltar(){
+        binding.voltarMain.setOnClickListener{
+            startActivity(Intent(this@CadastrarPetActivity, MainActivity::class.java))
         }
     }
 
@@ -83,15 +74,11 @@ class CadastrarPetActivity : AppCompatActivity() {
                 idade.isNotEmpty() &&
                 imagem.isNotEmpty()
             ) {
-                lifecycleScope.launch(IO) {
+                lifecycleScope.launch {
                     registrarPet(
                         this@CadastrarPetActivity,
                         nome, description, peso, idade, imagem
                     )
-                    withContext(Main) {
-                        Toast.makeText(this@CadastrarPetActivity, "Cadastrado", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@CadastrarPetActivity, MainActivity::class.java))
-                    }
                 }
             } else {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
@@ -113,6 +100,7 @@ class CadastrarPetActivity : AppCompatActivity() {
         ).build()
 
         val petDao = db.petDao()
+        val petApi = UsersApi.retrofitService
 
         val novoPet = Pet(
             name = nome,
@@ -122,8 +110,26 @@ class CadastrarPetActivity : AppCompatActivity() {
             imagem = imagem
         )
         withContext(IO) {
-            petDao.cadastrarPet(novoPet)
+            try {
+                petApi.savePets(novoPet)
+                petDao.cadastrarPet(novoPet)
+                withContext(Main) {
+                    startActivity(Intent(this@CadastrarPetActivity, MainActivity::class.java))
+                    Toast.makeText(
+                        this@CadastrarPetActivity,
+                        "Pet Cadastrado!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                withContext(Main) {
+                    Toast.makeText(
+                        this@CadastrarPetActivity,
+                        "Não é possível cadastrar Pets offline!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
     }
 }
-

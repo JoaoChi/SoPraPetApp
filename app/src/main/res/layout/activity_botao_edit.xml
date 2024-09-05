@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardPerfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/corfundo"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="20dp"
+        android:elevation="30dp"
+        app:layout_constraintVertical_bias="0.192"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#A1FFFFFF"
+                android:padding="8dp"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16dp"
+                android:text="Editar Perfil"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imageOpen"
+                app:layout_constraintEnd_toEndOf="@id/cardpet"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@id/cardpet"
+                app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
+                app:layout_constraintVertical_bias="0.206"
+                />
+
+            <TextView
+                android:id="@+id/textInstrucoes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#A1FFFFFF"
+                android:padding="8dp"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                android:text="Você pode editar apenas um dos campos caso desejar,
+                ou todos eles."
+                app:layout_constraintBottom_toBottomOf="@+id/imageOpen"
+                app:layout_constraintEnd_toEndOf="@id/cardpet"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@id/cardpet"
+                app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
+                app:layout_constraintVertical_bias="0.206"
+                />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="28dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/dia_mundial_do_gato__veterin_rio_cat_felinos_fevereiro_divertido_moderno_post_de_instagram" />
+
+            <EditText
+                android:id="@+id/textemaileditprofile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:elevation="20dp"
+                android:padding="8dp"
+                android:maxLength="30"
+                android:ems="10"
+                android:hint="Trocar nome"
+                android:textColor="#000000"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageOpen"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <EditText
+                android:id="@+id/textTelefoneeditProfile"
+                android:layout_width="match_parent"
+                android:inputType="numberDecimal"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:elevation="20dp"
+                android:hint="Novo telefone"
+                android:padding="8dp"
+                android:textColor="#000000"
+                android:textSize="12dp"
+                android:maxLength="14"
+                android:ems="10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textDescricao"
+                app:layout_constraintVertical_bias="0.0" />
+
+<!--            <EditText-->
+<!--                android:id="@+id/textimagemeditprofile"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="#00EDEDED"-->
+<!--                android:elevation="20dp"-->
+<!--                android:padding="8dp"-->
+<!--                android:hint="Nova imagem"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="12dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.0"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/textPeso"-->
+<!--                app:layout_constraintVertical_bias="0.0"-->
+<!--                />-->
+
+            <Button
+                android:id="@+id/botaoconfirmaredicaoconta"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/corfundo"
+                android:elevation="25dp"
+                android:text="Confirmar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
+                app:layout_constraintVertical_bias="0.646" />
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

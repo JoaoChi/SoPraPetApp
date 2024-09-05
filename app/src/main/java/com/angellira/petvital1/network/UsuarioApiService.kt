@@ -10,12 +10,14 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.http.Body
 import retrofit2.http.DELETE
+import retrofit2.http.Field
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-private const val BASE_URL = "http://10.0.2.2:8080/"
+private const val BASE_URL = "http://192.168.111.141:8080"
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
@@ -23,26 +25,36 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface UsuariosApiService{
-    @GET("users")
-    suspend fun getUsers() :Map<String, User>
 
-    @GET("users/{id}")
+    @GET("/users/{email}")
+    suspend fun getUsers(@retrofit2.http.Query("email") email: String): User
+
+    @GET("/users/{id}")
     suspend fun getUser(@Path("id") id: String) : User
 
-    @POST("users")
+    @POST("/users")
     suspend fun saveUser(@Body user: User)
 
-    @PUT("users/{id}")
-    suspend fun editUser(@Path("id") id: String, @Body user: User): Response<Unit>
+    @PATCH("/users/{email}/password")
+    suspend fun putUser(@retrofit2.http.Query("email") email: String, @retrofit2.http.Query("newPassword") newPassword: String)
 
-    @DELETE("users/{id}")
-    suspend fun deleteUser(@Path("id") id: String)
+    @PATCH("/users/{email}/details")
+    suspend fun editarPerfilUsuario(
+        @Path("email") meuEmail: String,
+        @retrofit2.http.Query("email") email: String,
+        @retrofit2.http.Query("newName") newName: String,
+        @retrofit2.http.Query("newCpf") newCpf: String,
+        @retrofit2.http.Query("newImage") newImage: String
+    )
 
-    @GET("pets")
-    suspend fun getPets() : Map<String, Pet>
+    @DELETE("users/{email}")
+    suspend fun deleteUser(@Path("email") email: String)
 
-    @POST("pets")
-    suspend fun savePets(@Body pet: Pet)
+    @GET("/pets")
+    suspend fun getPets() : List<Pet>
+
+        @POST("/pets")
+        suspend fun savePets(@Body pet: Pet)
 
     @POST("pets/{id}")
     suspend fun savePetId(@Body pet: Pet, @Path("id")id: String)
@@ -50,11 +62,14 @@ interface UsuariosApiService{
     @DELETE("pets/{id}")
     suspend fun deletePet(@Path("id")id: String)
 
-    @POST("Petshops")
-    suspend fun savePetshop(@Body petshop: Petshop)
+    @DELETE("/petshops/{uid}")
+    suspend fun deletarPetshop(@Path("uid") uid: String)
 
-    @GET("Petshops")
-    suspend fun getPetshop() : Map<String, Petshop>
+    @POST("/petshops")
+    suspend fun savePetshop(@Body petshop: Petshop): Response<Void>
+
+    @GET("/Petshops")
+    suspend fun getPetshop(): List<Petshop>
 }
 
 

@@ -35,9 +35,10 @@
     <EditText
         android:id="@+id/editNomePet"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginBottom="444dp"
         android:ems="10"
+        android:maxLength="30"
         android:hint="Nome"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,9 +51,10 @@
     <EditText
         android:id="@+id/editRacaPet"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginBottom="376dp"
         android:ems="10"
+        android:maxLength="100"
         android:hint="Descrição (Raça, cor etc..)"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -64,8 +66,9 @@
     <EditText
         android:id="@+id/editIdade"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:ems="10"
+        android:maxLength="10"
         android:hint="Idade"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,8 +80,9 @@
     <EditText
         android:id="@+id/editPeso"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:ems="10"
+        android:maxLength="10"
         android:hint="Peso (Kg)"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,8 +94,9 @@
     <EditText
         android:id="@+id/editImagem"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:ems="10"
+        android:maxLength="200"
         android:hint="Imagem (Url)"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +107,7 @@
 
     <Button
         android:id="@+id/buttonSalvarPet"
-        android:layout_width="120dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:backgroundTint="#56D1C5"
@@ -113,5 +118,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPeso"
         app:layout_constraintVertical_bias="0.526" />
+
+    <Button
+        android:id="@+id/voltarMain"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#56D1C5"
+        android:text="Cancelar (voltar)"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editPeso"
+        app:layout_constraintVertical_bias="0.768" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

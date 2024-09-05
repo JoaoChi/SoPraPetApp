@@ -1,11 +1,9 @@
 package com.angellira.petvital1.database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.angellira.petvital1.model.Petshop
-import com.angellira.petvital1.model.Usuario
 
 @Dao
 interface PetshopDao{
@@ -19,7 +17,7 @@ interface PetshopDao{
     fun cadastrarPetshop(petshops: Petshop)
 
     @Query("delete from Petshop where uid = (:uid)")
-    fun deletarPetshop(uid: Long)
+    fun deletarPet(uid: String)
 
     @Query("SELECT * FROM petshop WHERE cnpj = :cnpj LIMIT 1")
     suspend fun pegarCnpj(cnpj: String): Petshop?

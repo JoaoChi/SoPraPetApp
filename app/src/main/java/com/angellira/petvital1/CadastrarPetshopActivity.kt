@@ -41,22 +41,6 @@ class CadastrarPetshopActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundo)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
         cadastrarPetshop()
-        imageLoad()
-    }
-
-    private fun imageLoad() {
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
-
-        binding.cadastrarPetshop.load(R.drawable.hit_the_follow_button_now_, imageLoader)
-
     }
 
     private fun setupView() {
@@ -75,26 +59,22 @@ class CadastrarPetshopActivity : AppCompatActivity() {
 
             val nome = binding.nomePetshop.text.toString()
             val description = binding.descricaoPetshop.text.toString()
-            val peso = binding.localizacaoPetshop.text.toString()
-            val idade = binding.servicosPetshop.text.toString()
+            val localizacao = binding.localizacaoPetshop.text.toString()
+            val servicos = binding.servicosPetshop.text.toString()
             val imagem = binding.imagemPetshop.text.toString()
             val cnpj = binding.textCnpj.text.toString()
 
             if (nome.isNotEmpty() &&
                 description.isNotEmpty() &&
-                peso.isNotEmpty() &&
-                idade.isNotEmpty() &&
+                localizacao.isNotEmpty() &&
+                servicos.isNotEmpty() &&
                 imagem.isNotEmpty()
             ) {
                 lifecycleScope.launch(IO) {
                     registrarPetshop(
                         this@CadastrarPetshopActivity,
-                        nome, description, peso, idade, imagem, cnpj
+                        nome, description, localizacao, servicos, imagem, cnpj
                     )
-                    withContext(Main) {
-                        Toast.makeText(this@CadastrarPetshopActivity, "Cadastrado", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@CadastrarPetshopActivity, PetshopsActivity::class.java))
-                    }
                 }
             } else {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
@@ -117,16 +97,20 @@ class CadastrarPetshopActivity : AppCompatActivity() {
         ).build()
 
         val petshopDao = db.petshopDao()
+        val petshopApi = UsersApi.retrofitService
+
         val petshopExiste = withContext(Main) {
             petshopDao.pegarCnpj(cnpj)
         }
 
         if (petshopExiste != null) {
             withContext(Main) {
-                Toast.makeText(this@CadastrarPetshopActivity, "Email Já existe!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CadastrarPetshopActivity, "CNPJ já existe!", Toast.LENGTH_SHORT)
+                    .show()
             }
             return
         }
+
 
         val novoPetshop = Petshop(
             name = nome,
@@ -137,7 +121,31 @@ class CadastrarPetshopActivity : AppCompatActivity() {
             cnpj = cnpj
         )
         withContext(IO) {
-            petshopDao.cadastrarPetshop(novoPetshop)
+            try {
+                petshopApi.savePetshop(novoPetshop)
+                petshopDao.cadastrarPetshop(novoPetshop)
+                withContext(Main) {
+                    startActivity(
+                        Intent(
+                            this@CadastrarPetshopActivity,
+                            PetshopsActivity::class.java
+                        )
+                    )
+                    Toast.makeText(
+                        this@CadastrarPetshopActivity,
+                        "Petshop Cadastrado!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                withContext(Main) {
+                    Toast.makeText(
+                        this@CadastrarPetshopActivity,
+                        "Não é possível cadastrar Petshops offline!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
     }
 }

@@ -17,7 +17,7 @@
     <EditText
         android:id="@+id/textEmailLogin"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:hint="Email"
@@ -31,7 +31,7 @@
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:ems="10"
         android:hint="Senha"
         android:inputType="textPassword"
