@@ -6,5 +6,6 @@
         <domain includeSubdomains="true">10.0.2.2</domain>
         <domain includeSubdomains="true">192.168.115.240</domain>
         <domain includeSubdomains="true">192.168.111.199</domain>
+        <domain includeSubdomains="true">192.168.111.141</domain>
     </domain-config>
 </network-security-config>

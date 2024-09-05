@@ -35,7 +35,7 @@
     <EditText
         android:id="@+id/editNomePet"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginBottom="444dp"
         android:ems="10"
         android:maxLength="30"
@@ -51,7 +51,7 @@
     <EditText
         android:id="@+id/editRacaPet"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginBottom="376dp"
         android:ems="10"
         android:maxLength="100"
@@ -66,7 +66,7 @@
     <EditText
         android:id="@+id/editIdade"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:ems="10"
         android:maxLength="10"
         android:hint="Idade"
@@ -80,7 +80,7 @@
     <EditText
         android:id="@+id/editPeso"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:ems="10"
         android:maxLength="10"
         android:hint="Peso (Kg)"
@@ -94,7 +94,7 @@
     <EditText
         android:id="@+id/editImagem"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:ems="10"
         android:maxLength="200"
         android:hint="Imagem (Url)"
