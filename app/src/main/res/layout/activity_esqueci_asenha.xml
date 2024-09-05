@@ -20,6 +20,20 @@
         app:layout_constraintTop_toBottomOf="@+id/textemail"
         app:layout_constraintVertical_bias="0.367" />
 
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="112dp"
+        android:ems="10"
+        android:hint="Confirme seu email"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/textSenha"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
     <TextView
         android:id="@+id/textSenha"
         android:layout_width="wrap_content"
@@ -56,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.64" />
+        app:layout_constraintVertical_bias="0.759" />
 
     <EditText
         android:id="@+id/editTextNumberPassword"

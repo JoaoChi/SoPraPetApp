@@ -1,7 +1,6 @@
 package com.angellira.petvital1
 
 import android.content.Intent
-import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,53 +12,37 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
 import coil.load
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityPetProfileBinding
+import com.angellira.petvital1.databinding.ActivityPetshopProfileBinding
 import com.angellira.petvital1.preferences.PreferencesManager
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class PetProfileActivity : AppCompatActivity() {
+class PetshopProfileActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityPetProfileBinding
+    private lateinit var binding: ActivityPetshopProfileBinding
     private lateinit var preferencesManager: PreferencesManager
-    private var petId: Long = 0
+    private var petshopId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setupView()
-        preferencesManager = PreferencesManager(this)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundo)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
-        setSupportActionBar(findViewById(R.id.barra_tarefas))
-        fundoAnimado()
-        carregandoPet()
-        excluirPet()
-    }
 
-    private fun fundoAnimado() {
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
-
-        binding.background.load(R.drawable.fundo, imageLoader)
-    }
+            setupView()
+            preferencesManager = PreferencesManager(this)
+            window.statusBarColor = ContextCompat.getColor(this, R.color.corfundo)
+            window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
+            setSupportActionBar(findViewById(R.id.barra_tarefas))
+            carregandoPet()
+            excluirPet()
+        }
 
     private fun setupView() {
-        binding = ActivityPetProfileBinding.inflate(layoutInflater)
+        binding = ActivityPetshopProfileBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -70,27 +53,27 @@ class PetProfileActivity : AppCompatActivity() {
     }
 
     private fun carregandoPet() {
-        val pegandoNome = intent.getStringExtra("nome_pet")
-        val pegandoPhoto = intent.getStringExtra("foto_pet")
+        val pegandoNome = intent.getStringExtra("nome_petshop")
+        val pegandoPhoto = intent.getStringExtra("foto_petshop")
         val pegandoDescricao = intent.getStringExtra("descricao")
-        val pegandoPeso = intent.getStringExtra("peso")
-        val pegandoIdade = intent.getStringExtra("idade")
+        val pegandoServicos = intent.getStringExtra("servicos")
+        val pegandolocalizacao = intent.getStringExtra("localizacao")
 
-        binding.textDescricao.text = "Descrição: $pegandoDescricao"
-        binding.imageOpen.load(pegandoPhoto)
-        binding.textNome.text = "Nome: $pegandoNome"
-        binding.textPeso.text = "Peso: $pegandoPeso"
-        binding.textIdade.text = "Idade: $pegandoIdade"
+        binding.descricaoPetshop.text = "Descrição: $pegandoDescricao"
+        binding.imagePetshop.load(pegandoPhoto)
+        binding.nomePetshop.text = "Nome: $pegandoNome"
+        binding.servicosPetshop.text = "Serviços: $pegandoServicos"
+        binding.localizacaoPetshop.text = "Localização: $pegandolocalizacao"
 
     }
 
     private fun excluirPet() {
-        binding.excluirPet.setOnClickListener {
+        binding.excluirPetshop.setOnClickListener {
             lifecycleScope.launch(IO) {
-                deletePet()
+                deletePetshop()
                 withContext(Main) {
-                    startActivity(Intent(this@PetProfileActivity, MainActivity::class.java))
-                    Toast.makeText(this@PetProfileActivity, "Pet Excluido!", Toast.LENGTH_SHORT)
+                    startActivity(Intent(this@PetshopProfileActivity, PetshopsActivity::class.java))
+                    Toast.makeText(this@PetshopProfileActivity, "Petshop Excluido!", Toast.LENGTH_SHORT)
                         .show()
                 }
             }
@@ -98,16 +81,16 @@ class PetProfileActivity : AppCompatActivity() {
 
     }
 
-    private fun deletePet() {
+    private fun deletePetshop() {
 
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "Petvital.db"
         ).build()
-        val petDao = db.petDao()
-        petId = intent.getLongExtra("id", 0)
+        val petshopDao = db.petshopDao()
+        petshopId = intent.getLongExtra("uid", 0)
 
-        petDao.deletarPet(petId)
+        petshopDao.deletarPetshop(petshopId)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

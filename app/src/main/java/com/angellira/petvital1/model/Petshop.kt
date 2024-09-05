@@ -6,12 +6,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @Entity
-data class User(
+data class Petshop(
     @PrimaryKey(autoGenerate = true)
     val uid: Int = 0,
-    var cpf: String,
     var name: String,
-    var email: String,
-    var password: String,
-    var imagem: String
-)
+    var imagem: String,
+    var localizacao: String,
+    var descricao: String,
+    var servicos: String,
+    val cnpj: String
+
+    )

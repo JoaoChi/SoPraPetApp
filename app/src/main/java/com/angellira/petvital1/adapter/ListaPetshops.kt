@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.angellira.petvital1.databinding.ActivityRecyclerBinding
-import com.angellira.petvital1.model.Pet
-import com.angellira.petvital1.model.Petshops
+import com.angellira.petvital1.model.Petshop
 
 class ListaPetshops(
-    private val propaganda: List<Petshops>,
-    private val onItemClickListener: (Petshops) -> Unit
+    private val propaganda: List<Petshop>,
+    private val onItemClickListener: (Petshop) -> Unit
 ) : RecyclerView.Adapter<ListaPetshops.ViewHolder>(), Parcelable {
 
     inner class ViewHolder(
@@ -20,7 +19,7 @@ class ListaPetshops(
     ) :
         RecyclerView.ViewHolder(preferencesUsuarioBinding.root) {
 
-        private lateinit var umPetshop: Petshops
+        private lateinit var umPetshop: Petshop
 
         init {
             preferencesUsuarioBinding.root.setOnClickListener {
@@ -30,7 +29,7 @@ class ListaPetshops(
             }
         }
 
-        fun bind(preferencia: Petshops) {
+        fun bind(preferencia: Petshop) {
             this.umPetshop = preferencia
             preferencesUsuarioBinding.imageRecycler.load(umPetshop.imagem)
             preferencesUsuarioBinding.nomePet.setText(umPetshop.name)
@@ -41,8 +40,8 @@ class ListaPetshops(
     constructor(parcel: Parcel) : this(
         TODO("propaganda"),
         TODO("onItemClickListener")
-    ) {
-    }
+    )
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

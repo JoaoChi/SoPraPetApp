@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/imageRecycler"
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_width="400dp"
+            android:layout_height="300dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

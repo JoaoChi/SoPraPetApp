@@ -1,10 +1,14 @@
 package com.angellira.petvital1.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Entity
 data class Pet(
-    var id: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
     var name: String,
     var descricao: String,
     var peso: String,

@@ -1,10 +1,9 @@
 package com.angellira.petvital1.network
 
 import com.angellira.petvital1.model.Pet
-import com.angellira.petvital1.model.Petshops
-import com.angellira.petvital1.model.Usuario
+import com.angellira.petvital1.model.Petshop
+import com.angellira.petvital1.model.User
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Response
@@ -16,50 +15,46 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-private const val BASE_URL = "https://pets-f26d1-default-rtdb.firebaseio.com/"
+private const val BASE_URL = "http://10.0.2.2:8080/"
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
     .baseUrl(BASE_URL)
     .build()
 
-val json = Json {
-    ignoreUnknownKeys = true
-}
-
 interface UsuariosApiService{
-    @GET("Usuario.json")
-    suspend fun getUsers() :Map<String, Usuario>
+    @GET("users")
+    suspend fun getUsers() :Map<String, User>
 
-    @GET("Usuario/{id}.json")
-    suspend fun getUser(@Path("id") id: String) : Usuario
+    @GET("users/{id}")
+    suspend fun getUser(@Path("id") id: String) : User
 
-    @POST("Usuario.json")
-    suspend fun saveUser(@Body user: Usuario)
+    @POST("users")
+    suspend fun saveUser(@Body user: User)
 
-    @PUT("Usuario/{id}.json")
-    suspend fun editUser(@Path("id") id: String, @Body user: Usuario): Response<Unit>
+    @PUT("users/{id}")
+    suspend fun editUser(@Path("id") id: String, @Body user: User): Response<Unit>
 
-    @DELETE("Usuario/{id}.json")
+    @DELETE("users/{id}")
     suspend fun deleteUser(@Path("id") id: String)
 
-    @GET("pets.json")
+    @GET("pets")
     suspend fun getPets() : Map<String, Pet>
 
-    @POST("pets.json")
+    @POST("pets")
     suspend fun savePets(@Body pet: Pet)
 
-    @POST("pets/{id}.json")
+    @POST("pets/{id}")
     suspend fun savePetId(@Body pet: Pet, @Path("id")id: String)
 
-    @DELETE("pets/{id}.json")
+    @DELETE("pets/{id}")
     suspend fun deletePet(@Path("id")id: String)
 
-    @POST("Petshops.json")
-    suspend fun savePetshop(@Body petshops: Petshops)
+    @POST("Petshops")
+    suspend fun savePetshop(@Body petshop: Petshop)
 
-    @GET("Petshops.json")
-    suspend fun getPetshop() : Map<String, Petshops>
+    @GET("Petshops")
+    suspend fun getPetshop() : Map<String, Petshop>
 }
 
 

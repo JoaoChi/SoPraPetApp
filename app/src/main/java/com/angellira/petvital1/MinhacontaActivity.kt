@@ -1,8 +1,6 @@
 package com.angellira.petvital1
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,25 +10,20 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.angellira.petvital1.databinding.ActivityMinhacontaBinding
-import com.angellira.petvital1.model.User
 import com.angellira.petvital1.preferences.PreferencesManager
-import com.angellira.petvital1.preferences.preferenciaCadastro
-import com.angellira.petvital1.recyclerview.adapter.PreferenciasListAdapter
 
 class MinhacontaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMinhacontaBinding
-    private val dados = User()
     private lateinit var preferencesManager: PreferencesManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setupView()
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
-
-        setupView()
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         preferencesManager = PreferencesManager(this)
         botaoPropaganda()

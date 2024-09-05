@@ -19,7 +19,9 @@ import coil.decode.ImageDecoderDecoder
 import coil.load
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityCadastrarPetBinding
+import com.angellira.petvital1.databinding.ActivityCadastrarPetshopBinding
 import com.angellira.petvital1.model.Pet
+import com.angellira.petvital1.model.Petshop
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
 import kotlinx.coroutines.Dispatchers.IO
@@ -28,17 +30,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.UUID
 
-class CadastrarPetActivity : AppCompatActivity() {
+class CadastrarPetshopActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityCadastrarPetBinding
+    private lateinit var binding: ActivityCadastrarPetshopBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setupView()
-        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
-        cadastrarPet()
+        window.statusBarColor = ContextCompat.getColor(this, R.color.corfundo)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
+        cadastrarPetshop()
         imageLoad()
     }
 
@@ -53,12 +55,12 @@ class CadastrarPetActivity : AppCompatActivity() {
             }
             .build()
 
-        binding.cadastrarPet.load(R.drawable.cadastrar_pet, imageLoader)
+        binding.cadastrarPetshop.load(R.drawable.hit_the_follow_button_now_, imageLoader)
 
     }
 
     private fun setupView() {
-        binding = ActivityCadastrarPetBinding.inflate(layoutInflater)
+        binding = ActivityCadastrarPetshopBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -68,14 +70,15 @@ class CadastrarPetActivity : AppCompatActivity() {
         }
     }
 
-    private fun cadastrarPet() {
-        binding.buttonSalvarPet.setOnClickListener {
+    private fun cadastrarPetshop() {
+        binding.buttonSalvarPetshop.setOnClickListener {
 
-            val nome = binding.editNomePet.text.toString()
-            val description = binding.editRacaPet.text.toString()
-            val peso = binding.editPeso.text.toString()
-            val idade = binding.editIdade.text.toString()
-            val imagem = binding.editImagem.text.toString()
+            val nome = binding.nomePetshop.text.toString()
+            val description = binding.descricaoPetshop.text.toString()
+            val peso = binding.localizacaoPetshop.text.toString()
+            val idade = binding.servicosPetshop.text.toString()
+            val imagem = binding.imagemPetshop.text.toString()
+            val cnpj = binding.textCnpj.text.toString()
 
             if (nome.isNotEmpty() &&
                 description.isNotEmpty() &&
@@ -84,13 +87,13 @@ class CadastrarPetActivity : AppCompatActivity() {
                 imagem.isNotEmpty()
             ) {
                 lifecycleScope.launch(IO) {
-                    registrarPet(
-                        this@CadastrarPetActivity,
-                        nome, description, peso, idade, imagem
+                    registrarPetshop(
+                        this@CadastrarPetshopActivity,
+                        nome, description, peso, idade, imagem, cnpj
                     )
                     withContext(Main) {
-                        Toast.makeText(this@CadastrarPetActivity, "Cadastrado", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@CadastrarPetActivity, MainActivity::class.java))
+                        Toast.makeText(this@CadastrarPetshopActivity, "Cadastrado", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@CadastrarPetshopActivity, PetshopsActivity::class.java))
                     }
                 }
             } else {
@@ -99,30 +102,42 @@ class CadastrarPetActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun registrarPet(
+    private suspend fun registrarPetshop(
         context: Context,
         nome: String,
         description: String,
-        peso: String,
-        idade: String,
-        imagem: String
+        localizacao: String,
+        servicos: String,
+        imagem: String,
+        cnpj: String
     ) {
         val db = Room.databaseBuilder(
             context.applicationContext,
             AppDatabase::class.java, "Petvital.db"
         ).build()
 
-        val petDao = db.petDao()
+        val petshopDao = db.petshopDao()
+        val petshopExiste = withContext(Main) {
+            petshopDao.pegarCnpj(cnpj)
+        }
 
-        val novoPet = Pet(
+        if (petshopExiste != null) {
+            withContext(Main) {
+                Toast.makeText(this@CadastrarPetshopActivity, "Email Já existe!", Toast.LENGTH_SHORT).show()
+            }
+            return
+        }
+
+        val novoPetshop = Petshop(
             name = nome,
             descricao = description,
-            peso = peso,
-            idade = idade,
-            imagem = imagem
+            localizacao = localizacao,
+            servicos = servicos,
+            imagem = imagem,
+            cnpj = cnpj
         )
         withContext(IO) {
-            petDao.cadastrarPet(novoPet)
+            petshopDao.cadastrarPetshop(novoPetshop)
         }
     }
 }

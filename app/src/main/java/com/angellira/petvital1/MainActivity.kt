@@ -3,7 +3,6 @@ package com.angellira.petvital1
 import android.content.Intent
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
@@ -14,39 +13,40 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.load
+import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityMainBinding
-import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
 import com.angellira.petvital1.recyclerview.adapter.ListaFotos
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.seconds
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var preferencesManager: PreferencesManager
-    private val pets = UsersApi.retrofitService
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setupView()
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
 
-        setupView()
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         preferencesManager = PreferencesManager(this)
         mandandoImagens()
         botaoPropaganda()
     }
 
-    private fun botaoPropaganda(){
+    private fun botaoPropaganda() {
         val imageLoader = ImageLoader.Builder(this)
             .components {
                 if (SDK_INT >= 28) {
@@ -65,28 +65,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun mandandoImagens() {
-        lifecycleScope.launch {
-                delay(1.seconds)
-                val listaPet = pets.getPets().values.toList()
-                Log.d("ListResult", "ListResult: ${listaPet}")
-                recyclerView = binding.textItensRecyclerview
-                binding.textItensRecyclerview.layoutManager =
-                    LinearLayoutManager(this@MainActivity)
-                val adapter = ListaFotos(
-                    listaPet,
-                    onItemClickListener = { pet ->
-                        val intent = Intent(this@MainActivity, PetProfileActivity::class.java)
-                        intent.putExtra("descricao", pet.descricao)
-                        intent.putExtra("foto_pet", pet.imagem)
-                        intent.putExtra("nome_pet", pet.name)
-                        intent.putExtra("idade", pet.idade)
-                        intent.putExtra("peso", pet.peso)
-                        startActivity(intent)
-                    }
-                )
+        lifecycleScope.launch(IO) {
+            val db = Room.databaseBuilder(
+                applicationContext,
+                AppDatabase::class.java, "Petvital.db"
+            ).build()
+            val petDao = db.petDao()
+            val listaPet = petDao.getPet()
+
+            withContext(Main){
+            recyclerView = binding.textItensRecyclerview
+            binding.textItensRecyclerview.layoutManager =
+                LinearLayoutManager(this@MainActivity)
+            val adapter = ListaFotos(
+                listaPet,
+                onItemClickListener = { pet ->
+                    val intent = Intent(this@MainActivity, PetProfileActivity::class.java)
+                    intent.putExtra("descricao", pet.descricao)
+                    intent.putExtra("foto_pet", pet.imagem)
+                    intent.putExtra("nome_pet", pet.name)
+                    intent.putExtra("idade", pet.idade)
+                    intent.putExtra("peso", pet.peso)
+                    intent.putExtra("id", pet.id)
+                    startActivity(intent)
+                }
+            )
             recyclerView.adapter = adapter
         }
+        }
     }
+
 
     private fun setupView() {
         enableEdgeToEdge()
@@ -111,12 +119,13 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, MinhacontaActivity::class.java))
                 true
             }
-            R.id.action_favorite ->{
+
+            R.id.action_favorite -> {
                 startActivity(Intent(this, CadastrarPetActivity::class.java))
                 true
             }
 
-            R.id.logo ->{
+            R.id.logo -> {
                 startActivity(Intent(this, PetshopsActivity::class.java))
                 true
             }

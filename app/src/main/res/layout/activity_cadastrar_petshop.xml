@@ -10,9 +10,9 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
-        android:layout_width="490dp"
-        android:layout_height="230dp"
-        android:background="#56D1C5"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@color/corfundo"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,96 +22,107 @@
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/cadastrarPet"
+        android:id="@+id/cadastrarPetshop"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:scaleType="centerCrop"
+        android:layout_height="250dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cadastrar_pet" />
+        app:srcCompat="@drawable/hit_the_follow_button_now_" />
 
     <EditText
-        android:id="@+id/editNomePet"
+        android:id="@+id/nomePetshop"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="444dp"
         android:ems="10"
         android:hint="Nome"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/imagemPetshop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
+        app:layout_constraintVertical_bias="0.294" />
+
+    <EditText
+        android:id="@+id/descricaoPetshop"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="356dp"
+        android:ems="10"
+        android:hint="Descrição"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.875" />
 
     <EditText
-        android:id="@+id/editRacaPet"
+        android:id="@+id/localizacaoPetshop"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="376dp"
+        android:layout_marginBottom="224dp"
         android:ems="10"
-        android:hint="Descrição (Raça, cor etc..)"
-        android:inputType="text"
+        android:hint="Localização"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editNomePet" />
+        app:layout_constraintTop_toBottomOf="@+id/imagemPetshop" />
 
     <EditText
-        android:id="@+id/editIdade"
+        android:id="@+id/servicosPetshop"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="152dp"
         android:ems="10"
-        android:hint="Idade"
+        android:hint="Serviços"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editRacaPet"
-        app:layout_constraintVertical_bias="0.058" />
+        app:layout_constraintTop_toBottomOf="@+id/localizacaoPetshop" />
 
     <EditText
-        android:id="@+id/editPeso"
+        android:id="@+id/imagemPetshop"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Peso (Kg)"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editRacaPet"
-        app:layout_constraintVertical_bias="0.255" />
-
-    <EditText
-        android:id="@+id/editImagem"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_marginBottom="292dp"
         android:ems="10"
         android:hint="Imagem (Url)"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editRacaPet"
-        app:layout_constraintVertical_bias="0.456" />
+        app:layout_constraintTop_toBottomOf="@+id/descricaoPetshop" />
 
     <Button
-        android:id="@+id/buttonSalvarPet"
-        android:layout_width="120dp"
+        android:id="@+id/buttonSalvarPetshop"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#56D1C5"
-        android:text="Salvar Pet"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="@color/corfundo"
+        android:text="Salvar Petshop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPeso"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintTop_toBottomOf="@+id/textCnpj"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/textCnpj"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Cnpj"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/servicosPetshop"
+        app:layout_constraintVertical_bias="0.147" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

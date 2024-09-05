@@ -7,12 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<ImageView
+    <ImageView
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:background="@drawable/fundo"/>
+        android:background="@drawable/fundo"
+        android:scaleType="centerCrop" />
 
 
     <androidx.appcompat.widget.Toolbar
@@ -28,96 +28,111 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-
-    <ImageView
-        android:id="@+id/imageOpen"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:scaleType="centerCrop"
-        android:elevation="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textDescricao"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardpet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00FFFFFF"
-        android:textSize="16dp"
-        android:padding="8dp"
-        android:elevation="20dp"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textStyle="bold"
+        android:layout_margin="16dp"
+        android:background="@color/corfundo"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageOpen"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="@tools:sample/cities" />
-
-    <TextView
-        android:id="@+id/textPeso"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#00FFFFFF"
-        android:textSize="16dp"
-        android:padding="8dp"
-        android:elevation="20dp"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textDescricao"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="@tools:sample/cities" />
-
-    <TextView
-        android:id="@+id/textIdade"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#00EDEDED"
-        android:textSize="16dp"
-        android:elevation="20dp"
-        android:padding="8dp"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textPeso"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="@tools:sample/cities" />
-
-    <TextView
-        android:id="@+id/textNome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#A1FFFFFF"
-        android:padding="8dp"
-        android:textAlignment="center"
-        android:elevation="20dp"
-        android:textColor="#000000"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageOpen"
-        app:layout_constraintEnd_toEndOf="@id/imageOpen"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@id/imageOpen"
         app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
-        app:layout_constraintVertical_bias="0.206"
-        tools:text="@tools:sample/cities" />
+        app:layout_constraintVertical_bias="0.192"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/imageOpen"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_margin="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.45"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/textNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#A1FFFFFF"
+                android:elevation="20dp"
+                android:padding="8dp"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imageOpen"
+                app:layout_constraintEnd_toEndOf="@id/cardpet"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@id/cardpet"
+                app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
+                app:layout_constraintVertical_bias="0.206"
+                tools:text="@tools:sample/cities" />
+
+            <TextView
+                android:id="@+id/textDescricao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:elevation="20dp"
+                android:padding="8dp"
+                android:textColor="#000000"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageOpen"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="@tools:sample/cities" />
+
+            <TextView
+                android:id="@+id/textPeso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:elevation="20dp"
+                android:padding="8dp"
+                android:textColor="#000000"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textDescricao"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="@tools:sample/cities" />
+
+            <TextView
+                android:id="@+id/textIdade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00EDEDED"
+                android:elevation="20dp"
+                android:padding="8dp"
+                android:textColor="#000000"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textPeso"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="@tools:sample/cities" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/excluirPet"
@@ -126,12 +141,12 @@
         android:layout_margin="30dp"
         android:layout_marginBottom="4dp"
         android:backgroundTint="#F6C64B"
-        android:text="Excluir Pet"
         android:elevation="20dp"
+        android:text="Excluir Pet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textIdade" />
+        app:layout_constraintTop_toBottomOf="@+id/cardpet" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

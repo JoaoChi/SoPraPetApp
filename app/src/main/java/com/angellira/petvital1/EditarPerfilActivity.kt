@@ -12,10 +12,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
+import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityEditarPerfilBinding
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class EditarPerfilActivity : AppCompatActivity() {
 
@@ -26,11 +31,10 @@ class EditarPerfilActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setupView()
         preferencesManager = PreferencesManager(this)
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundociano)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
-
-        setupView()
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         botaoExcluirConta()
         botaoEsqueciaSenha()
@@ -71,9 +75,22 @@ class EditarPerfilActivity : AppCompatActivity() {
 
 
     private fun deleteUser() {
-        lifecycleScope.launch {
-            val id = preferencesManager.userId
-            users.deleteUser(id.toString())
+        lifecycleScope.launch(IO) {
+            val db = Room.databaseBuilder(
+                applicationContext,
+                AppDatabase::class.java, "Petvital.db"
+            ).build()
+
+            val email = preferencesManager.userId
+
+            val userDao = db.usuarioDao()
+            if (email != null) {
+                userDao.deletarUsuario(email)
+            }else{
+                withContext(Main){
+                    Toast.makeText(this@EditarPerfilActivity, "Email não localizado.", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
