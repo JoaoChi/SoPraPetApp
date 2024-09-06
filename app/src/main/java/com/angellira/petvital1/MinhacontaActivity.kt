@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -17,6 +18,8 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
@@ -160,9 +163,17 @@ class MinhacontaActivity : AppCompatActivity() {
                 }
             }
         }
-//        binding.trocarimagem.setOnClickListener {
-//            pegarImagem()
-//        }
+            val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                if (uri != null) {
+                    Log.d("PhotoPicker", "Selected URI: $uri")
+                    binding.imageOpen.load(uri)
+                } else {
+                    Log.d("PhotoPicker", "No media selected")
+                }
+            }
+        binding.trocarimagem.setOnClickListener {
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
     }
 
     private fun trocarfoto() {
