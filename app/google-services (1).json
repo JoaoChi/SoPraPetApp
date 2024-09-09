@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "114130619983",
+    "project_id": "imagepets-82fe7",
+    "storage_bucket": "imagepets-82fe7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114130619983:android:4f9c5361c806a18e2b643a",
+        "android_client_info": {
+          "package_name": "com.angellira.petvital1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCMhL7yjIcT1JPGAsf8tw_nWbzkySBMJo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

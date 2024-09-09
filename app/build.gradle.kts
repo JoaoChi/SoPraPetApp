@@ -3,7 +3,9 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
     kotlin("kapt")
+    id("com.google.gms.google-services")
 }
+
 
 android {
     namespace = "com.angellira.petvital1"
@@ -93,4 +95,8 @@ dependencies {
 
     // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$room_version")
+    implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-storage")
+
 }

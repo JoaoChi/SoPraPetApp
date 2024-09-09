@@ -26,6 +26,8 @@ import com.angellira.petvital1.model.User
 import com.angellira.petvital1.model.Usuario
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
+import com.google.firebase.Firebase
+import com.google.firebase.storage.storage
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
@@ -37,7 +39,8 @@ class CadastroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCadastroBinding
     private lateinit var preferencesManager: PreferencesManager
     private val PICK_IMAGE_REQUEST = 1
-    private var imagemBase64: String? = null
+    val storage = Firebase.storage
+    private var storageRef = storage.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,24 +67,32 @@ class CadastroActivity : AppCompatActivity() {
             && data != null
         ) {
             val imageUri = data.data
+            uploadImageToFirebase(imageUri)
 
-            imagemBase64 = encodeImageToBase64(imageUri!!)
         }
     }
 
-    fun encodeImageToBase64(imageUri: Uri): String? {
-        val imageStream = contentResolver.openInputStream(imageUri)
-        val bitmap = BitmapFactory.decodeStream(imageStream)
+    private fun uploadImageToFirebase(imageUri: Uri?) {
+        if (imageUri != null) {
+            // Cria uma referência para o Firebase Storage
+            val storage = Firebase.storage
+            val storageRef = storage.reference
 
-        if (bitmap == null) {
-            return null
+            // Cria uma referência para a imagem no Storage
+            val imagesRef = storageRef.child("images/${imageUri.lastPathSegment}")
+
+            // Faz o upload da imagem
+            val uploadTask = imagesRef.putFile(imageUri)
+
+            // Monitora o progresso do upload
+            uploadTask.addOnSuccessListener {
+                // A imagem foi carregada com sucesso
+                Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener {
+                // O upload falhou
+                Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
         }
-
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-        val imageBytes = byteArrayOutputStream.toByteArray()
-
-        return android.util.Base64.encodeToString(imageBytes, android.util.Base64.DEFAULT)
     }
 
     private fun registroUsuario() {
@@ -109,7 +120,7 @@ class CadastroActivity : AppCompatActivity() {
                             email,
                             senha,
                             cpf,
-                            imagemBase64 ?: ""
+                            ""
                         )
                     }
                 } catch (e: Exception) {

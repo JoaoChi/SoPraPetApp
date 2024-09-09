@@ -32,6 +32,8 @@ import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityMinhacontaBinding
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
+import com.google.firebase.Firebase
+import com.google.firebase.storage.storage
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
@@ -134,22 +136,7 @@ class MinhacontaActivity : AppCompatActivity() {
                     binding.textCpf.text = user.cpf
                     binding.textTelefone.text = user.password
 
-                    val imageView: ImageView = binding.imageOpen
-                    val imageBase64 = user.imagem
-                    if (imageBase64 != null) {
-                        val bitmap = decodeBase64ToBitmap(imageBase64)
-                        imageView.setImageBitmap(bitmap)
-                        if (bitmap != null) {
-                            binding.imageOpen.setImageBitmap(bitmap)
-                        } else {
-                            Toast.makeText(
-                                this@MinhacontaActivity,
-                                "Erro ao decodificar a imagem!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
                     }
-                }
             }
             } catch (e: Exception) {
 
@@ -159,7 +146,6 @@ class MinhacontaActivity : AppCompatActivity() {
                     binding.textNome.text = usuario!!.name
                     binding.textCpf.text = usuario.cpf
                     binding.textTelefone.text = usuario.password
-                    binding.imageOpen.load(usuario.imagem)
                 }
             }
         }
@@ -167,6 +153,7 @@ class MinhacontaActivity : AppCompatActivity() {
                 if (uri != null) {
                     Log.d("PhotoPicker", "Selected URI: $uri")
                     binding.imageOpen.load(uri)
+
                 } else {
                     Log.d("PhotoPicker", "No media selected")
                 }
@@ -175,6 +162,7 @@ class MinhacontaActivity : AppCompatActivity() {
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
     }
+
 
     private fun trocarfoto() {
         val email = preferencesManager.userId
@@ -204,15 +192,6 @@ class MinhacontaActivity : AppCompatActivity() {
                     Toast.makeText(this@MinhacontaActivity, "Não pode atualizar seus dados offline!", Toast.LENGTH_SHORT).show()
                 }
             }
-        }
-    }
-
-    fun decodeBase64ToBitmap(base64Str: String): Bitmap? {
-        return try {
-            val decodedBytes = Base64.decode(base64Str, Base64.DEFAULT)
-            BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
-        } catch (e: IllegalArgumentException) {
-            null
         }
     }
 
