@@ -14,7 +14,7 @@ class PreferencesManager (context: Context){
         private const val ID_PET = "Idpet"
     }
 
-    var petId: String?
+    var userImage: String?
         get() = sharedPreferences.getString(ID_PET, null)
         set(value) = sharedPreferences.edit().putString(ID_PET, value).apply()
 

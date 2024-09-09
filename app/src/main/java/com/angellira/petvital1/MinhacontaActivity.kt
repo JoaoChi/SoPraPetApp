@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -21,7 +20,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -33,6 +31,7 @@ import com.angellira.petvital1.databinding.ActivityMinhacontaBinding
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
 import com.google.firebase.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -44,8 +43,8 @@ class MinhacontaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMinhacontaBinding
     private lateinit var preferencesManager: PreferencesManager
-    private val PICK_IMAGE_REQUEST = 1
-    private var imagemBase64: String? = null
+    private lateinit var imageView: ImageView
+    private val storage = FirebaseStorage.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,39 +83,39 @@ class MinhacontaActivity : AppCompatActivity() {
         }
     }
 
-    private fun pegarImagem() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST
-            && resultCode == Activity.RESULT_OK
-            && data != null
-        ) {
-            val imageUri = data.data
-
-            imagemBase64 = encodeImageToBase64(imageUri!!)
-            trocarfoto()
-        }
-    }
-
-    fun encodeImageToBase64(imageUri: Uri): String? {
-        val imageStream = contentResolver.openInputStream(imageUri)
-        val bitmap = BitmapFactory.decodeStream(imageStream)
-
-        if (bitmap == null) {
-            Toast.makeText(this@MinhacontaActivity, "erro", Toast.LENGTH_SHORT).show()
-        }
-
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-        val imageBytes = byteArrayOutputStream.toByteArray()
-
-        return Base64.encodeToString(imageBytes, Base64.DEFAULT)
-    }
+//    private fun pegarImagem() {
+//        val intent = Intent(Intent.ACTION_PICK)
+//        intent.type = "image/*"
+//        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+//    }
+//
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == PICK_IMAGE_REQUEST
+//            && resultCode == Activity.RESULT_OK
+//            && data != null
+//        ) {
+//            val imageUri = data.data
+//
+//            imagemBase64 = encodeImageToBase64(imageUri!!)
+//            trocarfoto()
+//        }
+//    }
+//
+//    fun encodeImageToBase64(imageUri: Uri): String? {
+//        val imageStream = contentResolver.openInputStream(imageUri)
+//        val bitmap = BitmapFactory.decodeStream(imageStream)
+//
+//        if (bitmap == null) {
+//            Toast.makeText(this@MinhacontaActivity, "erro", Toast.LENGTH_SHORT).show()
+//        }
+//
+//        val byteArrayOutputStream = ByteArrayOutputStream()
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+//        val imageBytes = byteArrayOutputStream.toByteArray()
+//
+//        return Base64.encodeToString(imageBytes, Base64.DEFAULT)
+//    }
 
     private suspend fun pegarDadosUser(context: Context) {
         val email = preferencesManager.userId
@@ -151,15 +150,41 @@ class MinhacontaActivity : AppCompatActivity() {
         }
             val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
                 if (uri != null) {
-                    Log.d("PhotoPicker", "Selected URI: $uri")
                     binding.imageOpen.load(uri)
-
+                    val imageUri = uri
+                    uploadImageToFirebase(imageUri)
+                    Toast.makeText(this@MinhacontaActivity, "Deu boa", Toast.LENGTH_SHORT).show()
                 } else {
-                    Log.d("PhotoPicker", "No media selected")
+                    Toast.makeText(this@MinhacontaActivity, "Erro", Toast.LENGTH_SHORT).show()
                 }
             }
         binding.trocarimagem.setOnClickListener {
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+    }
+
+//    private fun dowloadUrl(){
+//        val email = preferencesManager.userId
+//        val imageView = binding.imageOpen
+//        val imageRef = storage.reference.child("images/$email/${imageUri.lastPathSegment}")
+//    }
+
+
+    private fun uploadImageToFirebase(imageUri: Uri?) {
+        if (imageUri != null) {
+            val storage = Firebase.storage
+            val storageRef = storage.reference
+            val emailImg = preferencesManager.userId
+
+            val imagesRef = storageRef.child("images/$emailImg/${imageUri.lastPathSegment}")
+
+            val uploadTask = imagesRef.putFile(imageUri)
+
+            uploadTask.addOnSuccessListener {
+                Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener {
+                Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -176,7 +201,7 @@ class MinhacontaActivity : AppCompatActivity() {
                     user.email,
                     user.name,
                     user.cpf,
-                    imagemBase64 ?: ""
+                    ""
                 )
                 withContext(Main) {
                     Toast.makeText(

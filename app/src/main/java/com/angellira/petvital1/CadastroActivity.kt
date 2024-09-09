@@ -39,8 +39,6 @@ class CadastroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCadastroBinding
     private lateinit var preferencesManager: PreferencesManager
     private val PICK_IMAGE_REQUEST = 1
-    val storage = Firebase.storage
-    private var storageRef = storage.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,23 +72,26 @@ class CadastroActivity : AppCompatActivity() {
 
     private fun uploadImageToFirebase(imageUri: Uri?) {
         if (imageUri != null) {
-            // Cria uma referência para o Firebase Storage
             val storage = Firebase.storage
             val storageRef = storage.reference
+            val emailImg = binding.textoregistroEmail.text.toString()
 
-            // Cria uma referência para a imagem no Storage
-            val imagesRef = storageRef.child("images/${imageUri.lastPathSegment}")
+            val imagesRef = storageRef.child("images/$emailImg/${imageUri.lastPathSegment}")
 
-            // Faz o upload da imagem
             val uploadTask = imagesRef.putFile(imageUri)
 
-            // Monitora o progresso do upload
             uploadTask.addOnSuccessListener {
-                // A imagem foi carregada com sucesso
-                Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
-            }.addOnFailureListener {
-                // O upload falhou
-                Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT).show()
+                imagesRef.downloadUrl.addOnSuccessListener { uri ->
+
+                    val downloadUrl = uri.toString()
+
+                    Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
+                    preferencesManager.userImage = downloadUrl
+
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
     }
@@ -102,6 +103,7 @@ class CadastroActivity : AppCompatActivity() {
             val senha = binding.passwordEditText.text.toString()
             val senha2 = binding.password2.text.toString()
             val cpf = "123124"
+            val imagem = preferencesManager.userImage
 
             if (senha != senha2) {
                 Toast.makeText(this, "As senhas devem coincidir! ", Toast.LENGTH_SHORT).show()
@@ -120,7 +122,7 @@ class CadastroActivity : AppCompatActivity() {
                             email,
                             senha,
                             cpf,
-                            ""
+                            imagem.toString()
                         )
                     }
                 } catch (e: Exception) {
