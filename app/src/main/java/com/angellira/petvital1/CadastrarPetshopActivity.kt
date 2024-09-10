@@ -3,10 +3,13 @@ package com.angellira.petvital1
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -24,6 +27,8 @@ import com.angellira.petvital1.model.Pet
 import com.angellira.petvital1.model.Petshop
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
+import com.google.firebase.Firebase
+import com.google.firebase.storage.storage
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
@@ -33,6 +38,7 @@ import java.util.UUID
 class CadastrarPetshopActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCadastrarPetshopBinding
+    private lateinit var preferencesManager: PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +47,8 @@ class CadastrarPetshopActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.corfundo)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
         cadastrarPetshop()
+        pegarImagemPet()
+        preferencesManager = PreferencesManager(this)
     }
 
     private fun setupView() {
@@ -54,6 +62,48 @@ class CadastrarPetshopActivity : AppCompatActivity() {
         }
     }
 
+    private fun pegarImagemPet(){
+        val pickMedia =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                if (uri != null) {
+                    val imageUri = uri
+                    uploadImageToFirebase(imageUri)
+                    Toast.makeText(this@CadastrarPetshopActivity, "Upload Concluído!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@CadastrarPetshopActivity, "Erro", Toast.LENGTH_SHORT).show()
+                }
+            }
+        binding.buttonAdicionarImagem.setOnClickListener {
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+    }
+
+    private fun uploadImageToFirebase(imageUri: Uri?) {
+        if (imageUri != null) {
+            val storage = Firebase.storage
+            val storageRef = storage.reference
+
+            val imagesRef = storageRef.child("images/petshop/${imageUri.lastPathSegment}")
+
+            val uploadTask = imagesRef.putFile(imageUri)
+
+            uploadTask.addOnSuccessListener {
+                imagesRef.downloadUrl.addOnSuccessListener { uri ->
+
+                    val downloadUrl = uri.toString()
+                    preferencesManager.petshopImage = downloadUrl
+
+                    Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
+
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+
+
     private fun cadastrarPetshop() {
         binding.buttonSalvarPetshop.setOnClickListener {
 
@@ -61,19 +111,18 @@ class CadastrarPetshopActivity : AppCompatActivity() {
             val description = binding.descricaoPetshop.text.toString()
             val localizacao = binding.localizacaoPetshop.text.toString()
             val servicos = binding.servicosPetshop.text.toString()
-            val imagem = binding.imagemPetshop.text.toString()
+            val imagem = preferencesManager.petshopImage
             val cnpj = binding.textCnpj.text.toString()
 
             if (nome.isNotEmpty() &&
                 description.isNotEmpty() &&
                 localizacao.isNotEmpty() &&
-                servicos.isNotEmpty() &&
-                imagem.isNotEmpty()
+                servicos.isNotEmpty()
             ) {
                 lifecycleScope.launch(IO) {
                     registrarPetshop(
                         this@CadastrarPetshopActivity,
-                        nome, description, localizacao, servicos, imagem, cnpj
+                        nome, description, localizacao, servicos, imagem.toString(), cnpj
                     )
                 }
             } else {

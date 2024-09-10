@@ -192,7 +192,7 @@ class CadastrarPetActivity : AppCompatActivity() {
                 imagesRef.downloadUrl.addOnSuccessListener { uri ->
 
                     val downloadUrl = uri.toString()
-                    preferencesManager.petImage = downloadUrl
+                    preferencesManager.petshopImage = downloadUrl
 
                     Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
 
@@ -228,7 +228,7 @@ class CadastrarPetActivity : AppCompatActivity() {
             val description = binding.editRacaPet.text.toString()
             val peso = binding.editPeso.text.toString()
             val idade = binding.editIdade.text.toString()
-            val imagem = preferencesManager.petImage
+            val imagem = preferencesManager.petshopImage
 
             if (nome.isNotEmpty() &&
                 description.isNotEmpty() &&

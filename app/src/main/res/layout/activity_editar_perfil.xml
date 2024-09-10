@@ -28,7 +28,7 @@
         android:textSize="16dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonExcluirConta"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.383"
+        app:layout_constraintHorizontal_bias="0.379"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
         app:layout_constraintVertical_bias="0.787" />
@@ -37,13 +37,14 @@
         android:id="@+id/checkBox2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16dp"
         android:text="Estou ciente de que \n não conseguirei recuperar\n minha conta após excluí-la."
+        android:textSize="16dp"
         app:layout_constraintBottom_toTopOf="@+id/checkBox1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
-        app:layout_constraintVertical_bias="0.931" />
+        app:layout_constraintVertical_bias="0.93" />
 
     <Button
         android:id="@+id/buttonExcluirConta"
@@ -94,7 +95,7 @@
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="230dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
