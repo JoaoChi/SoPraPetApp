@@ -5,6 +5,13 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -40,6 +47,123 @@ class CadastrarPetActivity : AppCompatActivity() {
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundociano)
         cadastrarPet()
         botaoVoltar()
+        layoutVisibleInvisible()
+    }
+
+
+    private fun layoutVisibleInvisible() {
+
+        binding.buttonProximo.visibility = INVISIBLE
+
+        binding.editNomePet.addTextChangedListener(/* watcher = */ object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.buttonProximo.visibility = if (s.isNullOrBlank()) {
+                    INVISIBLE
+                } else {
+                    VISIBLE
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+        binding.buttonProximo.setOnClickListener {
+            binding.textoNome.visibility = INVISIBLE
+            binding.editNomePet.visibility = INVISIBLE
+            binding.textoRaca.visibility = VISIBLE
+            binding.editRacaPet.visibility = VISIBLE
+            binding.buttonProximo.visibility = INVISIBLE
+
+            binding.editRacaPet.addTextChangedListener(/* watcher = */ object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    binding.buttonProximo2.visibility = if (s.isNullOrBlank()) {
+                        INVISIBLE
+                    } else {
+                        VISIBLE
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                }
+            })
+        }
+        binding.buttonProximo2.setOnClickListener {
+            binding.textoRaca.visibility = INVISIBLE
+            binding.editRacaPet.visibility = INVISIBLE
+            binding.textoPeso.visibility = VISIBLE
+            binding.editPeso.visibility = VISIBLE
+            binding.buttonProximo2.visibility = INVISIBLE
+
+            binding.editPeso.addTextChangedListener(/* watcher = */ object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    binding.buttonProximo3.visibility = if (s.isNullOrBlank()) {
+                        INVISIBLE
+                    } else {
+                        VISIBLE
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                }
+            })
+        }
+        binding.buttonProximo3.setOnClickListener {
+            binding.textoPeso.visibility = INVISIBLE
+            binding.editPeso.visibility = INVISIBLE
+            binding.buttonProximo3.visibility = INVISIBLE
+            binding.editIdade.visibility = VISIBLE
+            binding.textoIdade.visibility = VISIBLE
+
+            binding.editIdade.addTextChangedListener(/* watcher = */ object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    binding.buttonProximo4.visibility = if (s.isNullOrBlank()) {
+                        INVISIBLE
+                    } else {
+                        VISIBLE
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                }
+            })
+        }
+        binding.buttonProximo4.setOnClickListener{
+            binding.buttonProximo4.visibility = INVISIBLE
+            binding.editIdade.visibility = INVISIBLE
+            binding.textoIdade.visibility = INVISIBLE
+            binding.imagemPet.visibility = VISIBLE
+            binding.textoImagem.visibility = VISIBLE
+            binding.buttonSalvarPet.visibility = VISIBLE
+        }
     }
 
     private fun setupView() {
@@ -53,8 +177,8 @@ class CadastrarPetActivity : AppCompatActivity() {
         }
     }
 
-    private fun botaoVoltar(){
-        binding.voltarMain.setOnClickListener{
+    private fun botaoVoltar() {
+        binding.voltarMain.setOnClickListener {
             startActivity(Intent(this@CadastrarPetActivity, MainActivity::class.java))
         }
     }
@@ -66,7 +190,7 @@ class CadastrarPetActivity : AppCompatActivity() {
             val description = binding.editRacaPet.text.toString()
             val peso = binding.editPeso.text.toString()
             val idade = binding.editIdade.text.toString()
-            val imagem = binding.editImagem.text.toString()
+            val imagem = binding.imagemPet.text.toString()
 
             if (nome.isNotEmpty() &&
                 description.isNotEmpty() &&
