@@ -43,8 +43,6 @@ class MinhacontaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMinhacontaBinding
     private lateinit var preferencesManager: PreferencesManager
-    private lateinit var imageView: ImageView
-    private val storage = FirebaseStorage.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

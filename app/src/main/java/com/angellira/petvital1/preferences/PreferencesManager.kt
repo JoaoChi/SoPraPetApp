@@ -12,11 +12,16 @@ class PreferencesManager (context: Context){
         private const val ID_USUARIO = "Id"
         private const val IS_LOGGED = "logou"
         private const val ID_PET = "Idpet"
+        private const val ID_IMAGE = "ImageUser"
     }
 
-    var userImage: String?
+    var petImage: String?
         get() = sharedPreferences.getString(ID_PET, null)
         set(value) = sharedPreferences.edit().putString(ID_PET, value).apply()
+
+    var userImage: String?
+        get() = sharedPreferences.getString(ID_IMAGE, null)
+        set(value) = sharedPreferences.edit().putString(ID_IMAGE, value).apply()
 
     var userId: String?
         get() = sharedPreferences.getString(ID_USUARIO, null)

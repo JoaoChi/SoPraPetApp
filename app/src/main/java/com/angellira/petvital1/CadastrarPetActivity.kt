@@ -2,42 +2,38 @@ package com.angellira.petvital1
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
-import android.os.Build.VERSION.SDK_INT
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.load
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityCadastrarPetBinding
 import com.angellira.petvital1.model.Pet
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
+import com.google.firebase.Firebase
+import com.google.firebase.storage.storage
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.UUID
 
 class CadastrarPetActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCadastrarPetBinding
+    private lateinit var preferencesManager: PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +44,8 @@ class CadastrarPetActivity : AppCompatActivity() {
         cadastrarPet()
         botaoVoltar()
         layoutVisibleInvisible()
+        pegarImagemPet()
+        preferencesManager = PreferencesManager(this)
     }
 
 
@@ -86,7 +84,6 @@ class CadastrarPetActivity : AppCompatActivity() {
                     after: Int
                 ) {
                 }
-
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     binding.buttonProximo2.visibility = if (s.isNullOrBlank()) {
@@ -166,6 +163,47 @@ class CadastrarPetActivity : AppCompatActivity() {
         }
     }
 
+    private fun pegarImagemPet(){
+        val pickMedia =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                if (uri != null) {
+                    val imageUri = uri
+                    uploadImageToFirebase(imageUri)
+                    Toast.makeText(this@CadastrarPetActivity, "Upload Concluído!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@CadastrarPetActivity, "Erro", Toast.LENGTH_SHORT).show()
+                }
+            }
+        binding.imagemPet.setOnClickListener {
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+    }
+
+    private fun uploadImageToFirebase(imageUri: Uri?) {
+        if (imageUri != null) {
+            val storage = Firebase.storage
+            val storageRef = storage.reference
+
+            val imagesRef = storageRef.child("images/pets/${imageUri.lastPathSegment}")
+
+            val uploadTask = imagesRef.putFile(imageUri)
+
+            uploadTask.addOnSuccessListener {
+                imagesRef.downloadUrl.addOnSuccessListener { uri ->
+
+                    val downloadUrl = uri.toString()
+                    preferencesManager.petImage = downloadUrl
+
+                    Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
+
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+
     private fun setupView() {
         binding = ActivityCadastrarPetBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -190,18 +228,17 @@ class CadastrarPetActivity : AppCompatActivity() {
             val description = binding.editRacaPet.text.toString()
             val peso = binding.editPeso.text.toString()
             val idade = binding.editIdade.text.toString()
-            val imagem = binding.imagemPet.text.toString()
+            val imagem = preferencesManager.petImage
 
             if (nome.isNotEmpty() &&
                 description.isNotEmpty() &&
                 peso.isNotEmpty() &&
-                idade.isNotEmpty() &&
-                imagem.isNotEmpty()
+                idade.isNotEmpty()
             ) {
                 lifecycleScope.launch {
                     registrarPet(
                         this@CadastrarPetActivity,
-                        nome, description, peso, idade, imagem
+                        nome, description, peso, idade, imagem.toString()
                     )
                 }
             } else {
