@@ -83,40 +83,6 @@ class MinhacontaActivity : AppCompatActivity() {
         }
     }
 
-//    private fun pegarImagem() {
-//        val intent = Intent(Intent.ACTION_PICK)
-//        intent.type = "image/*"
-//        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-//    }
-//
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == PICK_IMAGE_REQUEST
-//            && resultCode == Activity.RESULT_OK
-//            && data != null
-//        ) {
-//            val imageUri = data.data
-//
-//            imagemBase64 = encodeImageToBase64(imageUri!!)
-//            trocarfoto()
-//        }
-//    }
-//
-//    fun encodeImageToBase64(imageUri: Uri): String? {
-//        val imageStream = contentResolver.openInputStream(imageUri)
-//        val bitmap = BitmapFactory.decodeStream(imageStream)
-//
-//        if (bitmap == null) {
-//            Toast.makeText(this@MinhacontaActivity, "erro", Toast.LENGTH_SHORT).show()
-//        }
-//
-//        val byteArrayOutputStream = ByteArrayOutputStream()
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-//        val imageBytes = byteArrayOutputStream.toByteArray()
-//
-//        return Base64.encodeToString(imageBytes, Base64.DEFAULT)
-//    }
-
     private suspend fun pegarDadosUser(context: Context) {
         val email = preferencesManager.userId
         lifecycleScope.launch(IO) {
@@ -126,17 +92,18 @@ class MinhacontaActivity : AppCompatActivity() {
             ).build()
 
             try {
-            val userApi = UsersApi.retrofitService
-            val user = userApi.getUsers(email.toString())
+                val userApi = UsersApi.retrofitService
+                val user = userApi.getUsers(email.toString())
 
-            if (user.name.isNotEmpty()) {
-                withContext(Main) {
-                    binding.textNome.text = user.name
-                    binding.textCpf.text = user.cpf
-                    binding.textTelefone.text = user.password
+                if (user.name.isNotEmpty()) {
+                    withContext(Main) {
+                        binding.textNome.text = user.name
+                        binding.textCpf.text = user.cpf
+                        binding.textTelefone.text = user.password
+                        binding.imageOpen.load(user.imagem)
 
                     }
-            }
+                }
             } catch (e: Exception) {
 
                 val usuarioDao = db.usuarioDao()
@@ -145,10 +112,12 @@ class MinhacontaActivity : AppCompatActivity() {
                     binding.textNome.text = usuario!!.name
                     binding.textCpf.text = usuario.cpf
                     binding.textTelefone.text = usuario.password
+
                 }
             }
         }
-            val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        val pickMedia =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
                 if (uri != null) {
                     binding.imageOpen.load(uri)
                     val imageUri = uri
@@ -163,13 +132,6 @@ class MinhacontaActivity : AppCompatActivity() {
         }
     }
 
-//    private fun dowloadUrl(){
-//        val email = preferencesManager.userId
-//        val imageView = binding.imageOpen
-//        val imageRef = storage.reference.child("images/$email/${imageUri.lastPathSegment}")
-//    }
-
-
     private fun uploadImageToFirebase(imageUri: Uri?) {
         if (imageUri != null) {
             val storage = Firebase.storage
@@ -181,169 +143,190 @@ class MinhacontaActivity : AppCompatActivity() {
             val uploadTask = imagesRef.putFile(imageUri)
 
             uploadTask.addOnSuccessListener {
-                Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
-            }.addOnFailureListener {
-                Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
+                imagesRef.downloadUrl.addOnSuccessListener { uri ->
 
+                    val downloadUrl = uri.toString()
 
-    private fun trocarfoto() {
-        val email = preferencesManager.userId
-        lifecycleScope.launch(IO) {
-            try {
-                val userApi = UsersApi.retrofitService
-                val user = userApi.getUsers(email.toString())
-
-                userApi.editarPerfilUsuario(
-                    user.email,
-                    user.email,
-                    user.name,
-                    user.cpf,
-                    ""
-                )
-                withContext(Main) {
-                    Toast.makeText(
-                        this@MinhacontaActivity,
-                        "Atualizado com sucesso!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    startActivity(Intent(this@MinhacontaActivity, MainActivity::class.java))
-                }
-
-            }catch (e: Exception){
-                withContext(Main){
-                    Toast.makeText(this@MinhacontaActivity, "Não pode atualizar seus dados offline!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
+                    preferencesManager.userImage = downloadUrl
+                    trocarfoto()
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
     }
 
-    private fun botaoDeslogarPreferences() {
 
-        val buttonDeslogar = binding.buttonsair
-        buttonDeslogar.setOnClickListener {
-            showConfirmationDialog(
-                title = "Deseja sair?",
-                message = "Certeza que deseja deslogar?",
-                positiveAction = {
-                    Toast.makeText(this, "Deslogando", Toast.LENGTH_SHORT).show()
-                    startActivity(
-                        Intent(
+        private fun trocarfoto() {
+            val email = preferencesManager.userId
+            val imagem = preferencesManager.userImage
+            lifecycleScope.launch(IO) {
+                try {
+                    val userApi = UsersApi.retrofitService
+                    val user = userApi.getUsers(email.toString())
+
+                    userApi.editarPerfilUsuario(
+                        user.email,
+                        user.email,
+                        user.name,
+                        user.cpf,
+                        imagem.toString()
+                    )
+                    withContext(Main) {
+                        Toast.makeText(
                             this@MinhacontaActivity,
-                            LoginActivity::class.java
-                        )
-                    )
-                    preferencesManager.estaLogado = false
-                    finishAffinity()
+                            "Atualizado com sucesso!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                } catch (e: Exception) {
+                    withContext(Main) {
+                        Toast.makeText(
+                            this@MinhacontaActivity,
+                            "Não pode atualizar seus dados offline!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            )
+            }
         }
-    }
 
-    private fun botaoEsqueciaSenha() {
-        binding.button2esquecisenha.setOnClickListener {
-            startActivity(Intent(this, EsqueciASenhaActivity::class.java))
-        }
-    }
+        private fun botaoDeslogarPreferences() {
 
-    private fun showPopupMenu(view: View) {
-
-        val popupMenu = PopupMenu(this, view)
-        val inflater: MenuInflater = popupMenu.menuInflater
-        inflater.inflate(R.menu.popup, popupMenu.menu)
-
-        popupMenu.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.inicio -> {
-                    Toast.makeText(this, "Voltando ao início", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@MinhacontaActivity, MainActivity::class.java))
-                    true
-                }
-
-                R.id.perfil -> {
-                    Toast.makeText(this, "Já está no perfil", Toast.LENGTH_SHORT).show()
-                    true
-                }
-
-                R.id.ajuda -> {
-                    Toast.makeText(this, "Petshops", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@MinhacontaActivity, PetshopsActivity::class.java))
-                    true
-                }
-
-                R.id.config -> {
-                    Toast.makeText(this, "Configurações", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@MinhacontaActivity, EditarPerfilActivity::class.java))
-                    true
-                }
-
-                R.id.sair -> {
-                    showConfirmationDialog(
-                        title = "Deseja sair?",
-                        message = "Certeza que deseja deslogar?",
-                        positiveAction = {
-                            Toast.makeText(this, "Deslogando", Toast.LENGTH_SHORT).show()
-                            startActivity(
-                                Intent(
-                                    this@MinhacontaActivity,
-                                    LoginActivity::class.java
-                                )
+            val buttonDeslogar = binding.buttonsair
+            buttonDeslogar.setOnClickListener {
+                showConfirmationDialog(
+                    title = "Deseja sair?",
+                    message = "Certeza que deseja deslogar?",
+                    positiveAction = {
+                        Toast.makeText(this, "Deslogando", Toast.LENGTH_SHORT).show()
+                        startActivity(
+                            Intent(
+                                this@MinhacontaActivity,
+                                LoginActivity::class.java
                             )
-                            preferencesManager.estaLogado = false
-                            finishAffinity()
-                        }
-                    )
+                        )
+                        preferencesManager.estaLogado = false
+                        finishAffinity()
+                    }
+                )
+            }
+        }
+
+        private fun botaoEsqueciaSenha() {
+            binding.button2esquecisenha.setOnClickListener {
+                startActivity(Intent(this, EsqueciASenhaActivity::class.java))
+            }
+        }
+
+        private fun showPopupMenu(view: View) {
+
+            val popupMenu = PopupMenu(this, view)
+            val inflater: MenuInflater = popupMenu.menuInflater
+            inflater.inflate(R.menu.popup, popupMenu.menu)
+
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.inicio -> {
+                        Toast.makeText(this, "Voltando ao início", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@MinhacontaActivity, MainActivity::class.java))
+                        true
+                    }
+
+                    R.id.perfil -> {
+                        Toast.makeText(this, "Já está no perfil", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+
+                    R.id.ajuda -> {
+                        Toast.makeText(this, "Petshops", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@MinhacontaActivity, PetshopsActivity::class.java))
+                        true
+                    }
+
+                    R.id.config -> {
+                        Toast.makeText(this, "Configurações", Toast.LENGTH_SHORT).show()
+                        startActivity(
+                            Intent(
+                                this@MinhacontaActivity,
+                                EditarPerfilActivity::class.java
+                            )
+                        )
+                        true
+                    }
+
+                    R.id.sair -> {
+                        showConfirmationDialog(
+                            title = "Deseja sair?",
+                            message = "Certeza que deseja deslogar?",
+                            positiveAction = {
+                                Toast.makeText(this, "Deslogando", Toast.LENGTH_SHORT).show()
+                                startActivity(
+                                    Intent(
+                                        this@MinhacontaActivity,
+                                        LoginActivity::class.java
+                                    )
+                                )
+                                preferencesManager.estaLogado = false
+                                finishAffinity()
+                            }
+                        )
+                        true
+                    }
+
+                    R.id.privacidade -> {
+                        Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+            popupMenu.show()
+        }
+
+        private fun showConfirmationDialog(
+            title: String,
+            message: String,
+            positiveAction: () -> Unit
+        ) {
+            val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+            builder.setTitle(title)
+            builder.setMessage(message)
+
+            builder.setPositiveButton("Sim") { dialog, _ ->
+                positiveAction.invoke()
+                dialog.dismiss()
+            }
+
+            builder.setNegativeButton("Não") { dialog, _ ->
+                dialog.dismiss()
+            }
+            builder.show()
+        }
+
+        override fun onCreateOptionsMenu(menu: Menu): Boolean {
+            menuInflater.inflate(R.menu.profile, menu)
+            return true
+        }
+
+        override fun onOptionsItemSelected(item: MenuItem): Boolean {
+            return when (item.itemId) {
+                R.id.voltarPagina -> {
+                    startActivity(Intent(this, MainActivity::class.java))
                     true
                 }
 
-                R.id.privacidade -> {
-                    Toast.makeText(this, "Sem página ainda", Toast.LENGTH_SHORT).show()
+                R.id.configs -> {
+                    showPopupMenu(findViewById(R.id.configs))
                     true
                 }
 
-                else -> false
+                else -> super.onOptionsItemSelected(item)
             }
         }
-        popupMenu.show()
+
     }
-
-    private fun showConfirmationDialog(title: String, message: String, positiveAction: () -> Unit) {
-        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
-        builder.setTitle(title)
-        builder.setMessage(message)
-
-        builder.setPositiveButton("Sim") { dialog, _ ->
-            positiveAction.invoke()
-            dialog.dismiss()
-        }
-
-        builder.setNegativeButton("Não") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.show()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.profile, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.voltarPagina -> {
-                startActivity(Intent(this, MainActivity::class.java))
-                true
-            }
-
-            R.id.configs -> {
-                showPopupMenu(findViewById(R.id.configs))
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-}
