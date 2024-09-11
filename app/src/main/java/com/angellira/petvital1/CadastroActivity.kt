@@ -1,25 +1,19 @@
 package com.angellira.petvital1
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.load
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityCadastroBinding
 import com.angellira.petvital1.model.User
@@ -32,7 +26,6 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
 
 class CadastroActivity : AppCompatActivity() {
 
@@ -48,6 +41,7 @@ class CadastroActivity : AppCompatActivity() {
         preferencesManager = PreferencesManager(this)
         registroUsuario()
         pegarImagem()
+        pegarImagemUsuario()
     }
 
     private fun pegarImagem() {
@@ -58,15 +52,25 @@ class CadastroActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST
-            && resultCode == Activity.RESULT_OK
-            && data != null
-        ) {
-            val imageUri = data.data
-            uploadImageToFirebase(imageUri)
+    private fun pegarImagemUsuario(){
+        val pickMedia =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                if (uri != null) {
+                    val imageUri = uri
 
+                    val sharedPreferences = getSharedPreferences("ImageUser", Context.MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    editor.clear()
+                    editor.apply()
+
+                    uploadImageToFirebase(imageUri)
+                    Toast.makeText(this@CadastroActivity, "Upload Concluído!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@CadastroActivity, "Erro", Toast.LENGTH_SHORT).show()
+                }
+            }
+        binding.botaoAddfoto.setOnClickListener {
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
     }
 
@@ -103,8 +107,11 @@ class CadastroActivity : AppCompatActivity() {
             val senha = binding.passwordEditText.text.toString()
             val senha2 = binding.password2.text.toString()
             val cpf = "123124"
-            val imagem = preferencesManager.userImage
+            var imagem = preferencesManager.userImage
 
+            if(imagem.isNullOrEmpty()){
+                imagem = "https://firebasestorage.googleapis.com/v0/b/imagepets-82fe7.appspot.com/o/Post%20Instagram%20Hoje%20n%C3%A3o%20teremos%20culto.png?alt=media&token=51cbe88f-02f2-47d2-8237-51f31d814e99"
+            }
             if (senha != senha2) {
                 Toast.makeText(this, "As senhas devem coincidir! ", Toast.LENGTH_SHORT).show()
             } else if (nome.isEmpty()
@@ -122,7 +129,7 @@ class CadastroActivity : AppCompatActivity() {
                             email,
                             senha,
                             cpf,
-                            imagem.toString()
+                            imagem
                         )
                     }
                 } catch (e: Exception) {
@@ -203,7 +210,6 @@ class CadastroActivity : AppCompatActivity() {
         }
 
     }
-
 
     private fun setupView() {
         enableEdgeToEdge()

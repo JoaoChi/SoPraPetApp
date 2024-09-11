@@ -53,13 +53,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/editProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/baseline_edit_24"
-                />
-
         <ImageView
             android:id="@+id/imagePetshop"
             android:layout_width="match_parent"
@@ -123,6 +116,14 @@
                 android:textColor="#474747"
                 tools:text="@tools:sample/cities" />
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/buttonAgenda"
+                android:text="Agendar serviço"
+                android:backgroundTint="#00BCD4"
+                />
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -134,6 +135,7 @@
         android:layout_marginBottom="4dp"
         android:backgroundTint="@color/corfundoazul"
         android:elevation="20dp"
+        android:visibility="invisible"
         android:text="Excluir petshop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

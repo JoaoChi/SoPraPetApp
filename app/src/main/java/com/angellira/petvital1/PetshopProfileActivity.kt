@@ -45,6 +45,7 @@ class PetshopProfileActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         carregandoPet()
         excluirPet()
+        botaoCalendario()
     }
 
     private fun setupView() {
@@ -55,6 +56,12 @@ class PetshopProfileActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+    }
+
+    private fun botaoCalendario(){
+        binding.buttonAgenda.setOnClickListener{
+            startActivity(Intent(this@PetshopProfileActivity, AgendaActivity::class.java))
         }
     }
 

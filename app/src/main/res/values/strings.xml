@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PetVital1</string>
     <string name="title_activity_minha_conta">MinhaContaActivity</string>
+    <string name="title_activity_agenda">AgendaActivity</string>
 </resources>
