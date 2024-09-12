@@ -1,7 +1,8 @@
 package com.angellira.petvital1
 
-import android.graphics.Paint.Style
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -14,7 +15,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,10 +26,9 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuBoxScope
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -42,16 +41,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.angellira.petvital1.model.Pet
-import com.angellira.petvital1.model.Petshop
 import com.angellira.petvital1.ui.theme.PetVital1Theme
-import kotlin.math.exp
 
 class AgendaActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,17 +75,9 @@ fun app() {
     var selectedText by remember { mutableStateOf("Selecione o serviço") }
     var selectedText2 by remember { mutableStateOf("Selecione o horário") }
 
-    var valorCampo by remember {
-        mutableStateOf("")
-    }
-
-    var valorCampo2 by remember {
-        mutableStateOf("")
-    }
-
 
     Column(
-        Modifier.background(color = Color(3, 169, 244, 255)),
+        Modifier.background(color = Color(121, 213, 255, 255)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -96,12 +85,20 @@ fun app() {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            Image(
+                painter = painterResource(R.drawable.petvital__4__removebg_preview),
+                contentDescription = "Logo",
+                Modifier.size(100.dp)
+
+            )
+
             Text(
                 text = "SóPraPet",
                 style = TextStyle(
                     fontSize = 30.sp,
                     fontWeight = FontWeight.W900,
-                    color = Color(0xFFFFC107)
+                    color = Color(0, 132, 192, 255)
                 )
             )
 
@@ -111,59 +108,50 @@ fun app() {
             Text(
                 text = "Qual Serviço Gostaria \nde agendar?",
                 style = TextStyle(
-                    color = Color(255, 255, 255, 255),
+                    color = Color(0, 0, 0, 255),
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
 
                     )
             )
 
-            if (valorCampo.isNotBlank() && valorCampo2.isNotBlank()) {
-                val gasolina = valorCampo.toDouble() / valorCampo2.toDouble() > 0.7
-
-
-                val eGasolina = if (gasolina) {
-                    "Banho"
-                } else {
-                    "Tosa"
-                }
-
-                val cor = if (gasolina) {
-                    Color.Red
-                } else {
-                    Color.Green
-                }
-
-                Text(
-                    text = eGasolina, style = TextStyle(
-                        color = cor,
-                        fontSize = 40.sp,
-                        fontWeight = FontWeight.Bold,
-                    )
-                )
-            }
+            Spacer(modifier = Modifier.height(40.dp))
 
             ExposedDropdownMenuBox(
                 expanded = expanded,
-                onExpandedChange = { expanded = !expanded },
+                onExpandedChange = {
+                    expanded = !expanded
+                    Log.d(
+                        "DropdownService",
+                        "Estado do serviço alterado"
+                    ) // Adicionando log para verificar
+                },
             ) {
                 TextField(
                     value = selectedText,
                     onValueChange = {},
                     readOnly = true,
                     label = { Text("Selecione o serviço") },
-                    modifier = Modifier
-                        .clickable { expanded = true },
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+//                    trailingIcon = {
+//                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+//                    },
+                    colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                            modifier = Modifier.clickable {
+                        expanded = true
+                        Log.d(
+                            "DropdownService",
+                            "TextField clicado, expandindo menu"
+                        )
                     },
-                    colors = ExposedDropdownMenuDefaults.textFieldColors()
                 )
 
 
                 DropdownMenu(
                     expanded = expanded,
-                    onDismissRequest = { expanded = false },
+                    onDismissRequest = {
+                        expanded = false
+                        Log.d("DropdownService", "Menu de serviço fechado") // Log de fechamento
+                    },
                     modifier = Modifier.width(150.dp)
                 ) {
                     options.forEach { option ->
@@ -178,6 +166,9 @@ fun app() {
                 }
             }
 
+            Spacer(modifier = Modifier.height(12.dp))
+
+
             ExposedDropdownMenuBox(expanded = expandir,
                 onExpandedChange = { expandir = !expandir }
             )
@@ -189,14 +180,14 @@ fun app() {
                     label = {
                         Text(text = "Selecione a data")
                     },
-                    modifier = Modifier
-                        .clickable { expandir = true },
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandir)
                     },
+                    modifier = Modifier.clickable { expandir = true },
                     colors = ExposedDropdownMenuDefaults.textFieldColors()
                 )
-                DropdownMenu(expanded = expandir,
+                DropdownMenu(
+                    expanded = expandir,
                     onDismissRequest = { expandir = false },
                     modifier = Modifier.width(150.dp)
                 ) {
@@ -205,6 +196,7 @@ fun app() {
                             onClick = {
                                 selectedText2 = horarios
                                 expandir = false
+                                Log.d("DropdownService", "Serviço selecionado: ")
                             })
 
 
@@ -213,7 +205,26 @@ fun app() {
                 }
             }
 
+            Spacer(modifier = Modifier.height(20.dp))
 
+            val context = LocalContext.current
+
+            ExtendedFloatingActionButton(
+                modifier = Modifier
+                    .width(200.dp)
+                    .height(40.dp),
+                containerColor = Color(0xFF0162AF),
+                onClick = {
+                    val intent = Intent(context, PetshopsActivity::class.java)
+                    context.startActivity(intent)
+                }
+            ) {
+                Text(
+                    text = "Voltar",
+                    color = Color(0xFF000000),
+                    fontSize = 16.sp
+                )
+            }
 
             Spacer(modifier = Modifier.height(30.dp))
 
@@ -248,14 +259,14 @@ fun app() {
                     Text(
                         text = "Petchopp",
                         style = TextStyle(
-                            color = Color(255, 255, 255, 255),
+                            color = Color(0, 0, 0, 255),
                             fontSize = (16.sp)
                         )
                     )
                     Text(
                         text = "Petshop Verificado!",
                         style = TextStyle(
-                            color = Color(255, 255, 255, 255),
+                            color = Color(0, 0, 0, 255),
                             fontSize = (16.sp)
                         )
                     )
