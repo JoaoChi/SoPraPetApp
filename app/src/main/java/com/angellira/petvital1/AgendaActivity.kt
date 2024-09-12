@@ -5,13 +5,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -23,7 +28,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -67,10 +74,10 @@ fun app() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Alcool ou gasolina?",
+                text = "Qual Serviço Gostaria \nde agendar?",
                 style = TextStyle(
                     color = Color(255, 255, 255, 255),
-                    fontSize = 32.sp,
+                    fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
 
                     )
@@ -81,9 +88,9 @@ fun app() {
 
 
                 val eGasolina = if (gasolina) {
-                    "Gasolina"
+                    "Banho"
                 } else {
-                    "Alcool"
+                    "Tosa"
                 }
 
                 val cor = if(gasolina){
@@ -107,7 +114,7 @@ fun app() {
                     valorCampo2 = it
                 },
                 label = {
-                    Text(text = "Gasolina")
+                    Text(text = "Selecione o serviço")
                 }
 
             )
@@ -117,9 +124,45 @@ fun app() {
                     valorCampo = it
                 },
                 label = {
-                    Text(text = "Alcool")
+                    Text(text = "Selecione a data")
                 }
             )
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Row {
+            Image(
+                painter = painterResource(R.drawable.dia_mundial_do_gato__veterin_rio_cat_felinos_fevereiro_divertido_moderno_post_de_instagram),
+                contentDescription = "Perfil Usuario",
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+            )
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Column {
+                Text(
+                    text = "Agende agora",
+                    style = TextStyle(
+                        color = Color(255, 255, 255, 255),
+                        fontSize = 16.sp,
+                        )
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = "Estamos lhe esperando :)",
+                    style = TextStyle(
+                        color = Color(255,255,255,255),
+                        fontSize = 16.sp,
+                    )
+
+                )
+            }
+
         }
     }
 }
