@@ -7,4 +7,6 @@
 
     <style name="Theme.PetVital1" parent="Base.Theme.PetVital1" />
 
+<!--    <style name="Theme.AppCompat.Light.NoActionBar" parent="android:Theme.Material.Light.NoActionBar" />-->
+
 </resources>

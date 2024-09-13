@@ -2,4 +2,5 @@
     <string name="app_name">PetVital1</string>
     <string name="title_activity_minha_conta">MinhaContaActivity</string>
     <string name="title_activity_agenda">AgendaActivity</string>
+    <string name="title_activity_cadastro_jetpack">CadastroJetpackActivity</string>
 </resources>

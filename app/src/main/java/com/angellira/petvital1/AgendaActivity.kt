@@ -64,7 +64,7 @@ class AgendaActivity : ComponentActivity() {
         setContent {
             PetVital1Theme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    MyScreenWithToolbar()
+                    appEtoolbar()
                 }
             }
         }
@@ -307,7 +307,7 @@ fun myToolBar() {
 
         actions = {
             IconButton(onClick = {
-                val intent = Intent(context, MinhacontaActivity::class.java)
+                val intent = Intent(context, CadastroJetpackActivity::class.java)
                 context.startActivity(intent)
             })
             {
@@ -324,7 +324,7 @@ fun myToolBar() {
 }
 
 @Composable
-fun MyScreenWithToolbar() {
+fun appEtoolbar() {
     Scaffold(
         topBar = { myToolBar() },
         content = { paddingValues ->
@@ -346,5 +346,5 @@ fun MyScreenWithToolbar() {
 @Preview
 @Composable
 fun appPreview() {
-    MyScreenWithToolbar()
+    appEtoolbar()
 }
