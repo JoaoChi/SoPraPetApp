@@ -3,6 +3,7 @@ package com.angellira.petvital1
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -75,12 +76,14 @@ class AgendaActivity : ComponentActivity() {
 @Composable
 fun app() {
 
+    val context = LocalContext.current
+
     val options = listOf("Banho", "Tosa", "Veterinária")
     var expanded by remember { mutableStateOf(false) }
     var expandir by remember { mutableStateOf(false) }
-    val horarios = listOf("1, 2, 3, 4, 5, 6, 7, 8, 9, 10")
-    var selectedText by remember { mutableStateOf("Selecione o serviço") }
-    var selectedText2 by remember { mutableStateOf("Selecione o horário") }
+    val horarios = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+    var selectedText by remember { mutableStateOf((options[0])) }
+    var selectedText2 by remember { mutableStateOf((horarios[0])) }
 
 
     Column(
@@ -127,14 +130,11 @@ fun app() {
 
             Spacer(modifier = Modifier.height(40.dp))
 
+
             ExposedDropdownMenuBox(
                 expanded = expanded,
                 onExpandedChange = {
                     expanded = !expanded
-                    Log.d(
-                        "DropdownService",
-                        "Estado do serviço alterado"
-                    ) // Adicionando log para verificar
                 },
             ) {
                 TextField(
@@ -146,23 +146,15 @@ fun app() {
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                     },
                     colors = ExposedDropdownMenuDefaults.textFieldColors(),
-                    modifier = Modifier.clickable {
-                        expanded = true
-                        Log.d(
-                            "DropdownService",
-                            "TextField clicado, expandindo menu"
-                        )
-                    },
+                    modifier = Modifier.menuAnchor()
                 )
 
 
-                DropdownMenu(
+                ExposedDropdownMenu(
                     expanded = expanded,
                     onDismissRequest = {
                         expanded = false
-                        Log.d("DropdownService", "Menu de serviço fechado") // Log de fechamento
                     },
-                    modifier = Modifier.width(150.dp)
                 ) {
                     options.forEach { option ->
                         DropdownMenuItem(
@@ -170,6 +162,7 @@ fun app() {
                             onClick = {
                                 selectedText = option
                                 expanded = false
+                                Toast.makeText(context, option, Toast.LENGTH_SHORT).show()
                             }
                         )
                     }
@@ -193,13 +186,11 @@ fun app() {
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandir)
                     },
-                    modifier = Modifier.clickable { expandir = true },
-                    colors = ExposedDropdownMenuDefaults.textFieldColors()
+                    modifier = Modifier.menuAnchor()
                 )
                 DropdownMenu(
                     expanded = expandir,
                     onDismissRequest = { expandir = false },
-                    modifier = Modifier.width(150.dp)
                 ) {
                     horarios.forEach { horarios ->
                         DropdownMenuItem(text = { Text(horarios) },

@@ -156,6 +156,14 @@ fun cadastro() {
                                 imagem = "",
                                 cpf = cpf
                             )
+
+                            val emailJaexiste = userApi.getUsers(email)
+
+                            if(emailJaexiste != null){
+                                withContext(Main){
+                                    Toast.makeText(context, "Esse email já existe.", Toast.LENGTH_SHORT).show()
+                                }
+                            }
                             if (nome.isNullOrEmpty() ||
                                 email.isNullOrEmpty() ||
                                 senha.isNullOrEmpty() ||
