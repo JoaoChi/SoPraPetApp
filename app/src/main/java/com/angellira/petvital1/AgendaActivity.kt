@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,9 +31,13 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,6 +51,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,7 +64,7 @@ class AgendaActivity : ComponentActivity() {
         setContent {
             PetVital1Theme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    app()
+                    MyScreenWithToolbar()
                 }
             }
         }
@@ -80,11 +87,14 @@ fun app() {
         Modifier.background(color = Color(121, 213, 255, 255)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
+
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            Spacer(modifier = Modifier.height(0.dp))
 
             Image(
                 painter = painterResource(R.drawable.petvital__4__removebg_preview),
@@ -98,11 +108,11 @@ fun app() {
                 style = TextStyle(
                     fontSize = 30.sp,
                     fontWeight = FontWeight.W900,
-                    color = Color(0, 132, 192, 255)
+                    color = Color(0xFF0162AF)
                 )
             )
 
-            Spacer(modifier = Modifier.height(80.dp))
+            Spacer(modifier = Modifier.height(60.dp))
 
 
             Text(
@@ -111,7 +121,7 @@ fun app() {
                     color = Color(0, 0, 0, 255),
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
-
+                    textAlign = TextAlign.Center
                     )
             )
 
@@ -132,11 +142,11 @@ fun app() {
                     onValueChange = {},
                     readOnly = true,
                     label = { Text("Selecione o serviço") },
-//                    trailingIcon = {
-//                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-//                    },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                    },
                     colors = ExposedDropdownMenuDefaults.textFieldColors(),
-                            modifier = Modifier.clickable {
+                    modifier = Modifier.clickable {
                         expanded = true
                         Log.d(
                             "DropdownService",
@@ -226,7 +236,7 @@ fun app() {
                 )
             }
 
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(0.dp))
 
             Row {
                 Box(
@@ -276,9 +286,65 @@ fun app() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun myToolBar() {
+    val context = LocalContext.current
+
+    TopAppBar(
+        title = { Text(text = "SóPraPet") },
+        navigationIcon = {
+            IconButton(onClick = {
+                val intent = Intent(context, MainActivity::class.java)
+                context.startActivity(intent)
+            }) {
+                Icon(
+                    imageVector = Icons.Filled.Home,
+                    contentDescription = "Menu"
+                )
+            }
+        },
+
+        actions = {
+            IconButton(onClick = {
+                val intent = Intent(context, MinhacontaActivity::class.java)
+                context.startActivity(intent)
+            })
+            {
+                Icon(imageVector = Icons.Filled.Person, contentDescription = "Profile")
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(10, 116, 201, 255),
+            titleContentColor = Color.White,
+            actionIconContentColor = Color.White,
+            navigationIconContentColor = Color.White
+        ),
+    )
+}
+
+@Composable
+fun MyScreenWithToolbar() {
+    Scaffold(
+        topBar = { myToolBar() },
+        content = { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .background(color = Color(121, 213, 255, 255)),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                app()
+            }
+        }
+    )
+}
+
 
 @Preview
 @Composable
 fun appPreview() {
-    app()
+    MyScreenWithToolbar()
 }
