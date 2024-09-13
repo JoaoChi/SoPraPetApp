@@ -1,8 +1,10 @@
 package com.angellira.petvital1
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -57,6 +59,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.angellira.petvital1.ui.theme.PetVital1Theme
+import java.util.Calendar
 
 class AgendaActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,13 +80,21 @@ class AgendaActivity : ComponentActivity() {
 fun app() {
 
     val context = LocalContext.current
+    val calendar = Calendar.getInstance()
 
     val options = listOf("Banho", "Tosa", "Veterinária")
     var expanded by remember { mutableStateOf(false) }
     var expandir by remember { mutableStateOf(false) }
     val horarios = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
     var selectedText by remember { mutableStateOf((options[0])) }
-    var selectedText2 by remember { mutableStateOf((horarios[0])) }
+    var selectedText2 by remember { mutableStateOf("Data") }
+
+    val datePickerDialog = DatePickerDialog(
+        context,
+        { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+            selectedText2 = "$dayOfMonth/${month + 1}/$year"
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)
+    )
 
 
     Column(
@@ -186,7 +197,9 @@ fun app() {
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandir)
                     },
-                    modifier = Modifier.menuAnchor()
+                    modifier = Modifier
+                        .clickable { datePickerDialog.show()}
+                            .padding(16.dp)
                 )
                 DropdownMenu(
                     expanded = expandir,
@@ -197,7 +210,6 @@ fun app() {
                             onClick = {
                                 selectedText2 = horarios
                                 expandir = false
-                                Log.d("DropdownService", "Serviço selecionado: ")
                             })
 
 
