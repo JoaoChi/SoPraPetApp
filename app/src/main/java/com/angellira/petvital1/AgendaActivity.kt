@@ -78,11 +78,13 @@ class AgendaActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun app() {
-
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
 
-    val options = listOf("Banho", "Tosa", "Veterinária")
+    val intent = Intent(context, AgendaActivity::class.java)
+
+    val servicos = intent.getStringExtra("servicos")?: "Banho"
+    val options = listOf("$servicos")
     var expanded by remember { mutableStateOf(false) }
     var expandir by remember { mutableStateOf(false) }
     val horarios = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
@@ -98,7 +100,7 @@ fun app() {
 
 
     Column(
-        Modifier.background(color = Color(121, 213, 255, 255)),
+        Modifier.background(color = Color(69, 143, 255, 255)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
 
@@ -122,7 +124,7 @@ fun app() {
                 style = TextStyle(
                     fontSize = 30.sp,
                     fontWeight = FontWeight.W900,
-                    color = Color(0xFF0162AF)
+                    color = Color(0xFFFFFFFF)
                 )
             )
 
@@ -132,7 +134,7 @@ fun app() {
             Text(
                 text = "Qual Serviço Gostaria \nde agendar?",
                 style = TextStyle(
-                    color = Color(0, 0, 0, 255),
+                    color = Color(255, 255, 255, 255),
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -227,7 +229,7 @@ fun app() {
                 modifier = Modifier
                     .width(200.dp)
                     .height(40.dp),
-                containerColor = Color(0xFF0162AF),
+                containerColor = Color(0xFFF6C64B),
                 onClick = {
                     val intent = Intent(context, PetshopsActivity::class.java)
                     context.startActivity(intent)
@@ -269,9 +271,10 @@ fun app() {
 
                 Column {
 
+                    val pegandoNome = intent.getStringExtra("nome_petshop")?: "Nome petshop"
 
                     Text(
-                        text = "Petchopp",
+                        text = "$pegandoNome",
                         style = TextStyle(
                             color = Color(0, 0, 0, 255),
                             fontSize = (16.sp)
@@ -319,10 +322,10 @@ fun myToolBar() {
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(10, 116, 201, 255),
-            titleContentColor = Color.White,
-            actionIconContentColor = Color.White,
-            navigationIconContentColor = Color.White
+            containerColor = Color(246, 198, 75, 255),
+            titleContentColor = Color.Black,
+            actionIconContentColor = Color.Black,
+            navigationIconContentColor = Color.Black
         ),
     )
 }
@@ -336,7 +339,7 @@ fun appEtoolbar() {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .background(color = Color(121, 213, 255, 255)),
+                    .background(color = Color(69, 143, 255, 255)),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
