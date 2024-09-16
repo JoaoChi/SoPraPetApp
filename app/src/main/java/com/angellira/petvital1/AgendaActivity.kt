@@ -208,6 +208,7 @@ fun app() {
                     horarios.forEach { horarios ->
                         DropdownMenuItem(text = { Text(horarios) },
                             onClick = {
+                                datePickerDialog.show()
                                 selectedText2 = horarios
                                 expandir = false
                             })
