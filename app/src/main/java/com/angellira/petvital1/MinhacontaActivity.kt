@@ -43,6 +43,7 @@ class MinhacontaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMinhacontaBinding
     private lateinit var preferencesManager: PreferencesManager
+    object ImageStorage { var userImage: String? = null }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -146,7 +147,7 @@ class MinhacontaActivity : AppCompatActivity() {
                     val downloadUrl = uri.toString()
 
                     Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
-                    preferencesManager.userImage = downloadUrl
+                    ImageStorage.userImage = downloadUrl
                     trocarfoto()
                 }.addOnFailureListener {
                     Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT)
@@ -159,19 +160,21 @@ class MinhacontaActivity : AppCompatActivity() {
 
         private fun trocarfoto() {
             val email = preferencesManager.userId
-            val imagem = preferencesManager.userImage
+            val imagem = ImageStorage.userImage
             lifecycleScope.launch(IO) {
                 try {
                     val userApi = UsersApi.retrofitService
                     val user = userApi.getUsers(email.toString())
 
-                    userApi.editarPerfilUsuario(
-                        user.email,
-                        user.email,
-                        user.name,
-                        user.cpf,
-                        imagem.toString()
-                    )
+                    if (imagem != null) {
+                        userApi.editarPerfilUsuario(
+                            user.email,
+                            user.email,
+                            user.name,
+                            user.cpf,
+                            imagem
+                        )
+                    }
                     withContext(Main) {
                         Toast.makeText(
                             this@MinhacontaActivity,
