@@ -20,6 +20,7 @@ import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.load
+import com.angellira.petvital1.CadastroActivity.ImageStorage
 import com.angellira.petvital1.database.AppDatabase
 import com.angellira.petvital1.databinding.ActivityCadastrarPetBinding
 import com.angellira.petvital1.databinding.ActivityCadastrarPetshopBinding
@@ -39,6 +40,7 @@ class CadastrarPetshopActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCadastrarPetshopBinding
     private lateinit var preferencesManager: PreferencesManager
+    object ImageStorage { var petshopImage: String? = null }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,11 +70,6 @@ class CadastrarPetshopActivity : AppCompatActivity() {
                 if (uri != null) {
                     val imageUri = uri
 
-                    val sharedPreferences = getSharedPreferences("ImagePetshop", Context.MODE_PRIVATE)
-                    val editor = sharedPreferences.edit()
-                    editor.clear()
-                    editor.apply()
-
                     uploadImageToFirebase(imageUri)
                     Toast.makeText(this@CadastrarPetshopActivity, "Upload Concluído!", Toast.LENGTH_SHORT).show()
                 } else {
@@ -97,7 +94,7 @@ class CadastrarPetshopActivity : AppCompatActivity() {
                 imagesRef.downloadUrl.addOnSuccessListener { uri ->
 
                     val downloadUrl = uri.toString()
-                    preferencesManager.petshopImage = downloadUrl
+                    ImageStorage.petshopImage = downloadUrl
 
                     Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
 
@@ -117,7 +114,7 @@ class CadastrarPetshopActivity : AppCompatActivity() {
             val description = binding.descricaoPetshop.text.toString()
             val localizacao = binding.localizacaoPetshop.text.toString()
             val servicos = binding.servicosPetshop.text.toString()
-            var imagem = preferencesManager.petshopImage
+            var imagem = ImageStorage.petshopImage
             val cnpj = binding.textCnpj.text.toString()
 
             if(imagem.isNullOrEmpty()){

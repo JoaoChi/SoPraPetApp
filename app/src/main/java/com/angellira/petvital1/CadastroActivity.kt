@@ -32,6 +32,7 @@ class CadastroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCadastroBinding
     private lateinit var preferencesManager: PreferencesManager
     private val PICK_IMAGE_REQUEST = 1
+    object ImageStorage { var userImage: String? = null }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,11 +59,6 @@ class CadastroActivity : AppCompatActivity() {
                 if (uri != null) {
                     val imageUri = uri
 
-                    val sharedPreferences = getSharedPreferences("ImageUser", Context.MODE_PRIVATE)
-                    val editor = sharedPreferences.edit()
-                    editor.clear()
-                    editor.apply()
-
                     uploadImageToFirebase(imageUri)
                     Toast.makeText(this@CadastroActivity, "Upload Concluído!", Toast.LENGTH_SHORT).show()
                 } else {
@@ -88,9 +84,8 @@ class CadastroActivity : AppCompatActivity() {
                 imagesRef.downloadUrl.addOnSuccessListener { uri ->
 
                     val downloadUrl = uri.toString()
-
+                    ImageStorage.userImage = downloadUrl
                     Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
-                    preferencesManager.userImage = downloadUrl
 
                 }.addOnFailureListener {
                     Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT)
@@ -107,7 +102,7 @@ class CadastroActivity : AppCompatActivity() {
             val senha = binding.passwordEditText.text.toString()
             val senha2 = binding.password2.text.toString()
             val cpf = "123124"
-            var imagem = preferencesManager.userImage
+            var imagem = ImageStorage.userImage
 
             if(imagem.isNullOrEmpty()){
                 imagem = "https://firebasestorage.googleapis.com/v0/b/imagepets-82fe7.appspot.com/o/Post%20Instagram%20Hoje%20n%C3%A3o%20teremos%20culto.png?alt=media&token=51cbe88f-02f2-47d2-8237-51f31d814e99"
