@@ -232,7 +232,7 @@ class CadastrarPetActivity : AppCompatActivity() {
             val idade = binding.editIdade.text.toString()
             var imagem = ImageStorage.petImage
 
-            if(imagem.isNullOrBlank()){
+            if(imagem.isNullOrEmpty()){
                 imagem = "https://firebasestorage.googleapis.com/v0/b/imagepets-82fe7.appspot.com/o/Post%20Instagram%20Hoje%20n%C3%A3o%20teremos%20culto.png?alt=media&token=51cbe88f-02f2-47d2-8237-51f31d814e99"
             }
             if (nome.isNotEmpty() &&

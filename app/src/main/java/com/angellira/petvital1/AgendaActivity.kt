@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,6 +26,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.DropdownMenu
@@ -35,6 +38,7 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -81,7 +85,7 @@ fun app() {
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
     val minDate = calendar.timeInMillis
-    calendar.add(Calendar.YEAR, 1)
+    calendar.add(Calendar.MONTH, 2)
     val maxDate = calendar.timeInMillis
 
     val intent = Intent(context, AgendaActivity::class.java)
@@ -89,13 +93,12 @@ fun app() {
     val servicos = intent.getStringExtra("servicos")?: "Banho"
     val options = listOf("$servicos")
     var expanded by remember { mutableStateOf(false) }
-    var expandir by remember { mutableStateOf(false) }
-    val horarios = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
     var selectedText by remember { mutableStateOf((options[0])) }
     var selectedText2 by remember { mutableStateOf("Data") }
 
     val datePickerDialog = DatePickerDialog(
         context,
+        R.style.CustomDatePickerDialog,
         { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
             selectedText2 = "$dayOfMonth/${month + 1}/$year"
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)
@@ -116,8 +119,6 @@ fun app() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Spacer(modifier = Modifier.height(0.dp))
-
             Image(
                 painter = painterResource(R.drawable.petvital__4__removebg_preview),
                 contentDescription = "Logo",
@@ -134,9 +135,6 @@ fun app() {
                 )
             )
 
-            Spacer(modifier = Modifier.height(60.dp))
-
-
             Text(
                 text = "Qual Serviço Gostaria \nde agendar?",
                 style = TextStyle(
@@ -147,7 +145,7 @@ fun app() {
                     )
             )
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             ExposedDropdownMenuBox(
                 expanded = expanded,
@@ -163,8 +161,12 @@ fun app() {
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                     },
-                    colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                    colors = ExposedDropdownMenuDefaults.textFieldColors(
+                    ),
                     modifier = Modifier.menuAnchor()
+                        .fillMaxWidth()
+                        .padding(horizontal = 26.dp)
+                        .height(66.dp)
                 )
 
 
@@ -189,42 +191,19 @@ fun app() {
 
             Spacer(modifier = Modifier.height(12.dp))
 
-
-            ExposedDropdownMenuBox(expanded = expandir,
-                onExpandedChange = { expandir = !expandir }
+            ListItem(
+                headlineContent = { Text("Adicione a data") },
+                supportingContent = { Text(text = "Selecione o dia")},
+                leadingContent = {
+                    Icon(
+                        Icons.Filled.DateRange,
+                        contentDescription = "Data do agendamento",
+                    )
+                },
+                        modifier = Modifier
+                            .clickable { datePickerDialog.show() }
+                            .padding(26.dp)
             )
-            {
-                TextField(
-                    value = selectedText2,
-                    onValueChange = {},
-                    readOnly = true,
-                    label = {
-                        Text(text = "Selecione a data")
-                    },
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandir)
-                    },
-                    modifier = Modifier
-                        .clickable { datePickerDialog.show() }
-                        .padding(16.dp)
-                )
-                DropdownMenu(
-                    expanded = expandir,
-                    onDismissRequest = { expandir = false },
-                ) {
-                    horarios.forEach { horarios ->
-                        DropdownMenuItem(text = { Text(horarios) },
-                            onClick = {
-                                datePickerDialog.show()
-                                selectedText2 = horarios
-                                expandir = false
-                            })
-
-
-                    }
-
-                }
-            }
 
             Spacer(modifier = Modifier.height(20.dp))
 
