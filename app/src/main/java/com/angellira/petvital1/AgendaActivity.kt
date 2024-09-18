@@ -25,11 +25,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,9 +41,11 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -53,6 +57,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -64,6 +70,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.angellira.petvital1.ui.theme.PetVital1Theme
 import java.util.Calendar
+
 
 class AgendaActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,6 +89,10 @@ class AgendaActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun app() {
+
+    var showDialog by remember { mutableStateOf(false) }
+    var selectedOption by remember { mutableStateOf<String?>(null) }
+
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
     val minDate = calendar.timeInMillis
@@ -147,29 +158,31 @@ fun app() {
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            val focusRequester = remember { FocusRequester() }
+
+            ListItem(
+                headlineContent = { Text("Serviço") },
+                supportingContent = { Text(text = "Selecione o serviço")},
+                leadingContent = {
+                    Icon(
+                        Icons.Filled.Build,
+                        contentDescription = "Data do agendamento",
+                    )
+                },
+                modifier = Modifier
+                    .clickable {
+                        showDialog = true
+                    }
+                    .padding(26.dp)
+                    .focusRequester(focusRequester)
+            )
+
             ExposedDropdownMenuBox(
                 expanded = expanded,
                 onExpandedChange = {
                     expanded = !expanded
                 },
             ) {
-                TextField(
-                    value = selectedText,
-                    onValueChange = {},
-                    readOnly = true,
-                    label = { Text("Selecione o serviço") },
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-                    },
-                    colors = ExposedDropdownMenuDefaults.textFieldColors(
-                    ),
-                    modifier = Modifier.menuAnchor()
-                        .fillMaxWidth()
-                        .padding(horizontal = 26.dp)
-                        .height(66.dp)
-                )
-
-
                 ExposedDropdownMenu(
                     expanded = expanded,
                     onDismissRequest = {
@@ -189,11 +202,9 @@ fun app() {
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
-
             ListItem(
-                headlineContent = { Text("Adicione a data") },
-                supportingContent = { Text(text = "Selecione o dia")},
+                headlineContent = { Text("Data") },
+                supportingContent = { Text(text = "Selecione a data")},
                 leadingContent = {
                     Icon(
                         Icons.Filled.DateRange,
@@ -274,8 +285,64 @@ fun app() {
                 }
             }
         }
+
+        ServiceSelectionDialog(
+            showDialog = showDialog,
+            selectedOption = selectedText,
+            onDismiss = { showDialog = false },
+            onSelect = {option ->
+                selectedOption = option
+                showDialog = false
+            }
+        )
     }
 }
+
+@Composable
+fun ServiceSelectionDialog(
+    showDialog: Boolean,
+    selectedOption: String?,
+    onDismiss: () -> Unit,
+    onSelect: (String) -> Unit
+) {
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = { Text("Selecione um serviço") },
+            text = {
+                Column {
+                    listOf("Veterinária", "Tosa", "Banho").forEach { service ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { onSelect(service) }
+                                .padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = service == selectedOption,
+                                onClick = { onSelect(service) }
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(text = service)
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = onDismiss) {
+                    Text("OK")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = onDismiss) {
+                    Text("Cancelar")
+                }
+            }
+        )
+    }
+}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
