@@ -80,6 +80,9 @@ class AgendaActivity : ComponentActivity() {
 fun app() {
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
+    val minDate = calendar.timeInMillis
+    calendar.add(Calendar.YEAR, 1)
+    val maxDate = calendar.timeInMillis
 
     val intent = Intent(context, AgendaActivity::class.java)
 
@@ -96,7 +99,10 @@ fun app() {
         { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
             selectedText2 = "$dayOfMonth/${month + 1}/$year"
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)
-    )
+    ).apply {
+        datePicker.minDate = minDate
+        datePicker.maxDate = maxDate
+    }
 
 
     Column(
@@ -199,8 +205,8 @@ fun app() {
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandir)
                     },
                     modifier = Modifier
-                        .clickable { datePickerDialog.show()}
-                            .padding(16.dp)
+                        .clickable { datePickerDialog.show() }
+                        .padding(16.dp)
                 )
                 DropdownMenu(
                     expanded = expandir,
