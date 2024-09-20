@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
@@ -20,6 +22,7 @@ import com.angellira.petvital1.model.User
 import com.angellira.petvital1.model.Usuario
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
+import com.angellira.petvital1.preferences.preferenciaCadastro
 import com.google.firebase.Firebase
 import com.google.firebase.storage.storage
 import kotlinx.coroutines.Dispatchers.IO
@@ -32,7 +35,6 @@ class CadastroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCadastroBinding
     private lateinit var preferencesManager: PreferencesManager
     private val PICK_IMAGE_REQUEST = 1
-    object ImageStorage { var userImage: String? = null }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,12 +62,15 @@ class CadastroActivity : AppCompatActivity() {
                     val imageUri = uri
 
                     uploadImageToFirebase(imageUri)
-                    Toast.makeText(this@CadastroActivity, "Upload Concluído!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@CadastroActivity, "Foto selecionada", Toast.LENGTH_SHORT).show()
+                    binding.textoAviso.visibility = VISIBLE
                 } else {
-                    Toast.makeText(this@CadastroActivity, "Erro", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@CadastroActivity, "Nenhuma foto selecionada", Toast.LENGTH_SHORT).show()
+                    binding.BotaoRegistrar.visibility = VISIBLE
                 }
             }
         binding.botaoAddfoto.setOnClickListener {
+            binding.BotaoRegistrar.visibility = INVISIBLE
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
     }
@@ -84,8 +89,11 @@ class CadastroActivity : AppCompatActivity() {
                 imagesRef.downloadUrl.addOnSuccessListener { uri ->
 
                     val downloadUrl = uri.toString()
-                    ImageStorage.userImage = downloadUrl
+                    preferencesManager.userImage = downloadUrl
+
                     Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
+                    binding.BotaoRegistrar.visibility = VISIBLE
+                    binding.textoAviso.visibility = INVISIBLE
 
                 }.addOnFailureListener {
                     Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT)
@@ -102,7 +110,7 @@ class CadastroActivity : AppCompatActivity() {
             val senha = binding.passwordEditText.text.toString()
             val senha2 = binding.password2.text.toString()
             val cpf = "123124"
-            var imagem = ImageStorage.userImage
+            var imagem = preferencesManager.userImage
 
             if(imagem.isNullOrEmpty()){
                 imagem = "https://firebasestorage.googleapis.com/v0/b/imagepets-82fe7.appspot.com/o/Post%20Instagram%20Hoje%20n%C3%A3o%20teremos%20culto.png?alt=media&token=51cbe88f-02f2-47d2-8237-51f31d814e99"
@@ -127,6 +135,7 @@ class CadastroActivity : AppCompatActivity() {
                             imagem
                         )
                     }
+                    preferencesManager.userImage = null
                 } catch (e: Exception) {
                     Toast.makeText(
                         this@CadastroActivity,

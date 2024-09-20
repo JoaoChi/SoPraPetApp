@@ -2,9 +2,7 @@ package com.angellira.petvital1
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
-import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -16,15 +14,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.load
-import com.angellira.petvital1.CadastroActivity.ImageStorage
 import com.angellira.petvital1.database.AppDatabase
-import com.angellira.petvital1.databinding.ActivityCadastrarPetBinding
 import com.angellira.petvital1.databinding.ActivityCadastrarPetshopBinding
-import com.angellira.petvital1.model.Pet
 import com.angellira.petvital1.model.Petshop
 import com.angellira.petvital1.network.UsersApi
 import com.angellira.petvital1.preferences.PreferencesManager
@@ -34,13 +25,11 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.UUID
 
 class CadastrarPetshopActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCadastrarPetshopBinding
     private lateinit var preferencesManager: PreferencesManager
-    object ImageStorage { var petshopImage: String? = null }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +59,7 @@ class CadastrarPetshopActivity : AppCompatActivity() {
                 if (uri != null) {
                     val imageUri = uri
 
+                    preferencesManager.petshopImage = imageUri.toString()
                     uploadImageToFirebase(imageUri)
                     Toast.makeText(this@CadastrarPetshopActivity, "Upload Concluído!", Toast.LENGTH_SHORT).show()
                 } else {
@@ -94,7 +84,6 @@ class CadastrarPetshopActivity : AppCompatActivity() {
                 imagesRef.downloadUrl.addOnSuccessListener { uri ->
 
                     val downloadUrl = uri.toString()
-                    ImageStorage.petshopImage = downloadUrl
 
                     Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
 
@@ -114,12 +103,12 @@ class CadastrarPetshopActivity : AppCompatActivity() {
             val description = binding.descricaoPetshop.text.toString()
             val localizacao = binding.localizacaoPetshop.text.toString()
             val servicos = binding.servicosPetshop.text.toString()
-            var imagem = ImageStorage.petshopImage
+            var imagem = preferencesManager.petshopImage
             val cnpj = binding.textCnpj.text.toString()
 
-            if(imagem.isNullOrEmpty()){
-                imagem = "https://firebasestorage.googleapis.com/v0/b/imagepets-82fe7.appspot.com/o/Post%20Instagram%20Hoje%20n%C3%A3o%20teremos%20culto.png?alt=media&token=51cbe88f-02f2-47d2-8237-51f31d814e99"
-            }
+//            if(imagem.isNullOrEmpty()){
+//                imagem = "https://firebasestorage.googleapis.com/v0/b/imagepets-82fe7.appspot.com/o/Post%20Instagram%20Hoje%20n%C3%A3o%20teremos%20culto.png?alt=media&token=51cbe88f-02f2-47d2-8237-51f31d814e99"
+//            }
             if (nome.isNotEmpty() &&
                 description.isNotEmpty() &&
                 localizacao.isNotEmpty() &&
