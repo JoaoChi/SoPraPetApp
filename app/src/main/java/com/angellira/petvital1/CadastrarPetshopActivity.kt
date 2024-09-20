@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
@@ -59,14 +61,16 @@ class CadastrarPetshopActivity : AppCompatActivity() {
                 if (uri != null) {
                     val imageUri = uri
 
-                    preferencesManager.petshopImage = imageUri.toString()
                     uploadImageToFirebase(imageUri)
-                    Toast.makeText(this@CadastrarPetshopActivity, "Upload Concluído!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@CadastrarPetshopActivity, "Imagem selecionada", Toast.LENGTH_SHORT).show()
+                    binding.textoAviso.visibility = VISIBLE
                 } else {
                     Toast.makeText(this@CadastrarPetshopActivity, "Erro", Toast.LENGTH_SHORT).show()
+                    binding.buttonSalvarPetshop.visibility = VISIBLE
                 }
             }
         binding.buttonAdicionarImagem.setOnClickListener {
+            binding.buttonSalvarPetshop.visibility = INVISIBLE
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
     }
@@ -84,12 +88,15 @@ class CadastrarPetshopActivity : AppCompatActivity() {
                 imagesRef.downloadUrl.addOnSuccessListener { uri ->
 
                     val downloadUrl = uri.toString()
+                    preferencesManager.petshopImage = downloadUrl
 
                     Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
-
+                    binding.textoAviso.visibility = INVISIBLE
+                    binding.buttonSalvarPetshop.visibility = VISIBLE
                 }.addOnFailureListener {
                     Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT)
                         .show()
+
                 }
             }
         }
@@ -106,9 +113,9 @@ class CadastrarPetshopActivity : AppCompatActivity() {
             var imagem = preferencesManager.petshopImage
             val cnpj = binding.textCnpj.text.toString()
 
-//            if(imagem.isNullOrEmpty()){
-//                imagem = "https://firebasestorage.googleapis.com/v0/b/imagepets-82fe7.appspot.com/o/Post%20Instagram%20Hoje%20n%C3%A3o%20teremos%20culto.png?alt=media&token=51cbe88f-02f2-47d2-8237-51f31d814e99"
-//            }
+            if(imagem.isNullOrEmpty()){
+                imagem = "https://firebasestorage.googleapis.com/v0/b/imagepets-82fe7.appspot.com/o/Post%20Instagram%20Hoje%20n%C3%A3o%20teremos%20culto.png?alt=media&token=51cbe88f-02f2-47d2-8237-51f31d814e99"
+            }
             if (nome.isNotEmpty() &&
                 description.isNotEmpty() &&
                 localizacao.isNotEmpty() &&
@@ -120,6 +127,7 @@ class CadastrarPetshopActivity : AppCompatActivity() {
                         nome, description, localizacao, servicos, imagem.toString(), cnpj
                     )
                 }
+                preferencesManager.petshopImage = null
             } else {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
             }

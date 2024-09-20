@@ -250,6 +250,7 @@ class CadastrarPetActivity : AppCompatActivity() {
                         nome, description, peso, idade, imagem.toString()
                     )
                 }
+                preferencesManager.petImage = null
             } else {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
             }
