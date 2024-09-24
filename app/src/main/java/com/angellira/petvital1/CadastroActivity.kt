@@ -67,9 +67,11 @@ class CadastroActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this@CadastroActivity, "Nenhuma foto selecionada", Toast.LENGTH_SHORT).show()
                     binding.BotaoRegistrar.visibility = VISIBLE
+                    binding.botaoAddfoto.visibility = VISIBLE
                 }
             }
         binding.botaoAddfoto.setOnClickListener {
+            binding.botaoAddfoto.visibility = INVISIBLE
             binding.BotaoRegistrar.visibility = INVISIBLE
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
@@ -94,10 +96,12 @@ class CadastroActivity : AppCompatActivity() {
                     Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
                     binding.BotaoRegistrar.visibility = VISIBLE
                     binding.textoAviso.visibility = INVISIBLE
+                    binding.botaoAddfoto.visibility = VISIBLE
 
                 }.addOnFailureListener {
                     Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT)
                         .show()
+                    binding.botaoAddfoto.visibility = VISIBLE
                 }
             }
         }

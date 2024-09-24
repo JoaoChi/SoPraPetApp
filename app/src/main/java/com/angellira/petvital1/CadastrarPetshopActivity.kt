@@ -67,9 +67,11 @@ class CadastrarPetshopActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this@CadastrarPetshopActivity, "Erro", Toast.LENGTH_SHORT).show()
                     binding.buttonSalvarPetshop.visibility = VISIBLE
+                    binding.buttonAdicionarImagem.visibility = VISIBLE
                 }
             }
         binding.buttonAdicionarImagem.setOnClickListener {
+            binding.buttonAdicionarImagem.visibility = INVISIBLE
             binding.buttonSalvarPetshop.visibility = INVISIBLE
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
@@ -93,6 +95,8 @@ class CadastrarPetshopActivity : AppCompatActivity() {
                     Toast.makeText(this, "Upload bem-sucedido", Toast.LENGTH_SHORT).show()
                     binding.textoAviso.visibility = INVISIBLE
                     binding.buttonSalvarPetshop.visibility = VISIBLE
+                    binding.buttonAdicionarImagem.visibility = VISIBLE
+
                 }.addOnFailureListener {
                     Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT)
                         .show()

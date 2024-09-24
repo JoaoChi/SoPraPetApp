@@ -175,10 +175,12 @@ class CadastrarPetActivity : AppCompatActivity() {
                 } else {
                     binding.textoAviso.visibility = INVISIBLE
                     binding.buttonSalvarPet.visibility = VISIBLE
+                    binding.imagemPet.visibility = VISIBLE
                     Toast.makeText(this@CadastrarPetActivity, "Nenhuma imagem Selecionada", Toast.LENGTH_SHORT).show()
                 }
             }
         binding.imagemPet.setOnClickListener {
+            binding.imagemPet.visibility = INVISIBLE
             binding.buttonSalvarPet.visibility = INVISIBLE
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
@@ -202,6 +204,8 @@ class CadastrarPetActivity : AppCompatActivity() {
                     Toast.makeText(this, "Imagem carregada!", Toast.LENGTH_SHORT).show()
                     binding.textoAviso.visibility = INVISIBLE
                     binding.buttonSalvarPet.visibility = VISIBLE
+                    binding.imagemPet.visibility = VISIBLE
+
                 }.addOnFailureListener {
                     Toast.makeText(this, "Falha no upload: ${it.message}", Toast.LENGTH_SHORT)
                         .show()
