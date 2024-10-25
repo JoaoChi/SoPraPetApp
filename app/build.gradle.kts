@@ -94,7 +94,6 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room_version")
     implementation ("androidx.room:room-ktx:2.5.0")
 
-    // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$room_version")
     implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
     implementation("com.google.firebase:firebase-analytics")
