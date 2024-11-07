@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/profile_action"
+        android:icon="@drawable/baseline_perm_identity_24"
+        android:title="profile"
+        app:showAsAction="always"
+
+        />
+
+    <item
+        android:id="@+id/action_favorite"
+        android:icon="@drawable/baseline_add_24"
+        android:title="add"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/configs"
+        android:icon="@drawable/baseline_menu_24"
+        android:title="profile"
+        app:showAsAction="always"
+        />
+
+</menu>
