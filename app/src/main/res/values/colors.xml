@@ -2,7 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="corfundo">#f6c64b</color>
-    <color name="corfundoazul">#458fff</color>
-    <color name="corfundociano">#56D1C5</color>
+    <color name="corfundo">#f8623f</color>
+    <color name="corfundoazul">#1253e8</color>
+    <color name="corfundociano">#1253e8</color>
 </resources>

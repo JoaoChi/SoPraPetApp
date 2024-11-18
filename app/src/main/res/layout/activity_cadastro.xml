@@ -7,134 +7,145 @@
     android:layout_height="match_parent"
     tools:context=".CadastroActivity">
 
-    <ImageView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/fundo"
-        android:id="@+id/background"
-        android:scaleType="centerCrop"
-        />
-
-    <TextView
-        android:id="@+id/textoAviso"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sua imagem está sendo carregada!"
-        android:textSize="20dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/botaoAddfoto"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cpf" />
-
-    <EditText
-        android:id="@+id/textoregistroEmail"
-        android:layout_width="260dp"
-        android:layout_height="48dp"
-        android:maxLength="30"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/usernameEditText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.953" />
-
-
-    <EditText
-        android:id="@+id/usernameEditText"
-        android:layout_width="260dp"
-        android:layout_height="48dp"
-        android:hint="Nome de usuário"
-        android:maxLength="30"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.968" />
-
-    <EditText
-        android:id="@+id/passwordEditText"
-        android:layout_width="260dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="420dp"
-        android:hint="Senha"
-        android:maxLength="30"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/password2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:id="@+id/password2"
-        android:layout_width="260dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="244dp"
-        android:hint="Confirme sua senha"
-        android:maxLength="30"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <EditText
-        android:id="@+id/cpf"
-        android:layout_width="260dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:hint="CPF"
-        android:maxLength="11"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password2" />
-
-    <Button
-        android:id="@+id/BotaoRegistrar"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#FFC107"
-        android:elevation="25dp"
-        android:text="Registrar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
-        app:layout_constraintVertical_bias="0.926" />
-
-    <Button
-        android:id="@+id/botaoAddfoto"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#FFC107"
-        android:elevation="25dp"
-        android:text="Adicionar Foto"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
-        app:layout_constraintVertical_bias="0.646" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="159dp"
-        android:layout_height="213dp"
-        android:layout_marginTop="28dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#FFFFFF"
+        android:backgroundTint="@color/corfundoazul"
+        android:elevation="4dp"
+        android:theme="@style/Theme.Material3.DayNight.NoActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/petvital__2__removebg_preview" />
+        app:titleTextColor="@android:color/background_dark">
 
+        <ImageView
+            android:id="@+id/buttonVolta"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/baseline_arrow_back_24" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:text="Cadastro"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:backgroundTint="#FFFFFF"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <ImageView
+                android:id="@+id/background"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/marca_01"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:id="@+id/textoAviso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sua imagem está sendo carregada!"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/textoregistroEmail"
+                android:layout_width="260dp"
+                android:layout_height="48dp"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:maxLength="30"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"/>
+
+
+            <EditText
+                android:id="@+id/usernameEditText"
+                android:layout_width="260dp"
+                android:layout_height="48dp"
+                android:hint="Nome de usuário"
+                android:inputType="textPersonName"
+                android:maxLength="30"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"/>
+
+            <EditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="260dp"
+                android:layout_height="48dp"
+                android:hint="Senha"
+                android:inputType="textPassword"
+                android:maxLength="30"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"/>
+
+            <EditText
+                android:id="@+id/password2"
+                android:layout_width="260dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:hint="Confirme sua senha"
+                android:inputType="textPassword"
+                android:maxLength="30" />
+
+            <EditText
+                android:id="@+id/cpf"
+                android:layout_width="260dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:hint="CPF"
+                android:inputType="textPassword"
+                android:maxLength="11" />
+
+            <Button
+                android:id="@+id/BotaoRegistrar"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/corfundoazul"
+                android:elevation="25dp"
+                android:textColor="@color/white"
+                android:text="Registrar"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"/>
+
+            <Button
+                android:id="@+id/botaoAddfoto"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/corfundoazul"
+                android:elevation="25dp"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:layout_margin="10dp"
+                android:text="Adicionar Foto" />
+
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

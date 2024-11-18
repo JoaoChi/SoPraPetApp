@@ -92,6 +92,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/petvital__3__removebg_preview" />
+        android:src="@drawable/marca_01"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

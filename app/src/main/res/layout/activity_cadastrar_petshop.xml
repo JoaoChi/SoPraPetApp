@@ -28,7 +28,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/hit_the_follow_button_now___1_" />
+        android:src="@drawable/marca_01"
+        />
 
     <EditText
         android:id="@+id/nomePetshop"

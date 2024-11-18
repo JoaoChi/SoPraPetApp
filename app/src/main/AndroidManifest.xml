@@ -19,21 +19,6 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".AAAAAAAAAAAAAAAAAA"
-            android:exported="false"
-            android:label="@string/title_activity_aaaaaaaaaaaaaaaaaa"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".CadastroJetpackActivity"
-            android:exported="false"
-            android:label="@string/title_activity_cadastro_jetpack"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".AgendaActivity"
-            android:exported="false"
-            android:label="@string/title_activity_agenda"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
             android:name=".BotaoEditActivity"
             android:exported="false" />
         <activity
@@ -49,7 +34,7 @@
             android:name=".PetProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.theme.SplashActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".CadastrarPetActivity"
@@ -70,12 +55,15 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".SplashActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateVisible|adjustResize">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

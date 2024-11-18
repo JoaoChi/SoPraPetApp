@@ -11,18 +11,10 @@
         android:id="@+id/imageView_logo"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="150dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/petvital__5__removebg_preview" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_logo" />
+        app:srcCompat="@drawable/motion_s_prapet" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

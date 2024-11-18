@@ -45,7 +45,7 @@ class PetshopProfileActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         carregandoPet()
         excluirPet()
-        botaoCalendario()
+//        botaoCalendario()
     }
 
     private fun setupView() {
@@ -59,11 +59,11 @@ class PetshopProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun botaoCalendario(){
-        binding.buttonAgenda.setOnClickListener{
-            startActivity(Intent(this@PetshopProfileActivity, AgendaActivity::class.java))
-        }
-    }
+//    private fun botaoCalendario(){
+//        binding.buttonAgenda.setOnClickListener{
+//            startActivity(Intent(this@PetshopProfileActivity, AgendaActivity::class.java))
+//        }
+//    }
 
     private fun carregandoPet() {
         val pegandoNome = intent.getStringExtra("nome_petshop")

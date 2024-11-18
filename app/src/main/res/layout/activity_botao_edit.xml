@@ -72,7 +72,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/dia_mundial_do_gato__veterin_rio_cat_felinos_fevereiro_divertido_moderno_post_de_instagram" />
+                android:src="@drawable/marca_01"
+                />
 
             <EditText
                 android:id="@+id/textemaileditprofile"
