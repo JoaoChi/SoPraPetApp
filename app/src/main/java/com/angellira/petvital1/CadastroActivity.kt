@@ -45,6 +45,9 @@ class CadastroActivity : AppCompatActivity() {
         registroUsuario()
         pegarImagem()
         pegarImagemUsuario()
+        binding.buttonVolta.setOnClickListener{
+            startActivity(Intent(this@CadastroActivity, LoginActivity::class.java))
+        }
     }
 
     private fun pegarImagem() {
