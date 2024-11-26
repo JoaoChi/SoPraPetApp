@@ -9,28 +9,45 @@
     tools:context=".PetshopsActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/barra_petshops"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/corfundo"
+        android:background="#FFFFFF"
+        android:backgroundTint="@color/corfundoazul"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:theme="@style/Theme.Material3.DayNight.NoActionBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:titleTextColor="@android:color/background_dark">
 
+        <ImageView
+            android:id="@+id/buttonVolta"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/baseline_arrow_back_24" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:text="Pet Shops"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+    </androidx.appcompat.widget.Toolbar>
     <ImageView
         android:id="@+id/bannerPromo"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/marca_01"
+        android:src="@drawable/aplica__o_roupas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barra_petshops" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFeed"

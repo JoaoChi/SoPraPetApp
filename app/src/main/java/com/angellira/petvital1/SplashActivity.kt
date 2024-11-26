@@ -58,7 +58,7 @@ class SplashActivity : AppCompatActivity() {
             delay(2.seconds)
             withContext(Main) {
                 if (preferencesManager.estaLogado) {
-                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                    startActivity(Intent(this@SplashActivity, PetshopsActivity::class.java))
                 } else {
                     startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
                 }

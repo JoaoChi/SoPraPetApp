@@ -7,92 +7,139 @@
     android:layout_height="match_parent"
     tools:context=".EsqueciASenhaActivity">
 
-
-    <EditText
-        android:id="@+id/editTextNumberPassword2"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:ems="10"
-        android:hint="Nova Senha"
-        android:maxLength="20"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNumberPassword"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#FFFFFF"
+        android:backgroundTint="@color/corfundoazul"
+        android:elevation="4dp"
+        android:theme="@style/Theme.Material3.DayNight.NoActionBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editEmail"
-        app:layout_constraintVertical_bias="0.814" />
-
-    <EditText
-        android:id="@+id/senhaAntiga"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="76dp"
-        android:ems="10"
-        android:maxLength="20"
-        android:hint="Confirme sua senha"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNumberPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.174" />
-
-    <EditText
-        android:id="@+id/editEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:maxLength="20"
-        android:hint="Confirme seu email"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/senhaAntiga"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <Button
-        android:id="@+id/botaoRedefinirEVoltar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#FFC107"
-        android:ellipsize="middle"
-        android:text="Redefinir e voltar"
-        android:textColorLink="#673AB7"
-        app:iconSize="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumberPassword"
-        app:layout_constraintVertical_bias="0.49" />
-
-    <EditText
-        android:id="@+id/editTextNumberPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:ems="10"
-        android:maxLength="20"
-        android:inputType="textPassword"
-        android:hint="Confirme a Senha"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.689" />
+        app:titleTextColor="@android:color/background_dark">
+
+        <ImageView
+            android:id="@+id/buttonVolta"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/baseline_arrow_back_24" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:text="Redefinir Senha"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+    </androidx.appcompat.widget.Toolbar>
+
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="176dp"
-        android:layout_height="266dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="56dp"
+        android:src="@drawable/marca_01"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/marca_01"
-        />
+        app:layout_constraintTop_toTopOf="@id/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_margin="20dp"
+            android:ems="10"
+            android:hint="Confirme seu email"
+            android:inputType="text"
+            android:maxLength="20"
+            app:layout_constraintBottom_toTopOf="@+id/senhaAntiga"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+
+        <EditText
+            android:id="@+id/senhaAntiga"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:ems="10"
+            android:layout_margin="20dp"
+
+            android:hint="Digite sua senha atual"
+            android:maxLength="20"
+            app:layout_constraintBottom_toTopOf="@+id/editTextNumberPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintVertical_bias="0.174" />
+
+        <EditText
+            android:id="@+id/editTextNumberPassword2"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:ems="10"
+            android:hint="Nova Senha"
+            android:layout_margin="20dp"
+
+            android:maxLength="20"
+            app:layout_constraintBottom_toTopOf="@+id/editTextNumberPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editEmail"
+            app:layout_constraintVertical_bias="0.814" />
+
+        <EditText
+            android:id="@+id/editTextNumberPassword"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:ems="10"
+            android:layout_margin="20dp"
+            android:hint="Confirme a Senha"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.689" />
+
+        <Button
+            android:id="@+id/botaoRedefinirEVoltar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/corfundo"
+            android:ellipsize="middle"
+            android:text="Redefinir e voltar"
+            android:layout_margin="20dp"
+            android:textColor="@color/white"
+            android:textColorLink="#673AB7"
+            app:iconSize="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNumberPassword"
+            app:layout_constraintVertical_bias="0.49" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

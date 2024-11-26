@@ -11,7 +11,7 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
         android:layout_width="490dp"
-        android:layout_height="230dp"
+        android:layout_height="330dp"
         android:background="#56D1C5"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -24,13 +24,13 @@
     <ImageView
         android:id="@+id/cadastrarPet"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="330dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/marca_01"
+        android:src="@drawable/artboard_1_copy_2"
         />
 
 
@@ -178,7 +178,7 @@
         android:id="@+id/textoAviso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="284dp"
         android:fontFamily="sans-serif-condensed"
         android:text="Carregando sua imagem, aguarde!"
         android:textAlignment="center"
@@ -192,7 +192,7 @@
         android:id="@+id/buttonSalvarPet"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="216dp"
+        android:layout_marginBottom="152dp"
         android:backgroundTint="@color/corfundoazul"
         android:text="Salvar Pet"
         android:visibility="invisible"
@@ -205,8 +205,9 @@
         android:id="@+id/voltarMain"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="136dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/corfundoazul"
+        android:textColor="@color/white"
         android:text="Cancelar (voltar)"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

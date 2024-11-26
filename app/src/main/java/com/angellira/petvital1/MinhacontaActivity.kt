@@ -59,6 +59,9 @@ class MinhacontaActivity : AppCompatActivity() {
         }
         botaoEsqueciaSenha()
         botaoeditarConta()
+        binding.buttonVolta.setOnClickListener{
+            finish()
+        }
     }
 
     private fun botaoeditarConta() {

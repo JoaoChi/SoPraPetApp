@@ -42,6 +42,9 @@ class EditarPerfilActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         botaoExcluirConta()
         conferirCheck()
+        binding.buttonVolta.setOnClickListener{
+            finish()
+        }
     }
 
     private fun setupView() {

@@ -46,6 +46,9 @@ class PetshopProfileActivity : AppCompatActivity() {
         carregandoPet()
         excluirPet()
 //        botaoCalendario()
+        binding.buttonVolta.setOnClickListener{
+            finish()
+        }
     }
 
     private fun setupView() {

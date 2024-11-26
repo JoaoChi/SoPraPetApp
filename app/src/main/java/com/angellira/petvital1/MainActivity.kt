@@ -51,6 +51,9 @@ class MainActivity : AppCompatActivity() {
         preferencesManager = PreferencesManager(this)
         mandandoImagens()
         botaoPropaganda()
+        binding.buttonVolta.setOnClickListener{
+            finish()
+        }
 
     }
 
