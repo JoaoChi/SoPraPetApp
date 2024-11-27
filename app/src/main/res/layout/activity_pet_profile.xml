@@ -44,6 +44,16 @@
             android:text="Pet"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/showPopup"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/baseline_menu_24" />
+
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.cardview.widget.CardView

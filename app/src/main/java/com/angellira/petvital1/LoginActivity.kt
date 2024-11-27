@@ -109,7 +109,7 @@ class LoginActivity : AppCompatActivity() {
         ) {
             withContext(Main) {
                 Toast.makeText(this@LoginActivity, "Login efetuado!", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                startActivity(Intent(this@LoginActivity, PetshopsActivity::class.java))
                 preferencesManager.estaLogado = true
                 finishAffinity()
             }

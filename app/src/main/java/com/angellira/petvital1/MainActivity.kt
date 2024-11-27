@@ -54,7 +54,12 @@ class MainActivity : AppCompatActivity() {
         binding.buttonVolta.setOnClickListener{
             finish()
         }
-
+        binding.showPopup.setOnClickListener {
+            showPopupMenu(binding.showPopup)
+        }
+        binding.addPet.setOnClickListener{
+            startActivity(Intent(this@MainActivity, CadastrarPetActivity::class.java))
+        }
     }
 
     private fun botaoPropaganda() {
@@ -204,25 +209,6 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.profile_action -> {
-                startActivity(Intent(this, MinhacontaActivity::class.java))
-                true
-            }
-
-            R.id.action_favorite -> {
-                startActivity(Intent(this, CadastrarPetActivity::class.java))
-                true
-            }
-
-            R.id.configs -> {
-                showPopupMenu(findViewById(R.id.configs))
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 }
 
 

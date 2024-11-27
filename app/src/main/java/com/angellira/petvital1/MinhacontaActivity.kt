@@ -62,6 +62,9 @@ class MinhacontaActivity : AppCompatActivity() {
         binding.buttonVolta.setOnClickListener{
             finish()
         }
+        binding.showPopup.setOnClickListener {
+            showPopupMenu(binding.showPopup)
+        }
     }
 
     private fun botaoeditarConta() {
@@ -316,21 +319,4 @@ class MinhacontaActivity : AppCompatActivity() {
             menuInflater.inflate(R.menu.profile, menu)
             return true
         }
-
-        override fun onOptionsItemSelected(item: MenuItem): Boolean {
-            return when (item.itemId) {
-                R.id.voltarPagina -> {
-                    startActivity(Intent(this, MainActivity::class.java))
-                    true
-                }
-
-                R.id.configs -> {
-                    showPopupMenu(findViewById(R.id.configs))
-                    true
-                }
-
-                else -> super.onOptionsItemSelected(item)
-            }
-        }
-
     }

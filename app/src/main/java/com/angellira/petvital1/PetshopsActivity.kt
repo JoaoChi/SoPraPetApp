@@ -52,6 +52,12 @@ class PetshopsActivity : AppCompatActivity() {
         binding.buttonVolta.setOnClickListener{
             finish()
         }
+        binding.showPopup.setOnClickListener {
+            showPopupMenu(binding.showPopup)
+        }
+        binding.AddPetshop.setOnClickListener{
+            startActivity(Intent(this@PetshopsActivity, CadastrarPetshopActivity::class.java))
+        }
     }
 
     private fun setupView() {
@@ -143,26 +149,7 @@ class PetshopsActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.voltarPagina -> {
-                startActivity(Intent(this, MainActivity::class.java))
-                true
-            }
 
-            R.id.pesquisar -> {
-                startActivity(Intent(this, CadastrarPetshopActivity::class.java))
-                true
-            }
-
-            R.id.configs -> {
-                showPopupMenu(findViewById(R.id.configs))
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 
     private fun mostrarPetshops() {
         lifecycleScope.launch(IO) {

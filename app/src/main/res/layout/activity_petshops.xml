@@ -37,6 +37,26 @@
             android:text="Pet Shops"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/showPopup"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/baseline_menu_24" />
+
+        <ImageView
+            android:id="@+id/AddPetshop"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/baseline_add_24" />
+
+
     </androidx.appcompat.widget.Toolbar>
     <ImageView
         android:id="@+id/bannerPromo"
