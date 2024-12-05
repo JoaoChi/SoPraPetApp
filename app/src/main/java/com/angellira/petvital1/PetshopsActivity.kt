@@ -148,11 +148,6 @@ class PetshopsActivity : AppCompatActivity() {
                 true
             }
 
-            R.id.pesquisar -> {
-                startActivity(Intent(this, CadastrarPetshopActivity::class.java))
-                true
-            }
-
             R.id.configs -> {
                 showPopupMenu(findViewById(R.id.configs))
                 true
