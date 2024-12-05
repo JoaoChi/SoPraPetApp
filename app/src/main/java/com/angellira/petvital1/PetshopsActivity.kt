@@ -50,6 +50,15 @@ class PetshopsActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.barra_petshops))
         preferencesManager = PreferencesManager(this)
         mostrarPetshops()
+        binding.buttonVolta.setOnClickListener{
+            finish()
+        }
+        binding.showPopup.setOnClickListener {
+            showPopupMenu(binding.showPopup)
+        }
+        binding.AddPetshop.setOnClickListener{
+            startActivity(Intent(this@PetshopsActivity, CadastrarPetshopActivity::class.java))
+        }
     }
 
     private fun setupView() {

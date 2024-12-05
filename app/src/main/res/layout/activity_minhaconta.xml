@@ -8,17 +8,45 @@
     tools:context=".MinhacontaActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/barra_tarefas"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/corfundoazul"
+        android:background="#FFFFFF"
+        android:backgroundTint="@color/corfundoazul"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:theme="@style/Theme.Material3.DayNight.NoActionBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:titleTextColor="@android:color/background_dark">
+
+        <ImageView
+            android:id="@+id/buttonVolta"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/baseline_arrow_back_24" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:text="Perfil"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/showPopup"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/baseline_menu_24" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardPerfil"
@@ -29,7 +57,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.192"
         tools:ignore="MissingConstraints">
 
@@ -39,26 +67,16 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:id="@+id/textProfile"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#A1FFFFFF"
-                android:padding="8dp"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="16dp"
-                android:text="Perfil"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/cardPerfil"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
-                />
+                android:orientation="horizontal"
+                android:gravity="center">
 
             <ImageView
                 android:id="@+id/editProfile"
                 android:layout_width="wrap_content"
+                android:layout_marginRight="20dp"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/baseline_edit_24" />
 
@@ -66,8 +84,10 @@
                 android:id="@+id/trocarimagem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 app:srcCompat="@drawable/baseline_image_search_24" />
 
+            </LinearLayout>
             <ImageView
                 android:id="@+id/imageOpen"
                 android:layout_width="match_parent"
@@ -161,7 +181,7 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/corfundoazul"
         android:text="Sair da conta"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
@@ -175,7 +195,7 @@
         android:backgroundTint="@color/corfundoazul"
         android:hapticFeedbackEnabled="false"
         android:text="Alterar senha"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"

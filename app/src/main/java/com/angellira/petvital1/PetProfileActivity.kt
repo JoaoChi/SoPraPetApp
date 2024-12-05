@@ -44,6 +44,12 @@ class PetProfileActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.barra_tarefas))
         carregandoPet()
         excluirPet()
+        binding.buttonVolta.setOnClickListener{
+            finish()
+        }
+        binding.showPopup.setOnClickListener {
+            showPopupMenu(binding.showPopup)
+        }
     }
 
     private fun setupView() {

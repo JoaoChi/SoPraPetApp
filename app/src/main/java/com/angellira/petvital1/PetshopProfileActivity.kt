@@ -46,6 +46,12 @@ class PetshopProfileActivity : AppCompatActivity() {
         carregandoPet()
         excluirPet()
 //        botaoCalendario()
+        binding.buttonVolta.setOnClickListener{
+            finish()
+        }
+        binding.showPopup.setOnClickListener {
+            showPopupMenu(binding.showPopup)
+        }
     }
 
     private fun setupView() {

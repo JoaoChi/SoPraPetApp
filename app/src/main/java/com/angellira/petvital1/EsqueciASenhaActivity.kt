@@ -36,6 +36,9 @@ class EsqueciASenhaActivity : AppCompatActivity() {
         window.navigationBarColor = ContextCompat.getColor(this, R.color.corfundo)
         preferencesManager = PreferencesManager(this)
         editSenha()
+        binding.buttonVolta.setOnClickListener{
+            finish()
+        }
     }
 
     private fun editSenha() {

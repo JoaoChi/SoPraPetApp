@@ -13,25 +13,52 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/marca_01"
+        android:visibility="invisible"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/barra_tarefas"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/corfundoazul"
+        android:background="#FFFFFF"
+        android:backgroundTint="@color/corfundo"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:theme="@style/Theme.Material3.DayNight.NoActionBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:titleTextColor="@android:color/background_dark">
 
+        <ImageView
+            android:id="@+id/buttonVolta"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/baseline_arrow_back_24" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:text="Petshop"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/showPopup"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/baseline_menu_24" />
+
+    </androidx.appcompat.widget.Toolbar>
     <androidx.cardview.widget.CardView
         android:id="@+id/cardpetshop"
         android:layout_width="match_parent"
@@ -43,7 +70,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.192"
         tools:ignore="MissingConstraints">
 
@@ -121,7 +148,8 @@
                 android:layout_height="50dp"
                 android:id="@+id/buttonAgenda"
                 android:text="Agendar serviço"
-                android:backgroundTint="#00BCD4"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/corfundo"
                 />
 
         </LinearLayout>

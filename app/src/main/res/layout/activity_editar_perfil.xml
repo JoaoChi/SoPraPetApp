@@ -11,14 +11,42 @@
         android:id="@+id/barra_tarefas"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/corfundoazul"
+        android:background="#FFFFFF"
+        android:backgroundTint="@color/corfundo"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:theme="@style/Theme.Material3.DayNight.NoActionBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:titleTextColor="@android:color/background_dark">
+
+        <ImageView
+            android:id="@+id/buttonVolta"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/baseline_arrow_back_24" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:text="Excluir Conta"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/showPopup"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/baseline_menu_24" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <CheckBox
         android:id="@+id/checkBox1"
@@ -31,7 +59,7 @@
         app:layout_constraintHorizontal_bias="0.379"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
-        app:layout_constraintVertical_bias="0.787" />
+        app:layout_constraintVertical_bias="0.702" />
 
     <CheckBox
         android:id="@+id/checkBox2"
@@ -44,7 +72,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
-        app:layout_constraintVertical_bias="0.93" />
+        app:layout_constraintVertical_bias="0.785" />
 
     <Button
         android:id="@+id/buttonExcluirConta"
@@ -67,13 +95,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="*Excluir conta*"
-        android:textStyle="bold"
-        android:textSize="20dp"
         android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/checkBox2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barra_tarefas" />
+        app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
+        app:layout_constraintVertical_bias="0.163" />
 
     <TextView
         android:id="@+id/textView"
@@ -87,20 +117,19 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/checkBox2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barra_tarefas"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.643" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="360dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/marca_01"
+        android:src="@drawable/artboard_1_copy"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
